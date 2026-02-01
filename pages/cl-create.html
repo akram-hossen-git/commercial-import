@@ -1,0 +1,2177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create CI - Commercial Import Module</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <div class="d-flex p-4 pt-0 pb-0" id="wrapper">
+      <!-- Sidebar (same as lc-create.html) -->
+      <div class="sidebar-wrapper" id="sidebar-wrapper" style="width: 280px">
+        <div class="sidebar-heading text-white">
+          <div class="d-flex align-items-center mb-2">
+            <div class="user-avatar">ASG</div>
+            <div>
+              <h4 class="mb-0">Import Module</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-group list-group-flush">
+          <!-- Main Navigation -->
+          <div class="category-label mt-0">MAIN NAVIGATION</div>
+
+          <a
+            href="../index.html"
+            class="list-group-item list-group-item-action"
+          >
+            <i class="bi bi-speedometer2"></i>Dashboard
+          </a>
+
+          <!-- PI Section -->
+          <div class="accordion" id="piAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#piCollapse"
+                >
+                  <i class="bi bi-file-earmark-text"></i>Proforma Invoice
+                </button>
+              </h2>
+              <div
+                id="piCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#piAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./pi-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create PI
+                  </a>
+                  <a
+                    href="./pi-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All PI
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CI Section -->
+          <div class="accordion" id="ciAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#ciCollapse"
+                >
+                  <i class="bi bi-receipt"></i>Commercial Invoice
+                </button>
+              </h2>
+              <div
+                id="ciCollapse"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#ciAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./cl-create.html"
+                    class="list-group-item list-group-item-action active"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create CI
+                  </a>
+                  <a
+                    href="./ci-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All CI
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LC Section -->
+          <div class="accordion" id="lcAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#lcCollapse"
+                >
+                  <i class="bi bi-bank"></i>Letter of Credit
+                </button>
+              </h2>
+              <div
+                id="lcCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#lcAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./lc-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create LC
+                  </a>
+                  <a
+                    href="./lc-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All LC
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper" style="flex: 1">
+        <!-- Main Content -->
+        <div class="container mt-4">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="ci-view.html">CI</a></li>
+              <li class="breadcrumb-item active">Create CI</li>
+            </ol>
+          </nav>
+
+          <div class="card">
+            <div
+              class="card-header bg-success text-white d-flex justify-content-between align-items-center"
+            >
+              <h4 class="mb-0">
+                <i class="bi bi-receipt me-2"></i>Create Commercial Invoice
+              </h4>
+              <div>
+                <span class="badge bg-light text-dark me-2">Status: Draft</span>
+                <button
+                  type="button"
+                  class="btn btn-light btn-sm"
+                  id="previewCIBtn"
+                >
+                  <i class="bi bi-eye me-1"></i> Preview
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <form id="ciForm">
+                <!-- Basic CI Information -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-info-circle me-2"></i>Commercial Invoice Information
+                    </h5>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">CI Number</label>
+                    <div class="input-group">
+                      <span class="input-group-text bg-light">CI-</span>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="ciNumber"
+                        value="2024-001"
+                        readonly
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Invoice Date</label>
+                    <input
+                      type="date"
+                      class="form-control form-control-sm"
+                      id="invoiceDate"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Due Date</label>
+                    <input
+                      type="date"
+                      class="form-control form-control-sm"
+                      id="dueDate"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">PO Number</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="poNumber"
+                      placeholder="Purchase Order Number"
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">LC Reference</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="lcReference"
+                      placeholder="Linked LC Number"
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Payment Terms</label>
+                    <select class="form-select" id="paymentTerms" required>
+                      <option value="NET30">Net 30 Days</option>
+                      <option value="NET60">Net 60 Days</option>
+                      <option value="NET90">Net 90 Days</option>
+                      <option value="IMMEDIATE">Immediate Payment</option>
+                      <option value="50ADVANCE">50% Advance, 50% on Delivery</option>
+                      <option value="LC_AT_SIGHT">LC at Sight</option>
+                      <option value="LC_USANCE">LC Usance</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Currency</label>
+                    <select class="form-select" id="currency" required>
+                      <option value="USD" selected>USD ($)</option>
+                      <option value="EUR">EUR (€)</option>
+                      <option value="GBP">GBP (£)</option>
+                      <option value="JPY">JPY (¥)</option>
+                      <option value="CNY">CNY (¥)</option>
+                      <option value="INR">INR (₹)</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Exchange Rate</label>
+                    <div class="input-group">
+                      <span class="input-group-text">1 USD =</span>
+                      <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        id="exchangeRate"
+                        value="1.00"
+                        step="0.0001"
+                      />
+                      <span class="input-group-text" id="exchangeCurrency">USD</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Parties Involved -->
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-person-badge me-2"></i>Seller (Exporter)
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Select Exporter</label>
+                        <select class="form-select" id="exporterSelect" required>
+                          <option value="">-- Select Exporter --</option>
+                          <option value="1">Global Tech Inc. (USA)</option>
+                          <option value="2">Euro Suppliers Ltd (Germany)</option>
+                          <option value="3">Asia Imports Co. (China)</option>
+                          <option value="4">Ocean Trading Ltd (Singapore)</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <div
+                          id="exporterInfo"
+                          class="card bg-light p-3"
+                          style="display: none"
+                        >
+                          <div class="row">
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Company Name</small>
+                              <span id="exporterCompany">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Tax ID</small>
+                              <span id="exporterTaxId">-</span>
+                            </div>
+                            <div class="col-md-12">
+                              <small class="text-muted d-block">Address</small>
+                              <span id="exporterAddress">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Contact</small>
+                              <span id="exporterContact">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Email</small>
+                              <span id="exporterEmail">-</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-building me-2"></i>Buyer (Importer)
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Select Importer</label>
+                        <select class="form-select" id="importerSelect" required>
+                          <option value="">-- Select Importer --</option>
+                          <option value="1">ABC Trading Company</option>
+                          <option value="2">XYZ Importers Ltd</option>
+                          <option value="3">Global Trade Solutions</option>
+                          <option value="4">International Merchants</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <div
+                          id="importerInfo"
+                          class="card bg-light p-3"
+                          style="display: none"
+                        >
+                          <div class="row">
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Company Name</small>
+                              <span id="importerCompany">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Tax ID</small>
+                              <span id="importerTaxId">-</span>
+                            </div>
+                            <div class="col-md-12">
+                              <small class="text-muted d-block">Address</small>
+                              <span id="importerAddress">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Contact</small>
+                              <span id="importerContact">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Email</small>
+                              <span id="importerEmail">-</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Shipment Details -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-truck me-2"></i>Shipment Details
+                    </h5>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Incoterms</label>
+                    <select class="form-select" id="incoterms" required>
+                      <option value="FOB">FOB (Free On Board)</option>
+                      <option value="CIF" selected>CIF (Cost, Insurance & Freight)</option>
+                      <option value="CFR">CFR (Cost and Freight)</option>
+                      <option value="EXW">EXW (Ex Works)</option>
+                      <option value="DAP">DAP (Delivered At Place)</option>
+                      <option value="DDP">DDP (Delivered Duty Paid)</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Port of Loading</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="portLoading"
+                      placeholder="e.g., Shanghai Port"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Port of Discharge</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="portDischarge"
+                      placeholder="e.g., Mumbai Port"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Final Destination</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="finalDestination"
+                      placeholder="e.g., Delhi Warehouse"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Country of Origin</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="countryOfOrigin"
+                      placeholder="e.g., China"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Country of Destination</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="destinationCountry"
+                      placeholder="e.g., India"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Bill of Lading No.</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="bolNumber"
+                      placeholder="B/L Number"
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Container Number</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="containerNumber"
+                      placeholder="Container No."
+                    />
+                  </div>
+                </div>
+
+                <!-- Description of Goods -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5
+                      class="border-bottom pb-2 mb-3 d-flex justify-content-between align-items-center"
+                    >
+                      <span
+                        ><i class="bi bi-box-seam me-2"></i>Description of Goods</span
+                      >
+                      <div>
+                        <button
+                          type="button"
+                          class="btn btn-success btn-sm me-2"
+                          id="loadSampleData"
+                        >
+                          <i class="bi bi-upload me-1"></i> Load Sample Data
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary btn-sm"
+                          id="clearGoods"
+                        >
+                          <i class="bi bi-trash me-1"></i> Clear
+                        </button>
+                      </div>
+                    </h5>
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-8">
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i class="bi bi-link"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control form-control-sm"
+                                id="piReference"
+                                placeholder="Link to Proforma Invoice (PI Number)"
+                              />
+                              <button
+                                class="btn btn-outline-success"
+                                type="button"
+                                id="searchPI"
+                              >
+                                <i class="bi bi-search"></i> Search PI
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i class="bi bi-plus-circle"></i>
+                              </span>
+                              <input
+                                type="number"
+                                class="form-control form-control-sm"
+                                id="addQuantity"
+                                placeholder="Quantity"
+                                min="1"
+                                value="1"
+                              />
+                              <button
+                                class="btn btn-outline-success"
+                                type="button"
+                                id="addGoodsRow"
+                              >
+                                Add Row
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="table-responsive mb-3">
+                          <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                              <tr>
+                                <th width="50">#</th>
+                                <th>Description of Goods</th>
+                                <th width="100">HS Code</th>
+                                <th width="100">Quantity</th>
+                                <th width="100">Unit</th>
+                                <th width="120">Unit Price</th>
+                                <th width="150">Total Amount</th>
+                                <th width="80">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody id="goodsDescription">
+                              <tr id="noGoodsRow">
+                                <td
+                                  colspan="8"
+                                  class="text-center text-muted py-4"
+                                >
+                                  <div class="mb-3">
+                                    <i
+                                      class="bi bi-box display-6 d-block mb-2"
+                                    ></i>
+                                    <h5>No goods description added</h5>
+                                    <p class="mb-3">
+                                      Link to a Proforma Invoice or add goods manually
+                                    </p>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-success"
+                                      id="quickAddElectronics"
+                                    >
+                                      <i class="bi bi-laptop me-1"></i> Add Electronics Sample
+                                    </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-primary ms-2"
+                                      id="quickAddTextiles"
+                                    >
+                                      <i class="bi bi-basket me-1"></i> Add Textiles Sample
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tfoot class="table-secondary">
+                              <tr>
+                                <td colspan="6" class="text-end fw-bold">
+                                  Subtotal:
+                                </td>
+                                <td id="goodsSubtotal" class="fw-bold">
+                                  $0.00
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td colspan="6" class="text-end">
+                                  Freight Charges:
+                                </td>
+                                <td>
+                                  <div class="input-group input-group-sm">
+                                    <span class="input-group-text">$</span>
+                                    <input
+                                      type="number"
+                                      class="form-control form-control-sm"
+                                      id="freightCharges"
+                                      value="0"
+                                      min="0"
+                                      step="0.01"
+                                    />
+                                  </div>
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td colspan="6" class="text-end">
+                                  Insurance:
+                                </td>
+                                <td>
+                                  <div class="input-group input-group-sm">
+                                    <span class="input-group-text">$</span>
+                                    <input
+                                      type="number"
+                                      class="form-control form-control-sm"
+                                      id="insurance"
+                                      value="0"
+                                      min="0"
+                                      step="0.01"
+                                    />
+                                  </div>
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td colspan="6" class="text-end">
+                                  Other Charges:
+                                </td>
+                                <td>
+                                  <div class="input-group input-group-sm">
+                                    <span class="input-group-text">$</span>
+                                    <input
+                                      type="number"
+                                      class="form-control form-control-sm"
+                                      id="otherCharges"
+                                      value="0"
+                                      min="0"
+                                      step="0.01"
+                                    />
+                                  </div>
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td colspan="6" class="text-end fw-bold">
+                                  Tax Rate:
+                                </td>
+                                <td>
+                                  <div class="input-group input-group-sm">
+                                    <input
+                                      type="number"
+                                      class="form-control form-control-sm"
+                                      id="taxRate"
+                                      value="0"
+                                      min="0"
+                                      max="100"
+                                      step="0.01"
+                                    />
+                                    <span class="input-group-text">%</span>
+                                  </div>
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr class="table-success">
+                                <td colspan="6" class="text-end fw-bold fs-5">
+                                  Grand Total:
+                                </td>
+                                <td id="grandTotal" class="fw-bold fs-5">
+                                  $0.00
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr class="table-light">
+                                <td colspan="6" class="text-end">
+                                  Amount in Words:
+                                </td>
+                                <td colspan="2" id="amountInWords" class="fst-italic">
+                                  Zero dollars only
+                                </td>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12 mb-3">
+                            <label class="form-label">Additional Description/Packing Details</label>
+                            <textarea
+                              class="form-control form-control-sm"
+                              id="packingDetails"
+                              rows="3"
+                              placeholder="Packing specifications, marks and numbers, special instructions..."
+                            ></textarea>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Gross Weight (kg)</label>
+                            <div class="input-group">
+                              <input
+                                type="number"
+                                class="form-control form-control-sm"
+                                id="grossWeight"
+                                placeholder="Total gross weight"
+                                step="0.01"
+                              />
+                              <span class="input-group-text">kg</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Net Weight (kg)</label>
+                            <div class="input-group">
+                              <input
+                                type="number"
+                                class="form-control form-control-sm"
+                                id="netWeight"
+                                placeholder="Total net weight"
+                                step="0.01"
+                              />
+                              <span class="input-group-text">kg</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Total Packages</label>
+                            <div class="input-group">
+                              <input
+                                type="number"
+                                class="form-control form-control-sm"
+                                id="totalPackages"
+                                placeholder="Number of packages"
+                                min="1"
+                              />
+                              <span class="input-group-text">pcs</span>
+                            </div>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label class="form-label">Package Type</label>
+                            <select class="form-select" id="packageType">
+                              <option value="CARTONS">Cartons</option>
+                              <option value="PALLETS">Pallets</option>
+                              <option value="CRATES">Crates</option>
+                              <option value="BAGS">Bags</option>
+                              <option value="DRUMS">Drums</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Banking & Payment Information -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-bank me-2"></i>Banking & Payment Information
+                    </h5>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Beneficiary Bank</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="beneficiaryBank"
+                      placeholder="Bank Name"
+                    />
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Account Number</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="accountNumber"
+                      placeholder="Account Number"
+                    />
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Swift Code</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="swiftCode"
+                      placeholder="SWIFT/BIC Code"
+                    />
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">IBAN</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      id="iban"
+                      placeholder="IBAN (if applicable)"
+                    />
+                  </div>
+
+                  <div class="col-md-12 mb-3">
+                    <label class="form-label">Bank Address</label>
+                    <textarea
+                      class="form-control form-control-sm"
+                      id="bankAddress"
+                      rows="2"
+                      placeholder="Bank address details..."
+                    ></textarea>
+                  </div>
+                </div>
+
+                <!-- Supporting Documents -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-paperclip me-2"></i>Supporting Documents
+                    </h5>
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row mb-3">
+                          <div class="col-md-12">
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="docPackingList">
+                              <label class="form-check-label" for="docPackingList">Packing List</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="docCertificateOfOrigin">
+                              <label class="form-check-label" for="docCertificateOfOrigin">Certificate of Origin</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="docInsurance">
+                              <label class="form-check-label" for="docInsurance">Insurance Certificate</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="docInspection">
+                              <label class="form-check-label" for="docInspection">Inspection Certificate</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="docBillOfLading">
+                              <label class="form-check-label" for="docBillOfLading">Bill of Lading</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12 mb-4">
+                            <div
+                              class="dropzone p-4 border rounded text-center"
+                              id="documentDropzone"
+                            >
+                              <i
+                                class="bi bi-cloud-upload display-4 text-muted d-block mb-3"
+                              ></i>
+                              <h5>Drag & Drop Files Here</h5>
+                              <p class="text-muted">or click to browse</p>
+                              <input
+                                type="file"
+                                class="d-none"
+                                id="fileInput"
+                                multiple
+                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                              />
+                              <button
+                                type="button"
+                                class="btn btn-outline-success mt-2"
+                                id="browseFiles"
+                              >
+                                <i class="bi bi-folder2-open me-2"></i> Browse Files
+                              </button>
+                              <p class="text-muted mt-2 mb-0">
+                                Supported formats: PDF, DOC, DOCX, JPG, PNG (Max: 5MB each)
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="col-md-12">
+                            <h6 class="mb-3">Uploaded Documents</h6>
+                            <div class="table-responsive">
+                              <table
+                                class="table table-bordered"
+                                id="uploadedDocuments"
+                              >
+                                <thead class="table-light">
+                                  <tr>
+                                    <th width="50">#</th>
+                                    <th>Document Name</th>
+                                    <th width="120">Type</th>
+                                    <th width="100">Size</th>
+                                    <th width="120">Status</th>
+                                    <th width="100">Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="documentsList">
+                                  <tr id="noDocumentsRow">
+                                    <td
+                                      colspan="6"
+                                      class="text-center text-muted py-3"
+                                    >
+                                      <i
+                                        class="bi bi-file-earmark display-6 d-block mb-2"
+                                      ></i>
+                                      <p>No documents uploaded yet</p>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-chat-square-text me-2"></i>Additional Information
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Special Instructions</label>
+                        <textarea
+                          class="form-control form-control-sm"
+                          id="specialInstructions"
+                          rows="3"
+                          placeholder="Any special instructions for shipping, handling, or documentation..."
+                        ></textarea>
+                      </div>
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Declaration</label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="declaration1">
+                          <label class="form-check-label" for="declaration1">
+                            We certify that this invoice shows the actual price of the goods described and that all particulars are true and correct.
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="declaration2">
+                          <label class="form-check-label" for="declaration2">
+                            The origin of the goods is as specified above.
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="declaration3">
+                          <label class="form-check-label" for="declaration3">
+                            This invoice is issued in accordance with the terms of the relevant Proforma Invoice/Contract.
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Prepared By</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="preparedBy"
+                          placeholder="Name of person preparing invoice"
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Authorized Signatory</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="authorizedSignatory"
+                          placeholder="Authorized signatory name"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div
+                  class="d-flex justify-content-between align-items-center border-top pt-4"
+                >
+                  <div>
+                    <a href="ci-view.html" class="btn btn-outline-secondary">
+                      <i class="bi bi-arrow-left me-2"></i>Back to List
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-outline-warning ms-2"
+                      id="saveDraftBtn"
+                    >
+                      <i class="bi bi-file-earmark me-2"></i>Save as Draft
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger me-2"
+                      id="resetBtn"
+                    >
+                      <i class="bi bi-x-circle me-2"></i>Reset
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-success"
+                      id="submitBtn"
+                    >
+                      <i class="bi bi-check-circle me-2"></i>Create Commercial Invoice
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer (same as other pages) -->
+        <footer class="footer mt-auto py-3 bg-light border-top">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="text-muted"
+                  >© 2024 Import Module System. All rights reserved.</span
+                >
+              </div>
+              <div class="col-md-6 text-end">
+                <span class="text-muted">Version 2.1.0</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+      /* Custom styles for CI page */
+      .card-header {
+          background: linear-gradient(135deg, #198754 0%, #157347 100%);
+      }
+      
+      h5 {
+          color: #2c3e50;
+          font-weight: 600;
+      }
+      
+      .form-label {
+          font-weight: 500;
+          color: #495057;
+          margin-bottom: 0.5rem;
+      }
+      
+      .table th {
+          font-weight: 600;
+          background-color: #f8f9fa;
+      }
+      
+      .form-control:focus, .form-select:focus {
+          border-color: #a3cfbb;
+          box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+      }
+      
+      .form-check-input:checked {
+          background-color: #198754;
+          border-color: #198754;
+      }
+      
+      .input-group-text {
+          background-color: #f8f9fa;
+      }
+      
+      #noGoodsRow, #noDocumentsRow {
+          background-color: #f8f9fa;
+      }
+      
+      .badge {
+          font-size: 0.75em;
+          padding: 0.35em 0.65em;
+      }
+      
+      /* Party info cards */
+      .party-info-card {
+          background-color: #f8f9fa;
+          border-left: 4px solid #198754;
+          transition: all 0.3s ease;
+      }
+      
+      .party-info-card:hover {
+          background-color: #e8f5ee;
+      }
+      
+      /* Document dropzone */
+      .dropzone {
+          background-color: #f8f9fa;
+          border: 2px dashed #dee2e6;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+      }
+      
+      .dropzone:hover {
+          background-color: #e8f5ee;
+          border-color: #a3cfbb;
+      }
+      
+      .dropzone.dragover {
+          background-color: #d1e7dd;
+          border-color: #198754;
+      }
+      
+      /* Document status badges */
+      .status-badge {
+          font-size: 0.75rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 0.25rem;
+      }
+      
+      .status-uploaded {
+          background-color: #d1e7dd;
+          color: #0f5132;
+      }
+      
+      .status-pending {
+          background-color: #fff3cd;
+          color: #856404;
+      }
+      
+      /* Interactive goods table */
+      .goods-table tbody tr:hover {
+          background-color: rgba(25, 135, 84, 0.05);
+      }
+      
+      /* Quick action buttons */
+      .quick-action-btn {
+          transition: all 0.2s ease;
+      }
+      
+      .quick-action-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      
+      /* Total row styling */
+      .table-success {
+          background-color: #d1e7dd !important;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+          .card-body {
+              padding: 1rem;
+          }
+          
+          .btn {
+              width: 100%;
+              margin-bottom: 0.5rem;
+          }
+          
+          .d-flex.justify-content-between {
+              flex-direction: column;
+              gap: 1rem;
+          }
+          
+          .table-responsive {
+              font-size: 0.875rem;
+          }
+      }
+      
+      /* Animation for new rows */
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .fade-in {
+          animation: fadeIn 0.3s ease-in;
+      }
+      
+      /* Amount in words styling */
+      #amountInWords {
+          color: #495057;
+          font-style: italic;
+          padding: 0.5rem;
+          background-color: #f8f9fa;
+          border-radius: 0.25rem;
+      }
+    </style>
+
+    <script>
+      // Sample data for CI
+      const exporters = {
+          1: {
+              company: 'Global Tech Inc.',
+              taxId: 'US-123456789',
+              address: '123 Tech Street, Silicon Valley, CA 94000, USA',
+              contact: 'Michael Chen',
+              email: 'michael.chen@globaltech.com',
+              phone: '+1-650-555-0123'
+          },
+          2: {
+              company: 'Euro Suppliers Ltd',
+              taxId: 'DE-987654321',
+              address: 'Berliner Strasse 45, 10115 Berlin, Germany',
+              contact: 'Hans Schmidt',
+              email: 'hans.schmidt@eurosuppliers.de',
+              phone: '+49-30-123456'
+          },
+          3: {
+              company: 'Asia Imports Co.',
+              taxId: 'CN-456789123',
+              address: 'No. 88 Nanjing Road, Shanghai 200000, China',
+              contact: 'Li Wei',
+              email: 'li.wei@asiaimports.cn',
+              phone: '+86-21-87654321'
+          },
+          4: {
+              company: 'Ocean Trading Ltd',
+              taxId: 'SG-789123456',
+              address: '101 Beach Road, Singapore 189702',
+              contact: 'Sarah Lim',
+              email: 'sarah.lim@oceantrading.sg',
+              phone: '+65-6123-4567'
+          }
+      };
+
+      const importers = {
+          1: {
+              company: 'ABC Trading Company',
+              taxId: 'IN-123456789',
+              address: '123 Business Ave, Mumbai 400001, India',
+              contact: 'Rajesh Kumar',
+              email: 'rajesh@abctrading.in',
+              phone: '+91-22-12345678'
+          },
+          2: {
+              company: 'XYZ Importers Ltd',
+              taxId: 'IN-987654321',
+              address: '456 Trade Street, Delhi 110001, India',
+              contact: 'Priya Sharma',
+              email: 'priya@xyzimporters.in',
+              phone: '+91-11-87654321'
+          },
+          3: {
+              company: 'Global Trade Solutions',
+              taxId: 'AE-456789123',
+              address: '789 Commerce Blvd, Dubai, UAE',
+              contact: 'Ahmed Al Mansoori',
+              email: 'ahmed@gts.ae',
+              phone: '+971-4-1234567'
+          },
+          4: {
+              company: 'International Merchants',
+              taxId: 'US-789123456',
+              address: '1000 Trade Center, New York, NY 10001, USA',
+              contact: 'David Wilson',
+              email: 'david@intmerchants.com',
+              phone: '+1-212-555-6789'
+          }
+      };
+
+      // Sample goods data for CI
+      const sampleGoodsCI = {
+          electronics: [
+              { description: 'Laptop Computers - Model X1 Pro', hsCode: '84713000', quantity: 50, unit: 'PCS', unitPrice: 850.00 },
+              { description: 'Wireless Mechanical Keyboards', hsCode: '84716090', quantity: 100, unit: 'PCS', unitPrice: 45.00 },
+              { description: '24" LED Monitors - 4K Resolution', hsCode: '85285210', quantity: 75, unit: 'PCS', unitPrice: 220.00 }
+          ],
+          textiles: [
+              { description: '100% Cotton Fabric Roll (White)', hsCode: '52081100', quantity: 200, unit: 'ROLLS', unitPrice: 25.50 },
+              { description: 'Textile Dyes - Red Color', hsCode: '32041600', quantity: 50, unit: 'KG', unitPrice: 12.75 },
+              { description: 'Polyester Blend Fabric', hsCode: '54074200', quantity: 150, unit: 'MTR', unitPrice: 18.25 }
+          ],
+          machinery: [
+              { description: 'CNC Milling Machine - Model M200', hsCode: '84596100', quantity: 2, unit: 'PCS', unitPrice: 12500.00 },
+              { description: 'Industrial Hydraulic Press', hsCode: '84629100', quantity: 5, unit: 'PCS', unitPrice: 8500.00 }
+          ],
+          furniture: [
+              { description: 'Executive Office Chair - Leather', hsCode: '94013000', quantity: 100, unit: 'PCS', unitPrice: 150.00 },
+              { description: 'Conference Table - Mahogany', hsCode: '94033000', quantity: 20, unit: 'PCS', unitPrice: 450.00 }
+          ]
+      };
+
+      // Sample PI data for CI
+      const samplePIsCI = [
+          {
+              piNumber: 'PI-2024-001',
+              goods: sampleGoodsCI.electronics,
+              total: 850.00 * 50 + 45.00 * 100 + 220.00 * 75
+          },
+          {
+              piNumber: 'PI-2024-002',
+              goods: sampleGoodsCI.textiles,
+              total: 25.50 * 200 + 12.75 * 50 + 18.25 * 150
+          },
+          {
+              piNumber: 'PI-2024-003',
+              goods: sampleGoodsCI.machinery,
+              total: 12500.00 * 2 + 8500.00 * 5
+          },
+          {
+              piNumber: 'PI-2024-004',
+              goods: sampleGoodsCI.furniture,
+              total: 150.00 * 100 + 450.00 * 20
+          }
+      ];
+
+      // Variables
+      let goodsCounter = 1;
+      let documentCounter = 1;
+      const uploadedFiles = [];
+
+      // Number to words function
+      function numberToWords(num) {
+          const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+          const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+          const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+          const thousands = ['', 'Thousand', 'Million', 'Billion'];
+
+          if (num === 0) return 'Zero';
+
+          let words = '';
+
+          for (let i = 0; i < thousands.length; i++) {
+              const chunk = Math.floor((num / Math.pow(1000, i)) % 1000);
+              if (chunk === 0) continue;
+
+              let chunkWords = '';
+              const hundreds = Math.floor(chunk / 100);
+              const tensAndOnes = chunk % 100;
+
+              if (hundreds > 0) {
+                  chunkWords += ones[hundreds] + ' Hundred ';
+              }
+
+              if (tensAndOnes > 0) {
+                  if (tensAndOnes < 10) {
+                      chunkWords += ones[tensAndOnes] + ' ';
+                  } else if (tensAndOnes < 20) {
+                      chunkWords += teens[tensAndOnes - 10] + ' ';
+                  } else {
+                      chunkWords += tens[Math.floor(tensAndOnes / 10)] + ' ';
+                      if (tensAndOnes % 10 > 0) {
+                          chunkWords += ones[tensAndOnes % 10] + ' ';
+                      }
+                  }
+              }
+
+              chunkWords += thousands[i] + ' ';
+              words = chunkWords + words;
+          }
+
+          return words.trim() + ' Dollars Only';
+      }
+
+      // Initialize page
+      document.addEventListener('DOMContentLoaded', function() {
+          // Set today's date
+          const today = new Date().toISOString().split('T')[0];
+          document.getElementById('invoiceDate').value = today;
+          
+          // Set due date (30 days from today)
+          const dueDate = new Date();
+          dueDate.setDate(dueDate.getDate() + 30);
+          document.getElementById('dueDate').value = dueDate.toISOString().split('T')[0];
+          
+          // Initialize event listeners
+          initializeEventListeners();
+          
+          // Initialize totals
+          calculateTotals();
+      });
+
+      // Initialize event listeners
+      function initializeEventListeners() {
+          // Exporter selection
+          document.getElementById('exporterSelect').addEventListener('change', function() {
+              updatePartyInfo(this.value, exporters, 'exporter');
+          });
+
+          // Importer selection
+          document.getElementById('importerSelect').addEventListener('change', function() {
+              updatePartyInfo(this.value, importers, 'importer');
+          });
+
+          // Currency change
+          document.getElementById('currency').addEventListener('change', function() {
+              const currency = this.value;
+              document.getElementById('exchangeCurrency').textContent = currency;
+              calculateTotals();
+          });
+
+          // Exchange rate change
+          document.getElementById('exchangeRate').addEventListener('input', calculateTotals);
+
+          // Goods description
+          document.getElementById('searchPI').addEventListener('click', searchPI);
+          document.getElementById('loadSampleData').addEventListener('click', loadSampleData);
+          document.getElementById('clearGoods').addEventListener('click', clearGoods);
+          document.getElementById('quickAddElectronics').addEventListener('click', () => addSampleGoods('electronics'));
+          document.getElementById('quickAddTextiles').addEventListener('click', () => addSampleGoods('textiles'));
+          document.getElementById('addGoodsRow').addEventListener('click', addGoodsRow);
+
+          // File upload
+          document.getElementById('browseFiles').addEventListener('click', () => document.getElementById('fileInput').click());
+          document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+          setupDragAndDrop();
+
+          // Total calculation
+          document.getElementById('freightCharges').addEventListener('input', calculateTotals);
+          document.getElementById('insurance').addEventListener('input', calculateTotals);
+          document.getElementById('otherCharges').addEventListener('input', calculateTotals);
+          document.getElementById('taxRate').addEventListener('input', calculateTotals);
+
+          // Form submission
+          document.getElementById('ciForm').addEventListener('submit', function(e) {
+              e.preventDefault();
+              submitCI();
+          });
+
+          // Save draft button
+          document.getElementById('saveDraftBtn').addEventListener('click', saveAsDraft);
+
+          // Reset button
+          document.getElementById('resetBtn').addEventListener('click', resetForm);
+
+          // Preview button
+          document.getElementById('previewCIBtn').addEventListener('click', previewCI);
+      }
+
+      // Update party information
+      function updatePartyInfo(id, data, type) {
+          const infoElement = document.getElementById(`${type}Info`);
+          
+          if (id && data[id]) {
+              const party = data[id];
+              document.getElementById(`${type}Company`).textContent = party.company;
+              document.getElementById(`${type}TaxId`).textContent = party.taxId;
+              document.getElementById(`${type}Address`).textContent = party.address;
+              document.getElementById(`${type}Contact`).textContent = party.contact;
+              document.getElementById(`${type}Email`).textContent = party.email;
+              infoElement.style.display = 'block';
+          } else {
+              infoElement.style.display = 'none';
+          }
+      }
+
+      // Search PI
+      function searchPI() {
+          const piRef = document.getElementById('piReference').value.trim();
+          if (!piRef) {
+              showAlert('Please enter a PI number to search.', 'warning');
+              return;
+          }
+
+          // Find matching PI
+          const pi = samplePIsCI.find(p => p.piNumber === piRef);
+          if (pi) {
+              populateGoodsFromPI(pi);
+              showAlert(`PI ${piRef} loaded successfully!`, 'success');
+          } else {
+              alert(`PI ${piRef} not found. Try: PI-2024-001, PI-2024-002, PI-2024-003, or PI-2024-004`);
+          }
+      }
+
+      // Load sample data
+      function loadSampleData() {
+          // Randomly select a sample PI
+          const randomPI = samplePIsCI[Math.floor(Math.random() * samplePIsCI.length)];
+          document.getElementById('piReference').value = randomPI.piNumber;
+          populateGoodsFromPI(randomPI);
+          
+          // Set sample values for other fields
+          document.getElementById('exporterSelect').value = '1';
+          updatePartyInfo('1', exporters, 'exporter');
+          
+          document.getElementById('importerSelect').value = '1';
+          updatePartyInfo('1', importers, 'importer');
+          
+          document.getElementById('poNumber').value = 'PO-2024-001';
+          document.getElementById('lcReference').value = 'LC-2024-001';
+          document.getElementById('portLoading').value = 'Shanghai Port, China';
+          document.getElementById('portDischarge').value = 'Mumbai Port, India';
+          document.getElementById('finalDestination').value = 'Delhi Warehouse, India';
+          document.getElementById('countryOfOrigin').value = 'China';
+          document.getElementById('destinationCountry').value = 'India';
+          document.getElementById('bolNumber').value = 'BOL-2024-001';
+          document.getElementById('containerNumber').value = 'MSKU1234567';
+          document.getElementById('grossWeight').value = '2500';
+          document.getElementById('netWeight').value = '2300';
+          document.getElementById('totalPackages').value = '120';
+          document.getElementById('beneficiaryBank').value = 'HSBC Bank';
+          document.getElementById('accountNumber').value = '9876543210';
+          document.getElementById('swiftCode').value = 'HSBCUS33';
+          document.getElementById('preparedBy').value = 'John Doe';
+          document.getElementById('authorizedSignatory').value = 'Sarah Smith';
+          
+          // Check some documents
+          document.getElementById('docPackingList').checked = true;
+          document.getElementById('docCertificateOfOrigin').checked = true;
+          document.getElementById('docBillOfLading').checked = true;
+          
+          calculateTotals();
+          showAlert('Sample data loaded successfully!', 'success');
+      }
+
+      // Add sample goods
+      function addSampleGoods(category) {
+          const goods = sampleGoodsCI[category];
+          if (!goods) return;
+
+          const tbody = document.getElementById('goodsDescription');
+          const noGoodsRow = document.getElementById('noGoodsRow');
+          
+          // Remove "no goods" row if it exists
+          if (noGoodsRow) {
+              noGoodsRow.remove();
+          }
+
+          goods.forEach(item => {
+              addGoodsRowToTable(item);
+          });
+
+          calculateTotals();
+          showAlert(`${category.charAt(0).toUpperCase() + category.slice(1)} goods added!`, 'success');
+      }
+
+      // Add goods row
+      function addGoodsRow() {
+          const quantity = parseInt(document.getElementById('addQuantity').value) || 1;
+          const newItem = {
+              description: 'New Item Description',
+              hsCode: 'XXXXXX00',
+              quantity: quantity,
+              unit: 'PCS',
+              unitPrice: 0.00
+          };
+          
+          const tbody = document.getElementById('goodsDescription');
+          const noGoodsRow = document.getElementById('noGoodsRow');
+          
+          // Remove "no goods" row if it exists
+          if (noGoodsRow) {
+              noGoodsRow.remove();
+          }
+          
+          addGoodsRowToTable(newItem);
+          calculateTotals();
+      }
+
+      // Add goods row to table
+      function addGoodsRowToTable(item) {
+          const tbody = document.getElementById('goodsDescription');
+          const row = document.createElement('tr');
+          row.className = 'fade-in';
+          const total = item.quantity * item.unitPrice;
+          
+          row.innerHTML = `
+              <td>${goodsCounter++}</td>
+              <td>
+                  <input type="text" class="form-control form-control-sm" value="${item.description}" 
+                         onchange="updateGoodsTotal()" placeholder="Enter description">
+              </td>
+              <td>
+                  <input type="text" class="form-control form-control-sm" value="${item.hsCode}" 
+                         onchange="updateGoodsTotal()" placeholder="HS Code">
+              </td>
+              <td>
+                  <div class="input-group input-group-sm">
+                      <input type="number" class="form-control form-control-sm" value="${item.quantity}" min="1" 
+                             onchange="updateGoodsTotal()">
+                  </div>
+              </td>
+              <td>
+                  <select class="form-select form-select-sm" onchange="updateGoodsTotal()">
+                      <option value="PCS" ${item.unit === 'PCS' ? 'selected' : ''}>PCS</option>
+                      <option value="KG" ${item.unit === 'KG' ? 'selected' : ''}>KG</option>
+                      <option value="MTR" ${item.unit === 'MTR' ? 'selected' : ''}>MTR</option>
+                      <option value="ROLLS" ${item.unit === 'ROLLS' ? 'selected' : ''}>ROLLS</option>
+                      <option value="SETS" ${item.unit === 'SETS' ? 'selected' : ''}>SETS</option>
+                      <option value="PAIRS" ${item.unit === 'PAIRS' ? 'selected' : ''}>PAIRS</option>
+                  </select>
+              </td>
+              <td>
+                  <div class="input-group input-group-sm">
+                      <span class="input-group-text">$</span>
+                      <input type="number" class="form-control form-control-sm" value="${item.unitPrice.toFixed(2)}" 
+                             step="0.01" min="0" onchange="updateGoodsTotal()">
+                  </div>
+              </td>
+              <td class="fw-bold item-total">$${total.toFixed(2)}</td>
+              <td>
+                  <button type="button" class="btn btn-danger btn-sm" onclick="removeGoodsRow(this)">
+                      <i class="bi bi-trash"></i>
+                  </button>
+              </td>
+          `;
+          
+          tbody.appendChild(row);
+      }
+
+      // Remove goods row
+      window.removeGoodsRow = function(button) {
+          const row = button.closest('tr');
+          row.remove();
+          
+          // Update row numbers
+          updateGoodsRowNumbers();
+          calculateTotals();
+      };
+
+      // Update goods row numbers
+      function updateGoodsRowNumbers() {
+          const rows = document.querySelectorAll('#goodsDescription tr');
+          goodsCounter = 1;
+          rows.forEach(row => {
+              if (!row.id.includes('noGoodsRow')) {
+                  row.cells[0].textContent = goodsCounter++;
+              }
+          });
+      }
+
+      // Populate goods from PI
+      function populateGoodsFromPI(pi) {
+          const tbody = document.getElementById('goodsDescription');
+          tbody.innerHTML = '';
+          goodsCounter = 1;
+          
+          pi.goods.forEach(item => {
+              addGoodsRowToTable(item);
+          });
+          
+          calculateTotals();
+      }
+
+      // Clear goods
+      function clearGoods() {
+          if (confirm('Are you sure you want to clear all goods?')) {
+              const tbody = document.getElementById('goodsDescription');
+              tbody.innerHTML = `
+                  <tr id="noGoodsRow">
+                      <td colspan="8" class="text-center text-muted py-4">
+                          <div class="mb-3">
+                              <i class="bi bi-box display-6 d-block mb-2"></i>
+                              <h5>No goods description added</h5>
+                              <p class="mb-3">Link to a Proforma Invoice or add goods manually</p>
+                              <button type="button" class="btn btn-outline-success" id="quickAddElectronics">
+                                  <i class="bi bi-laptop me-1"></i> Add Electronics Sample
+                              </button>
+                              <button type="button" class="btn btn-outline-primary ms-2" id="quickAddTextiles">
+                                  <i class="bi bi-basket me-1"></i> Add Textiles Sample
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
+              `;
+              
+              // Re-attach event listeners for quick add buttons
+              document.getElementById('quickAddElectronics').addEventListener('click', () => addSampleGoods('electronics'));
+              document.getElementById('quickAddTextiles').addEventListener('click', () => addSampleGoods('textiles'));
+              
+              calculateTotals();
+          }
+      }
+
+      // Calculate totals
+      function calculateTotals() {
+          let subtotal = 0;
+          
+          // Calculate from table rows
+          const rows = document.querySelectorAll('#goodsDescription tr');
+          rows.forEach(row => {
+              if (!row.id.includes('noGoodsRow')) {
+                  const quantity = parseFloat(row.cells[3].querySelector('input').value) || 0;
+                  const unitPrice = parseFloat(row.cells[5].querySelector('input').value) || 0;
+                  const total = quantity * unitPrice;
+                  subtotal += total;
+                  
+                  // Update row total
+                  const totalCell = row.querySelector('.item-total');
+                  if (totalCell) {
+                      const currency = document.getElementById('currency').value;
+                      totalCell.textContent = `${currency === 'USD' ? '$' : currency === 'EUR' ? '€' : currency === 'GBP' ? '£' : currency === 'JPY' ? '¥' : currency === 'CNY' ? '¥' : '₹'}${total.toFixed(2)}`;
+                  }
+              }
+          });
+          
+          // Get additional charges
+          const freight = parseFloat(document.getElementById('freightCharges').value) || 0;
+          const insurance = parseFloat(document.getElementById('insurance').value) || 0;
+          const otherCharges = parseFloat(document.getElementById('otherCharges').value) || 0;
+          const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+          
+          // Calculate tax
+          const taxableAmount = subtotal + freight + insurance + otherCharges;
+          const taxAmount = (taxableAmount * taxRate) / 100;
+          const grandTotal = taxableAmount + taxAmount;
+          
+          // Get exchange rate
+          const exchangeRate = parseFloat(document.getElementById('exchangeRate').value) || 1;
+          const convertedTotal = grandTotal * exchangeRate;
+          
+          // Update displays
+          const currency = document.getElementById('currency').value;
+          const currencySymbol = currency === 'USD' ? '$' : 
+                                currency === 'EUR' ? '€' : 
+                                currency === 'GBP' ? '£' : 
+                                currency === 'JPY' ? '¥' : 
+                                currency === 'CNY' ? '¥' : '₹';
+          
+          document.getElementById('goodsSubtotal').textContent = `${currencySymbol}${subtotal.toFixed(2)}`;
+          document.getElementById('grandTotal').textContent = `${currencySymbol}${grandTotal.toFixed(2)}`;
+          
+          // Update amount in words
+          const amountInWords = numberToWords(Math.floor(grandTotal));
+          document.getElementById('amountInWords').textContent = amountInWords;
+      }
+
+      // Update goods total (global function)
+      window.updateGoodsTotal = calculateTotals;
+
+      // Setup drag and drop
+      function setupDragAndDrop() {
+          const dropzone = document.getElementById('documentDropzone');
+          const fileInput = document.getElementById('fileInput');
+          
+          // Drag events
+          dropzone.addEventListener('dragover', (e) => {
+              e.preventDefault();
+              dropzone.classList.add('dragover');
+          });
+          
+          dropzone.addEventListener('dragleave', (e) => {
+              e.preventDefault();
+              dropzone.classList.remove('dragover');
+          });
+          
+          dropzone.addEventListener('drop', (e) => {
+              e.preventDefault();
+              dropzone.classList.remove('dragover');
+              const files = e.dataTransfer.files;
+              handleFiles(files);
+          });
+          
+          // Click on dropzone
+          dropzone.addEventListener('click', () => {
+              fileInput.click();
+          });
+      }
+
+      // Handle file select
+      function handleFileSelect(e) {
+          const files = e.target.files;
+          handleFiles(files);
+      }
+
+      // Handle files
+      function handleFiles(files) {
+          const validTypes = ['application/pdf', 'application/msword', 
+                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                            'image/jpeg', 'image/png', 'image/jpg'];
+          
+          for (let file of files) {
+              // Validate file type
+              if (!validTypes.includes(file.type)) {
+                  showAlert(`File "${file.name}" has unsupported format.`, 'warning');
+                  continue;
+              }
+              
+              // Validate file size (5MB)
+              if (file.size > 5 * 1024 * 1024) {
+                  showAlert(`File "${file.name}" exceeds 5MB limit.`, 'warning');
+                  continue;
+              }
+              
+              // Add to uploaded files
+              uploadedFiles.push({
+                  id: documentCounter,
+                  name: file.name,
+                  type: file.type,
+                  size: formatFileSize(file.size),
+                  uploadDate: new Date().toLocaleDateString(),
+                  status: 'Uploaded',
+                  file: file
+              });
+              
+              documentCounter++;
+          }
+          
+          // Update documents table
+          updateDocumentsTable();
+          showAlert(`${files.length} file(s) uploaded successfully!`, 'success');
+      }
+
+      // Format file size
+      function formatFileSize(bytes) {
+          if (bytes === 0) return '0 Bytes';
+          const k = 1024;
+          const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+          const i = Math.floor(Math.log(bytes) / Math.log(k));
+          return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      }
+
+      // Update documents table
+      function updateDocumentsTable() {
+          const tbody = document.getElementById('documentsList');
+          const noDocumentsRow = document.getElementById('noDocumentsRow');
+          
+          if (uploadedFiles.length === 0) {
+              tbody.innerHTML = `
+                  <tr id="noDocumentsRow">
+                      <td colspan="6" class="text-center text-muted py-3">
+                          <i class="bi bi-file-earmark display-6 d-block mb-2"></i>
+                          <p>No documents uploaded yet</p>
+                      </td>
+                  </tr>
+              `;
+              return;
+          }
+          
+          // Remove "no documents" row if it exists
+          if (noDocumentsRow) {
+              noDocumentsRow.remove();
+          }
+          
+          tbody.innerHTML = '';
+          uploadedFiles.forEach(file => {
+              const row = document.createElement('tr');
+              row.className = 'fade-in';
+              row.innerHTML = `
+                  <td>${file.id}</td>
+                  <td>
+                      <i class="bi ${getFileIcon(file.type)} me-2"></i>
+                      ${file.name}
+                  </td>
+                  <td>${getFileType(file.type)}</td>
+                  <td>${file.size}</td>
+                  <td>
+                      <span class="status-badge status-uploaded">${file.status}</span>
+                  </td>
+                  <td>
+                      <button type="button" class="btn btn-sm btn-outline-success me-1" onclick="previewFile(${file.id})">
+                          <i class="bi bi-eye"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFile(${file.id})">
+                          <i class="bi bi-trash"></i>
+                      </button>
+                  </td>
+              `;
+              tbody.appendChild(row);
+          });
+      }
+
+      // Get file icon
+      function getFileIcon(fileType) {
+          if (fileType.includes('pdf')) return 'bi-file-pdf';
+          if (fileType.includes('word') || fileType.includes('document')) return 'bi-file-word';
+          if (fileType.includes('image')) return 'bi-file-image';
+          return 'bi-file-earmark';
+      }
+
+      // Get file type
+      function getFileType(fileType) {
+          if (fileType.includes('pdf')) return 'PDF';
+          if (fileType.includes('word') || fileType.includes('document')) return 'Word';
+          if (fileType.includes('image')) return 'Image';
+          return 'Document';
+      }
+
+      // Preview file
+      window.previewFile = function(fileId) {
+          const file = uploadedFiles.find(f => f.id === fileId);
+          if (file) {
+              showAlert(`Previewing file: ${file.name}`, 'info');
+              console.log('Preview file:', file);
+          }
+      };
+
+      // Remove file
+      window.removeFile = function(fileId) {
+          if (confirm('Are you sure you want to remove this file?')) {
+              const index = uploadedFiles.findIndex(f => f.id === fileId);
+              if (index !== -1) {
+                  uploadedFiles.splice(index, 1);
+                  updateDocumentsTable();
+                  showAlert('File removed successfully!', 'success');
+              }
+          }
+      };
+
+      // Save as draft
+      function saveAsDraft() {
+          const ciData = collectCIData();
+          ciData.status = 'draft';
+          
+          console.log('Saving CI as draft:', ciData);
+          
+          showAlert('Commercial Invoice saved as draft successfully!', 'success');
+          
+          // Simulate saving
+          setTimeout(() => {
+              // Update CI number for next entry
+              const ciNumber = document.getElementById('ciNumber');
+              const currentNum = parseInt(ciNumber.value.split('-')[1]);
+              ciNumber.value = `2024-${String(currentNum + 1).padStart(3, '0')}`;
+          }, 1000);
+      }
+
+      // Submit CI
+      function submitCI() {
+          // Validate required fields
+          const exporter = document.getElementById('exporterSelect').value;
+          const importer = document.getElementById('importerSelect').value;
+          
+          if (!exporter || !importer) {
+              showAlert('Please select both exporter and importer.', 'warning');
+              return;
+          }
+
+          const ciData = collectCIData();
+          ciData.status = 'submitted';
+          
+          console.log('Submitting CI:', ciData);
+          
+          // Show success message
+          showAlert(`Commercial Invoice CI-${ciData.ciNumber} has been created successfully!`, 'success');
+          
+          // Reset form for next entry
+          setTimeout(() => {
+              resetFormForNext();
+          }, 2000);
+      }
+
+      // Reset form (with confirmation)
+      function resetForm() {
+          if (confirm('Are you sure you want to reset the form? All unsaved data will be lost.')) {
+              resetFormForNext();
+              showAlert('Form has been reset.', 'info');
+          }
+      }
+
+      // Reset form for next entry
+      function resetFormForNext() {
+          // Clear form fields
+          document.getElementById('exporterSelect').value = '';
+          document.getElementById('importerSelect').value = '';
+          document.getElementById('exporterInfo').style.display = 'none';
+          document.getElementById('importerInfo').style.display = 'none';
+          document.getElementById('poNumber').value = '';
+          document.getElementById('lcReference').value = '';
+          document.getElementById('portLoading').value = '';
+          document.getElementById('portDischarge').value = '';
+          document.getElementById('finalDestination').value = '';
+          document.getElementById('countryOfOrigin').value = '';
+          document.getElementById('destinationCountry').value = '';
+          document.getElementById('bolNumber').value = '';
+          document.getElementById('containerNumber').value = '';
+          document.getElementById('grossWeight').value = '';
+          document.getElementById('netWeight').value = '';
+          document.getElementById('totalPackages').value = '';
+          document.getElementById('beneficiaryBank').value = '';
+          document.getElementById('accountNumber').value = '';
+          document.getElementById('swiftCode').value = '';
+          document.getElementById('iban').value = '';
+          document.getElementById('bankAddress').value = '';
+          document.getElementById('piReference').value = '';
+          document.getElementById('packingDetails').value = '';
+          document.getElementById('specialInstructions').value = '';
+          document.getElementById('preparedBy').value = '';
+          document.getElementById('authorizedSignatory').value = '';
+          document.getElementById('freightCharges').value = '0';
+          document.getElementById('insurance').value = '0';
+          document.getElementById('otherCharges').value = '0';
+          document.getElementById('taxRate').value = '0';
+          
+          // Reset checkboxes
+          document.getElementById('docPackingList').checked = false;
+          document.getElementById('docCertificateOfOrigin').checked = false;
+          document.getElementById('docInsurance').checked = false;
+          document.getElementById('docInspection').checked = false;
+          document.getElementById('docBillOfLading').checked = false;
+          document.getElementById('declaration1').checked = false;
+          document.getElementById('declaration2').checked = false;
+          document.getElementById('declaration3').checked = false;
+          
+          // Reset goods description
+          clearGoods();
+          
+          // Clear uploaded files
+          uploadedFiles.length = 0;
+          updateDocumentsTable();
+          
+          // Reset dates
+          const today = new Date().toISOString().split('T')[0];
+          document.getElementById('invoiceDate').value = today;
+          
+          const dueDate = new Date();
+          dueDate.setDate(dueDate.getDate() + 30);
+          document.getElementById('dueDate').value = dueDate.toISOString().split('T')[0];
+          
+          // Update CI number
+          const ciNumber = document.getElementById('ciNumber');
+          const currentNum = parseInt(ciNumber.value.split('-')[1]);
+          ciNumber.value = `2024-${String(currentNum + 1).padStart(3, '0')}`;
+          
+          // Reset totals
+          calculateTotals();
+      }
+
+      // Collect CI data
+      function collectCIData() {
+          const formData = {
+              ciNumber: document.getElementById('ciNumber').value,
+              invoiceDate: document.getElementById('invoiceDate').value,
+              dueDate: document.getElementById('dueDate').value,
+              poNumber: document.getElementById('poNumber').value,
+              lcReference: document.getElementById('lcReference').value,
+              paymentTerms: document.getElementById('paymentTerms').value,
+              currency: document.getElementById('currency').value,
+              exchangeRate: parseFloat(document.getElementById('exchangeRate').value) || 1,
+              exporter: document.getElementById('exporterSelect').value,
+              importer: document.getElementById('importerSelect').value,
+              incoterms: document.getElementById('incoterms').value,
+              portLoading: document.getElementById('portLoading').value,
+              portDischarge: document.getElementById('portDischarge').value,
+              finalDestination: document.getElementById('finalDestination').value,
+              countryOfOrigin: document.getElementById('countryOfOrigin').value,
+              destinationCountry: document.getElementById('destinationCountry').value,
+              bolNumber: document.getElementById('bolNumber').value,
+              containerNumber: document.getElementById('containerNumber').value,
+              grossWeight: parseFloat(document.getElementById('grossWeight').value) || 0,
+              netWeight: parseFloat(document.getElementById('netWeight').value) || 0,
+              totalPackages: parseInt(document.getElementById('totalPackages').value) || 0,
+              packageType: document.getElementById('packageType').value,
+              beneficiaryBank: document.getElementById('beneficiaryBank').value,
+              accountNumber: document.getElementById('accountNumber').value,
+              swiftCode: document.getElementById('swiftCode').value,
+              iban: document.getElementById('iban').value,
+              bankAddress: document.getElementById('bankAddress').value,
+              piReference: document.getElementById('piReference').value,
+              packingDetails: document.getElementById('packingDetails').value,
+              specialInstructions: document.getElementById('specialInstructions').value,
+              preparedBy: document.getElementById('preparedBy').value,
+              authorizedSignatory: document.getElementById('authorizedSignatory').value,
+              freightCharges: parseFloat(document.getElementById('freightCharges').value) || 0,
+              insurance: parseFloat(document.getElementById('insurance').value) || 0,
+              otherCharges: parseFloat(document.getElementById('otherCharges').value) || 0,
+              taxRate: parseFloat(document.getElementById('taxRate').value) || 0,
+              uploadedFiles: uploadedFiles.map(f => f.name),
+              createdAt: new Date().toISOString()
+          };
+          
+          // Collect required documents
+          formData.requiredDocuments = [];
+          if (document.getElementById('docPackingList').checked) formData.requiredDocuments.push('Packing List');
+          if (document.getElementById('docCertificateOfOrigin').checked) formData.requiredDocuments.push('Certificate of Origin');
+          if (document.getElementById('docInsurance').checked) formData.requiredDocuments.push('Insurance Certificate');
+          if (document.getElementById('docInspection').checked) formData.requiredDocuments.push('Inspection Certificate');
+          if (document.getElementById('docBillOfLading').checked) formData.requiredDocuments.push('Bill of Lading');
+          
+          // Collect declaration
+          formData.declaration = {
+              statement1: document.getElementById('declaration1').checked,
+              statement2: document.getElementById('declaration2').checked,
+              statement3: document.getElementById('declaration3').checked
+          };
+          
+          // Collect goods data
+          formData.goods = [];
+          const rows = document.querySelectorAll('#goodsDescription tr');
+          rows.forEach(row => {
+              if (!row.id.includes('noGoodsRow')) {
+                  const goods = {
+                      description: row.cells[1].querySelector('input').value,
+                      hsCode: row.cells[2].querySelector('input').value,
+                      quantity: parseFloat(row.cells[3].querySelector('input').value) || 0,
+                      unit: row.cells[4].querySelector('select').value,
+                      unitPrice: parseFloat(row.cells[5].querySelector('input').value) || 0,
+                      total: parseFloat(row.cells[6].textContent.replace(/[^\d.-]/g, '')) || 0
+                  };
+                  formData.goods.push(goods);
+              }
+          });
+          
+          // Calculate totals
+          const subtotal = formData.goods.reduce((sum, item) => sum + item.total, 0);
+          const taxableAmount = subtotal + formData.freightCharges + formData.insurance + formData.otherCharges;
+          const taxAmount = (taxableAmount * formData.taxRate) / 100;
+          const grandTotal = taxableAmount + taxAmount;
+          
+          formData.subtotal = subtotal;
+          formData.taxAmount = taxAmount;
+          formData.grandTotal = grandTotal;
+          formData.amountInWords = numberToWords(Math.floor(grandTotal));
+          
+          return formData;
+      }
+
+      // Preview CI
+      function previewCI() {
+          // Validate required fields
+          const exporter = document.getElementById('exporterSelect').value;
+          const importer = document.getElementById('importerSelect').value;
+          
+          if (!exporter || !importer) {
+              showAlert('Please select both exporter and importer to preview.', 'warning');
+              return;
+          }
+          
+          // In a real application, this would open a preview modal or page
+          const ciData = collectCIData();
+          console.log('Preview CI Data:', ciData);
+          
+          // Simulate preview
+          showAlert('CI Preview generated. Check console for data.', 'info');
+      }
+
+      // Show alert message
+      function showAlert(message, type = 'info') {
+          // Remove existing alerts
+          const existingAlert = document.querySelector('.alert-dismissible');
+          if (existingAlert) {
+              existingAlert.remove();
+          }
+          
+          const alertClass = {
+              'success': 'alert-success',
+              'warning': 'alert-warning',
+              'info': 'alert-info',
+              'danger': 'alert-danger'
+          }[type];
+          
+          const iconClass = {
+              'success': 'bi-check-circle-fill',
+              'warning': 'bi-exclamation-triangle-fill',
+              'info': 'bi-info-circle-fill',
+              'danger': 'bi-x-circle-fill'
+          }[type];
+          
+          const alertHTML = `
+              <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                  <i class="bi ${iconClass} me-2"></i>
+                  ${message}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+          `;
+          
+          const cardBody = document.querySelector('.card-body');
+          cardBody.insertAdjacentHTML('afterbegin', alertHTML);
+          
+          // Auto-dismiss after 5 seconds
+          setTimeout(() => {
+              const alert = document.querySelector('.alert-dismissible');
+              if (alert) {
+                  alert.remove();
+              }
+          }, 5000);
+      }
+    </script>
+  </body>
+</html>

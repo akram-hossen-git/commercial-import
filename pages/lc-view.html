@@ -1,0 +1,2036 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View LC - Commercial Import Module</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+  </head>
+
+  <body>
+    <div class="d-flex p-4 pt-0 pb-0" id="wrapper">
+      <!-- Sidebar (same as other pages) -->
+      <div class="sidebar-wrapper" id="sidebar-wrapper" style="width: 280px">
+        <div class="sidebar-heading text-white">
+          <div class="d-flex align-items-center mb-2">
+            <div class="user-avatar">ASG</div>
+            <div>
+              <h4 class="mb-0">Import Module</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-group list-group-flush">
+          <!-- Main Navigation -->
+          <div class="category-label mt-0">MAIN NAVIGATION</div>
+
+          <a
+            href="../index.html"
+            class="list-group-item list-group-item-action"
+          >
+            <i class="bi bi-speedometer2"></i>Dashboard
+          </a>
+
+          <!-- PI Section -->
+          <div class="accordion" id="piAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#piCollapse"
+                >
+                  <i class="bi bi-file-earmark-text"></i>Proforma Invoice
+                </button>
+              </h2>
+              <div
+                id="piCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#piAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./pi-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create PI
+                  </a>
+                  <a
+                    href="./pi-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All PI
+                  </a>
+                  <!-- <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-clock-history"></i>Recent PI
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-file-pdf"></i>PI Templates
+                  </a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CI Section -->
+          <div class="accordion" id="ciAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#ciCollapse"
+                >
+                  <i class="bi bi-receipt"></i>Commercial Invoice
+                </button>
+              </h2>
+              <div
+                id="ciCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#ciAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./cl-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create CI
+                  </a>
+                  <a
+                    href="./ci-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All CI
+                  </a>
+                  <!-- <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-currency-exchange"></i>CI Reports
+                  </a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LC Section -->
+          <div class="accordion" id="lcAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#lcCollapse"
+                >
+                  <i class="bi bi-bank"></i>Letter of Credit
+                </button>
+              </h2>
+              <div
+                id="lcCollapse"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#lcAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./lc-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create LC
+                  </a>
+                  <a
+                    href="./lc-view.html"
+                    class="list-group-item list-group-item-action active"
+                  >
+                    <i class="bi bi-list-ul"></i>View All LC
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      
+          
+        </div>
+      </div>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper" style="flex: 1">
+        <!-- Main Content -->
+        <div class="container mt-4">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+              <li class="breadcrumb-item active">Letter of Credit</li>
+              <li class="breadcrumb-item active">View All LC</li>
+            </ol>
+          </nav>
+
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                  <h4 class="mb-0">
+                    <i class="bi bi-bank me-2"></i>Letters of Credit List
+                  </h4>
+                  <div>
+                    <a href="./lc-create.html" class="btn btn-light btn-sm">
+                      <i class="bi bi-plus-circle me-1"></i> Create New LC
+                    </a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <!-- Filters Section -->
+                  <div class="row mb-4">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-header bg-light">
+                          <h6 class="mb-0"><i class="bi bi-funnel me-2"></i>Filters</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="row g-3">
+                            <div class="col-md-3">
+                              <label class="form-label">LC Status</label>
+                              <select class="form-select" id="filterStatus">
+                                <option value="">All Status</option>
+                                <option value="draft">Draft</option>
+                                <option value="submitted">Submitted</option>
+                                <option value="issued">Issued</option>
+                                <option value="active">Active</option>
+                                <option value="amended">Amended</option>
+                                <option value="expired">Expired</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="utilized">Utilized</option>
+                                <option value="closed">Closed</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">LC Type</label>
+                              <select class="form-select" id="filterType">
+                                <option value="">All Types</option>
+                                <option value="SIGHT">Sight LC</option>
+                                <option value="USANCE">Usance LC</option>
+                                <option value="IRREVOCABLE">Irrevocable LC</option>
+                                <option value="CONFIRMED">Confirmed LC</option>
+                                <option value="TRANSFERABLE">Transferable LC</option>
+                                <option value="STANDBY">Standby LC</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">Applicant (Buyer)</label>
+                              <select class="form-select" id="filterApplicant">
+                                <option value="">All Applicants</option>
+                                <option value="ABC Trading Company">ABC Trading Company</option>
+                                <option value="XYZ Importers Ltd">XYZ Importers Ltd</option>
+                                <option value="Global Trade Solutions">Global Trade Solutions</option>
+                                <option value="International Merchants">International Merchants</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">Beneficiary (Supplier)</label>
+                              <select class="form-select" id="filterBeneficiary">
+                                <option value="">All Beneficiaries</option>
+                                <option value="Global Tech Inc.">Global Tech Inc.</option>
+                                <option value="Euro Suppliers Ltd">Euro Suppliers Ltd</option>
+                                <option value="Asia Imports Co.">Asia Imports Co.</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">Issuing Bank</label>
+                              <select class="form-select" id="filterIssuingBank">
+                                <option value="">All Banks</option>
+                                <option value="HSBC">HSBC Bank</option>
+                                <option value="CITI">Citibank</option>
+                                <option value="STANDARD">Standard Chartered Bank</option>
+                                <option value="DEUTSCHE">Deutsche Bank</option>
+                                <option value="BNP">BNP Paribas</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">Amount Range</label>
+                              <select class="form-select" id="filterAmount">
+                                <option value="">All Amounts</option>
+                                <option value="0-50000">$0 - $50,000</option>
+                                <option value="50000-200000">$50,000 - $200,000</option>
+                                <option value="200000-500000">$200,000 - $500,000</option>
+                                <option value="500000+">$500,000+</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">Currency</label>
+                              <select class="form-select" id="filterCurrency">
+                                <option value="">All Currencies</option>
+                                <option value="USD">USD ($)</option>
+                                <option value="EUR">EUR (€)</option>
+                                <option value="GBP">GBP (£)</option>
+                                <option value="JPY">JPY (¥)</option>
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">Date Range</label>
+                              <select class="form-select" id="filterDate">
+                                <option value="">All Dates</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                                <option value="quarter">This Quarter</option>
+                                <option value="year">This Year</option>
+                                <option value="custom">Custom Range</option>
+                              </select>
+                            </div>
+                            <div class="col-md-12 d-flex justify-content-end gap-2">
+                              <button class="btn btn-primary" id="applyFilters">
+                                <i class="bi bi-filter me-1"></i> Apply Filters
+                              </button>
+                              <button class="btn btn-outline-secondary" id="resetFilters">
+                                <i class="bi bi-arrow-clockwise me-1"></i> Reset
+                              </button>
+                            </div>
+                          </div>
+                          <div class="row mt-3" id="customDateRange" style="display: none;">
+                            <div class="col-md-3">
+                              <label class="form-label">From Date</label>
+                              <input type="date" class="form-control" id="dateFrom">
+                            </div>
+                            <div class="col-md-3">
+                              <label class="form-label">To Date</label>
+                              <input type="date" class="form-control" id="dateTo">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Summary Cards -->
+                  <div class="row mb-4">
+                    <div class="col-md-3">
+                      <div class="card border-primary border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Total LC</h6>
+                              <h3 class="card-title" id="totalLC">0</h3>
+                            </div>
+                            <div class="text-primary">
+                              <i class="bi bi-bank display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">All LC records</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="card border-success border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Active LC</h6>
+                              <h3 class="card-title" id="activeLC">0</h3>
+                            </div>
+                            <div class="text-success">
+                              <i class="bi bi-check-circle display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">Currently active</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="card border-warning border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Expiring Soon</h6>
+                              <h3 class="card-title" id="expiringLC">0</h3>
+                            </div>
+                            <div class="text-warning">
+                              <i class="bi bi-clock display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">Expiring in 30 days</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="card border-danger border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Total Amount</h6>
+                              <h3 class="card-title" id="totalAmount">$0</h3>
+                            </div>
+                            <div class="text-danger">
+                              <i class="bi bi-currency-dollar display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">Sum of all LC amounts</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- LC List Table -->
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                          <h6 class="mb-0"><i class="bi bi-table me-2"></i>Letters of Credit</h6>
+                          <div class="dropdown">
+                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                              <i class="bi bi-download me-1"></i> Export
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#" id="exportExcel"><i class="bi bi-file-earmark-excel me-2"></i> Excel</a></li>
+                              <li><a class="dropdown-item" href="#" id="exportPDF"><i class="bi bi-file-earmark-pdf me-2"></i> PDF</a></li>
+                              <li><a class="dropdown-item" href="#" id="exportCSV"><i class="bi bi-filetype-csv me-2"></i> CSV</a></li>
+                              <li><a class="dropdown-item" href="#" id="exportPrint"><i class="bi bi-printer me-2"></i> Print</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="card-body">
+                          <div class="table-responsive">
+                            <table id="lcTable" class="table table-hover table-striped" style="width:100%">
+                              <thead class="table-light">
+                                <tr>
+                                  <th width="50">#</th>
+                                  <th>LC Number</th>
+                                  <th>Issue Date</th>
+                                  <th>Expiry Date</th>
+                                  <th>Applicant (Buyer)</th>
+                                  <th>Beneficiary (Supplier)</th>
+                                  <th>LC Amount</th>
+                                  <th>LC Type</th>
+                                  <th>Status</th>
+                                  <th>Issuing Bank</th>
+                                  <th width="120">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <!-- Data will be populated by JavaScript -->
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Quick Actions -->
+                  <div class="row mt-4">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-header bg-light">
+                          <h6 class="mb-0"><i class="bi bi-lightning-charge me-2"></i>Quick Actions</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-primary" id="bulkAmend">
+                              <i class="bi bi-pencil-square me-1"></i> Amend Selected
+                            </button>
+                            <button class="btn btn-outline-success" id="bulkExtend">
+                              <i class="bi bi-calendar-plus me-1"></i> Extend Selected
+                            </button>
+                            <button class="btn btn-outline-warning" id="bulkRemind">
+                              <i class="bi bi-bell me-1"></i> Set Reminder
+                            </button>
+                            <button class="btn btn-outline-info" id="bulkDownload">
+                              <i class="bi bi-download me-1"></i> Download Selected
+                            </button>
+                            <button class="btn btn-outline-danger" id="bulkCancel">
+                              <i class="bi bi-x-circle me-1"></i> Cancel Selected
+                            </button>
+                            <button class="btn btn-outline-secondary" id="refreshData">
+                              <i class="bi bi-arrow-clockwise me-1"></i> Refresh
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer (same as other pages) -->
+        <footer class="footer mt-auto py-3 bg-light border-top">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="text-muted"
+                  >© 2024 Import Module System. All rights reserved.</span
+                >
+              </div>
+              <div class="col-md-6 text-end">
+                <span class="text-muted">Version 2.1.0</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- View LC Modal -->
+    <div class="modal fade" id="viewLCModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title"><i class="bi bi-bank me-2"></i>Letter of Credit Details</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="lcDetails">
+            <!-- Details will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="printLC"><i class="bi bi-printer me-1"></i> Print</button>
+            <button type="button" class="btn btn-success" id="downloadLC"><i class="bi bi-download me-1"></i> Download PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this Letter of Credit? This action cannot be undone.</p>
+            <p class="text-danger"><strong>Warning:</strong> Deleting this LC will remove all associated data including amendments and history.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Amend LC Modal -->
+    <div class="modal fade" id="amendLCModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-warning text-white">
+            <h5 class="modal-title"><i class="bi bi-pencil-square me-2"></i>Amend Letter of Credit</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <form id="amendLCForm">
+              <div class="mb-3">
+                <label class="form-label">LC Number</label>
+                <input type="text" class="form-control" id="amendLCNumber" readonly>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Amendment Type</label>
+                <select class="form-select" id="amendType" required>
+                  <option value="">Select amendment type</option>
+                  <option value="EXTEND_EXPIRY">Extend Expiry Date</option>
+                  <option value="INCREASE_AMOUNT">Increase LC Amount</option>
+                  <option value="CHANGE_SHIPMENT">Change Shipment Date</option>
+                  <option value="CHANGE_DOCS">Change Documents</option>
+                  <option value="OTHER">Other Changes</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">New Expiry Date (if applicable)</label>
+                <input type="date" class="form-control" id="amendExpiryDate">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Additional Amount (if applicable)</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" id="amendAmount" min="0" step="0.01">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Amendment Reason</label>
+                <textarea class="form-control" id="amendReason" rows="3" required></textarea>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Amendment Charges</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" id="amendCharges" value="0" min="0" step="0.01">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning" id="submitAmend">Submit Amendment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+
+    <style>
+      /* Custom styles for LC list page */
+      .card-header {
+          background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+      }
+      
+      .card.border-primary {
+          border-left: 4px solid #0d6efd !important;
+      }
+      
+      .card.border-success {
+          border-left: 4px solid #198754 !important;
+      }
+      
+      .card.border-warning {
+          border-left: 4px solid #ffc107 !important;
+      }
+      
+      .card.border-danger {
+          border-left: 4px solid #dc3545 !important;
+      }
+      
+      .table th {
+          font-weight: 600;
+          background-color: #f8f9fa;
+      }
+      
+      .dataTables_wrapper .dataTables_filter input {
+          border: 1px solid #dee2e6;
+          border-radius: 0.375rem;
+          padding: 0.375rem 0.75rem;
+      }
+      
+      .dataTables_wrapper .dataTables_length select {
+          border: 1px solid #dee2e6;
+          border-radius: 0.375rem;
+          padding: 0.375rem 2rem 0.375rem 0.75rem;
+      }
+      
+      /* Status badges */
+      .badge-status {
+          padding: 0.25rem 0.5rem;
+          font-size: 0.75rem;
+          font-weight: 500;
+          border-radius: 0.25rem;
+      }
+      
+      .badge-draft {
+          background-color: #6c757d;
+          color: white;
+      }
+      
+      .badge-submitted {
+          background-color: #0dcaf0;
+          color: #212529;
+      }
+      
+      .badge-issued {
+          background-color: #198754;
+          color: white;
+      }
+      
+      .badge-active {
+          background-color: #198754;
+          color: white;
+      }
+      
+      .badge-amended {
+          background-color: #ffc107;
+          color: #212529;
+      }
+      
+      .badge-expired {
+          background-color: #dc3545;
+          color: white;
+      }
+      
+      .badge-cancelled {
+          background-color: #6c757d;
+          color: white;
+      }
+      
+      .badge-utilized {
+          background-color: #198754;
+          color: white;
+      }
+      
+      .badge-closed {
+          background-color: #6c757d;
+          color: white;
+      }
+      
+      /* Expiry warning */
+      .expiry-warning {
+          color: #dc3545;
+          font-weight: bold;
+      }
+      
+      .expiry-soon {
+          color: #ffc107;
+          font-weight: bold;
+      }
+      
+      /* Action buttons */
+      .action-buttons .btn {
+          padding: 0.25rem 0.5rem;
+          font-size: 0.875rem;
+      }
+      
+      /* Hover effects */
+      .table-hover tbody tr:hover {
+          background-color: rgba(13, 110, 253, 0.05);
+      }
+      
+      /* DataTables custom styling */
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+          border-radius: 0.375rem;
+          margin: 0 2px;
+      }
+      
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+          background: #0d6efd !important;
+          border-color: #0d6efd !important;
+          color: white !important;
+      }
+      
+      .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+          background: #0b5ed7 !important;
+          border-color: #0b5ed7 !important;
+          color: white !important;
+      }
+      
+      /* LC type badges */
+      .badge-type {
+          background-color: #e7f1ff;
+          color: #0d6efd;
+          padding: 0.2rem 0.4rem;
+          font-size: 0.7rem;
+          border-radius: 0.2rem;
+      }
+      
+      /* Progress bar for utilization */
+      .utilization-progress {
+          height: 6px;
+          margin-top: 5px;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+          .card-body {
+              padding: 1rem;
+          }
+          
+          .btn {
+              margin-bottom: 0.5rem;
+          }
+          
+          .d-flex.flex-wrap {
+              gap: 0.5rem !important;
+          }
+          
+          .modal-dialog {
+              margin: 0.5rem;
+          }
+      }
+      
+      /* Selected row styling */
+      .selected {
+          background-color: rgba(13, 110, 253, 0.1) !important;
+      }
+      
+      /* Animation */
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .fade-in {
+          animation: fadeIn 0.3s ease-in;
+      }
+      
+      /* Export button styling */
+      .dropdown-item:hover {
+          background-color: #0d6efd;
+          color: white;
+      }
+    </style>
+
+    <script>
+      // Sample LC data
+      const sampleLCData = [
+        {
+          id: 1,
+          lcNumber: 'LC-2024-001',
+          issueDate: '2024-01-15',
+          expiryDate: '2024-04-15',
+          applicant: 'ABC Trading Company',
+          beneficiary: 'Global Tech Inc.',
+          lcAmount: 1250000.00,
+          utilizedAmount: 850000.00,
+          currency: 'USD',
+          lcType: 'IRREVOCABLE',
+          status: 'active',
+          issuingBank: 'HSBC Bank',
+          advisingBank: 'DBS Bank',
+          portLoading: 'Shanghai Port',
+          portDischarge: 'Mumbai Port',
+          latestShipmentDate: '2024-03-15',
+          createdAt: '2024-01-14',
+          updatedAt: '2024-02-01',
+          createdBy: 'John Doe',
+          utilization: 68,
+          daysToExpiry: 45,
+          amendments: 2
+        },
+        {
+          id: 2,
+          lcNumber: 'LC-2024-002',
+          issueDate: '2024-01-20',
+          expiryDate: '2024-04-20',
+          applicant: 'XYZ Importers Ltd',
+          beneficiary: 'Euro Suppliers Ltd',
+          lcAmount: 850000.00,
+          utilizedAmount: 850000.00,
+          currency: 'EUR',
+          lcType: 'SIGHT',
+          status: 'utilized',
+          issuingBank: 'Citibank',
+          advisingBank: 'UOB Bank',
+          portLoading: 'Hamburg Port',
+          portDischarge: 'London Port',
+          latestShipmentDate: '2024-03-20',
+          createdAt: '2024-01-19',
+          updatedAt: '2024-03-25',
+          createdBy: 'Jane Smith',
+          utilization: 100,
+          daysToExpiry: 30,
+          amendments: 1
+        },
+        {
+          id: 3,
+          lcNumber: 'LC-2024-003',
+          issueDate: '2024-02-01',
+          expiryDate: '2024-05-01',
+          applicant: 'Global Trade Solutions',
+          beneficiary: 'Asia Imports Co.',
+          lcAmount: 450000.00,
+          utilizedAmount: 150000.00,
+          currency: 'USD',
+          lcType: 'USANCE',
+          status: 'active',
+          issuingBank: 'Standard Chartered Bank',
+          advisingBank: 'OCBC Bank',
+          portLoading: 'Shanghai Port',
+          portDischarge: 'Dubai Port',
+          latestShipmentDate: '2024-04-01',
+          createdAt: '2024-01-31',
+          updatedAt: '2024-02-15',
+          createdBy: 'Mike Johnson',
+          utilization: 33,
+          daysToExpiry: 60,
+          amendments: 0
+        },
+        {
+          id: 4,
+          lcNumber: 'LC-2024-004',
+          issueDate: '2024-02-10',
+          expiryDate: '2024-03-10',
+          applicant: 'International Merchants',
+          beneficiary: 'Global Tech Inc.',
+          lcAmount: 1500000.00,
+          utilizedAmount: 0.00,
+          currency: 'GBP',
+          lcType: 'CONFIRMED',
+          status: 'expired',
+          issuingBank: 'Deutsche Bank',
+          advisingBank: 'ICICI Bank',
+          portLoading: 'Singapore Port',
+          portDischarge: 'New York Port',
+          latestShipmentDate: '2024-02-25',
+          createdAt: '2024-02-09',
+          updatedAt: '2024-03-11',
+          createdBy: 'Sarah Wilson',
+          utilization: 0,
+          daysToExpiry: -5,
+          amendments: 3
+        },
+        {
+          id: 5,
+          lcNumber: 'LC-2024-005',
+          issueDate: '2024-02-15',
+          expiryDate: '2024-05-15',
+          applicant: 'ABC Trading Company',
+          beneficiary: 'Euro Suppliers Ltd',
+          lcAmount: 750000.00,
+          utilizedAmount: 0.00,
+          currency: 'USD',
+          lcType: 'TRANSFERABLE',
+          status: 'issued',
+          issuingBank: 'HSBC Bank',
+          advisingBank: 'HDFC Bank',
+          portLoading: 'Los Angeles Port',
+          portDischarge: 'Tokyo Port',
+          latestShipmentDate: '2024-04-15',
+          createdAt: '2024-02-14',
+          updatedAt: '2024-02-20',
+          createdBy: 'John Doe',
+          utilization: 0,
+          daysToExpiry: 75,
+          amendments: 0
+        },
+        {
+          id: 6,
+          lcNumber: 'LC-2024-006',
+          issueDate: '2024-02-20',
+          expiryDate: '2024-05-20',
+          applicant: 'XYZ Importers Ltd',
+          beneficiary: 'Asia Imports Co.',
+          lcAmount: 950000.00,
+          utilizedAmount: 475000.00,
+          currency: 'EUR',
+          lcType: 'IRREVOCABLE',
+          status: 'active',
+          issuingBank: 'BNP Paribas',
+          advisingBank: 'Bank of Communications',
+          portLoading: 'Rotterdam Port',
+          portDischarge: 'Singapore Port',
+          latestShipmentDate: '2024-04-20',
+          createdAt: '2024-02-19',
+          updatedAt: '2024-03-10',
+          createdBy: 'Jane Smith',
+          utilization: 50,
+          daysToExpiry: 80,
+          amendments: 1
+        },
+        {
+          id: 7,
+          lcNumber: 'LC-2024-007',
+          issueDate: '2024-03-01',
+          expiryDate: '2024-06-01',
+          applicant: 'Global Trade Solutions',
+          beneficiary: 'Global Tech Inc.',
+          lcAmount: 350000.00,
+          utilizedAmount: 350000.00,
+          currency: 'USD',
+          lcType: 'SIGHT',
+          status: 'closed',
+          issuingBank: 'Standard Chartered Bank',
+          advisingBank: 'DBS Bank',
+          portLoading: 'Guangzhou Port',
+          portDischarge: 'Jeddah Port',
+          latestShipmentDate: '2024-05-01',
+          createdAt: '2024-02-28',
+          updatedAt: '2024-06-05',
+          createdBy: 'Mike Johnson',
+          utilization: 100,
+          daysToExpiry: 0,
+          amendments: 0
+        },
+        {
+          id: 8,
+          lcNumber: 'LC-2024-008',
+          issueDate: '2024-03-05',
+          expiryDate: '2024-04-05',
+          applicant: 'International Merchants',
+          beneficiary: 'Euro Suppliers Ltd',
+          lcAmount: 1800000.00,
+          utilizedAmount: 900000.00,
+          currency: 'GBP',
+          lcType: 'USANCE',
+          status: 'amended',
+          issuingBank: 'Deutsche Bank',
+          advisingBank: 'UOB Bank',
+          portLoading: 'Hong Kong Port',
+          portDischarge: 'Rotterdam Port',
+          latestShipmentDate: '2024-03-25',
+          createdAt: '2024-03-04',
+          updatedAt: '2024-03-15',
+          createdBy: 'Sarah Wilson',
+          utilization: 50,
+          daysToExpiry: 10,
+          amendments: 2
+        },
+        {
+          id: 9,
+          lcNumber: 'LC-2024-009',
+          issueDate: '2024-03-10',
+          expiryDate: '2024-06-10',
+          applicant: 'ABC Trading Company',
+          beneficiary: 'Asia Imports Co.',
+          lcAmount: 620000.00,
+          utilizedAmount: 0.00,
+          currency: 'USD',
+          lcType: 'STANDBY',
+          status: 'draft',
+          issuingBank: 'Citibank',
+          advisingBank: 'OCBC Bank',
+          portLoading: 'Seattle Port',
+          portDischarge: 'Sydney Port',
+          latestShipmentDate: '2024-05-10',
+          createdAt: '2024-03-09',
+          updatedAt: '2024-03-09',
+          createdBy: 'John Doe',
+          utilization: 0,
+          daysToExpiry: 90,
+          amendments: 0
+        },
+        {
+          id: 10,
+          lcNumber: 'LC-2024-010',
+          issueDate: '2024-03-15',
+          expiryDate: '2024-04-15',
+          applicant: 'XYZ Importers Ltd',
+          beneficiary: 'Global Tech Inc.',
+          lcAmount: 1100000.00,
+          utilizedAmount: 550000.00,
+          currency: 'EUR',
+          lcType: 'IRREVOCABLE',
+          status: 'cancelled',
+          issuingBank: 'HSBC Bank',
+          advisingBank: 'ICICI Bank',
+          portLoading: 'Antwerp Port',
+          portDischarge: 'Mumbai Port',
+          latestShipmentDate: '2024-03-30',
+          createdAt: '2024-03-14',
+          updatedAt: '2024-04-01',
+          createdBy: 'Jane Smith',
+          utilization: 50,
+          daysToExpiry: -10,
+          amendments: 0
+        },
+        {
+          id: 11,
+          lcNumber: 'LC-2024-011',
+          issueDate: '2024-03-20',
+          expiryDate: '2024-06-20',
+          applicant: 'Global Trade Solutions',
+          beneficiary: 'Euro Suppliers Ltd',
+          lcAmount: 2800000.00,
+          utilizedAmount: 1400000.00,
+          currency: 'USD',
+          lcType: 'CONFIRMED',
+          status: 'active',
+          issuingBank: 'BNP Paribas',
+          advisingBank: 'HDFC Bank',
+          portLoading: 'Shanghai Port',
+          portDischarge: 'Los Angeles Port',
+          latestShipmentDate: '2024-05-20',
+          createdAt: '2024-03-19',
+          updatedAt: '2024-04-10',
+          createdBy: 'Mike Johnson',
+          utilization: 50,
+          daysToExpiry: 85,
+          amendments: 1
+        },
+        {
+          id: 12,
+          lcNumber: 'LC-2024-012',
+          issueDate: '2024-03-25',
+          expiryDate: '2024-04-25',
+          applicant: 'International Merchants',
+          beneficiary: 'Asia Imports Co.',
+          lcAmount: 800000.00,
+          utilizedAmount: 800000.00,
+          currency: 'GBP',
+          lcType: 'SIGHT',
+          status: 'submitted',
+          issuingBank: 'Standard Chartered Bank',
+          advisingBank: 'Bank of Communications',
+          portLoading: 'Singapore Port',
+          portDischarge: 'Dubai Port',
+          latestShipmentDate: '2024-04-15',
+          createdAt: '2024-03-24',
+          updatedAt: '2024-03-25',
+          createdBy: 'Sarah Wilson',
+          utilization: 100,
+          daysToExpiry: 30,
+          amendments: 0
+        }
+      ];
+
+      // Variables
+      let lcTable;
+      let selectedLCs = new Set();
+      let currentDeleteId = null;
+      let currentAmendId = null;
+
+      // Initialize page
+      document.addEventListener('DOMContentLoaded', function() {
+        initializeDataTable();
+        initializeEventListeners();
+        updateSummaryCards();
+        
+        // Set custom date range visibility
+        document.getElementById('filterDate').addEventListener('change', function() {
+          const customRangeDiv = document.getElementById('customDateRange');
+          customRangeDiv.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+        
+        // Set today's date for date inputs
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('dateFrom').value = today;
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        document.getElementById('dateTo').value = nextMonth.toISOString().split('T')[0];
+      });
+
+      // Initialize DataTable
+      function initializeDataTable() {
+        lcTable = $('#lcTable').DataTable({
+          data: sampleLCData,
+          columns: [
+            {
+              data: 'id',
+              render: function(data, type, row) {
+                return `<div class="form-check">
+                  <input class="form-check-input lc-checkbox" type="checkbox" value="${data}">
+                </div>`;
+              },
+              orderable: false
+            },
+            { 
+              data: 'lcNumber',
+              render: function(data, type, row) {
+                let amendmentsBadge = '';
+                if (row.amendments > 0) {
+                  amendmentsBadge = `<span class="badge bg-warning ms-1" title="${row.amendments} amendment(s)">${row.amendments}</span>`;
+                }
+                
+                return `<a href="#" class="text-decoration-none view-lc" data-id="${row.id}">
+                  <strong>${data}</strong> ${amendmentsBadge}
+                </a>`;
+              }
+            },
+            { 
+              data: 'issueDate',
+              render: function(data) {
+                return new Date(data).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                });
+              }
+            },
+            { 
+              data: 'expiryDate',
+              render: function(data, type, row) {
+                const expiryDate = new Date(data);
+                const today = new Date();
+                const diffTime = expiryDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                let expiryClass = '';
+                let expiryBadge = '';
+                
+                if (diffDays < 0) {
+                  expiryClass = 'expiry-warning';
+                  expiryBadge = '<span class="badge bg-danger ms-1">Expired</span>';
+                } else if (diffDays <= 30) {
+                  expiryClass = 'expiry-soon';
+                  expiryBadge = '<span class="badge bg-warning ms-1">Expiring Soon</span>';
+                }
+                
+                return `<span class="${expiryClass}">${new Date(data).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                })}</span>${expiryBadge}`;
+              }
+            },
+            { data: 'applicant' },
+            { data: 'beneficiary' },
+            { 
+              data: 'lcAmount',
+              render: function(data, type, row) {
+                const symbol = row.currency === 'USD' ? '$' : 
+                             row.currency === 'EUR' ? '€' : 
+                             row.currency === 'GBP' ? '£' : '¥';
+                
+                // Utilization progress bar
+                const utilizationPercent = row.utilization;
+                const progressColor = utilizationPercent === 100 ? 'bg-success' : 
+                                     utilizationPercent >= 75 ? 'bg-warning' : 'bg-info';
+                
+                return `
+                  <div>
+                    <strong>${symbol}${data.toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}</strong>
+                    <small class="text-muted d-block">Utilized: ${utilizationPercent}%</small>
+                    <div class="progress utilization-progress">
+                      <div class="progress-bar ${progressColor}" role="progressbar" 
+                           style="width: ${utilizationPercent}%" 
+                           aria-valuenow="${utilizationPercent}" 
+                           aria-valuemin="0" 
+                           aria-valuemax="100">
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }
+            },
+            { 
+              data: 'lcType',
+              render: function(data) {
+                const typeMap = {
+                  'SIGHT': { class: 'badge-type', text: 'Sight LC' },
+                  'USANCE': { class: 'badge-type', text: 'Usance LC' },
+                  'IRREVOCABLE': { class: 'badge-type', text: 'Irrevocable LC' },
+                  'CONFIRMED': { class: 'badge-type', text: 'Confirmed LC' },
+                  'TRANSFERABLE': { class: 'badge-type', text: 'Transferable LC' },
+                  'STANDBY': { class: 'badge-type', text: 'Standby LC' }
+                };
+                const type = typeMap[data] || { class: 'badge-secondary', text: data };
+                return `<span class="${type.class}">${type.text}</span>`;
+              }
+            },
+            { 
+              data: 'status',
+              render: function(data) {
+                const statusMap = {
+                  'draft': { class: 'badge-draft', text: 'Draft' },
+                  'submitted': { class: 'badge-submitted', text: 'Submitted' },
+                  'issued': { class: 'badge-issued', text: 'Issued' },
+                  'active': { class: 'badge-active', text: 'Active' },
+                  'amended': { class: 'badge-amended', text: 'Amended' },
+                  'expired': { class: 'badge-expired', text: 'Expired' },
+                  'cancelled': { class: 'badge-cancelled', text: 'Cancelled' },
+                  'utilized': { class: 'badge-utilized', text: 'Utilized' },
+                  'closed': { class: 'badge-closed', text: 'Closed' }
+                };
+                const status = statusMap[data] || { class: 'badge-secondary', text: data };
+                return `<span class="badge-status ${status.class}">${status.text}</span>`;
+              }
+            },
+            { 
+              data: 'issuingBank',
+              render: function(data) {
+                return `<small>${data}</small>`;
+              }
+            },
+            {
+              data: 'id',
+              render: function(data, type, row) {
+                return `
+                  <div class="d-flex gap-1 action-buttons">
+                    <button class="btn btn-sm btn-outline-primary view-lc" data-id="${data}" title="View">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success amend-lc" data-id="${data}" title="Amend">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-info copy-lc" data-id="${data}" title="Copy">
+                      <i class="bi bi-copy"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger delete-lc" data-id="${data}" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                `;
+              },
+              orderable: false
+            }
+          ],
+          order: [[1, 'desc']], // Sort by LC Number descending
+          pageLength: 10,
+          responsive: true,
+          dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
+               '<"row"<"col-sm-12"tr>>' +
+               '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+          language: {
+            search: 'Search:',
+            lengthMenu: 'Show _MENU_ entries',
+            info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+            paginate: {
+              first: 'First',
+              last: 'Last',
+              next: 'Next',
+              previous: 'Previous'
+            }
+          }
+        });
+
+        // Add row click handler for checkboxes
+        $('#lcTable tbody').on('click', 'tr', function(e) {
+          // Don't trigger row click if clicking on checkbox or action buttons
+          if (e.target.type === 'checkbox' || 
+              e.target.closest('button') || 
+              e.target.closest('a')) {
+            return;
+          }
+          
+          const checkbox = $(this).find('.lc-checkbox');
+          const lcId = checkbox.val();
+          
+          if (checkbox.is(':checked')) {
+            checkbox.prop('checked', false);
+            selectedLCs.delete(lcId);
+            $(this).removeClass('selected');
+          } else {
+            checkbox.prop('checked', true);
+            selectedLCs.add(lcId);
+            $(this).addClass('selected');
+          }
+        });
+      }
+
+      // Initialize event listeners
+      function initializeEventListeners() {
+        // View LC button
+        $(document).on('click', '.view-lc', function(e) {
+          e.preventDefault();
+          const lcId = $(this).data('id');
+          viewLC(lcId);
+        });
+
+        // Amend LC button
+        $(document).on('click', '.amend-lc', function(e) {
+          e.preventDefault();
+          const lcId = $(this).data('id');
+          amendLC(lcId);
+        });
+
+        // Copy LC button
+        $(document).on('click', '.copy-lc', function(e) {
+          e.preventDefault();
+          const lcId = $(this).data('id');
+          copyLC(lcId);
+        });
+
+        // Delete LC button
+        $(document).on('click', '.delete-lc', function(e) {
+          e.preventDefault();
+          const lcId = $(this).data('id');
+          confirmDelete(lcId);
+        });
+
+        // Checkbox change
+        $(document).on('change', '.lc-checkbox', function() {
+          const lcId = $(this).val();
+          const row = $(this).closest('tr');
+          
+          if ($(this).is(':checked')) {
+            selectedLCs.add(lcId);
+            row.addClass('selected');
+          } else {
+            selectedLCs.delete(lcId);
+            row.removeClass('selected');
+          }
+        });
+
+        // Apply filters
+        document.getElementById('applyFilters').addEventListener('click', applyFilters);
+        
+        // Reset filters
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
+        
+        // Bulk actions
+        document.getElementById('bulkAmend').addEventListener('click', bulkAmend);
+        document.getElementById('bulkExtend').addEventListener('click', bulkExtend);
+        document.getElementById('bulkRemind').addEventListener('click', bulkRemind);
+        document.getElementById('bulkDownload').addEventListener('click', bulkDownload);
+        document.getElementById('bulkCancel').addEventListener('click', bulkCancel);
+        document.getElementById('refreshData').addEventListener('click', refreshData);
+        
+        // Export buttons
+        document.getElementById('exportExcel').addEventListener('click', () => exportData('excel'));
+        document.getElementById('exportPDF').addEventListener('click', () => exportData('pdf'));
+        document.getElementById('exportCSV').addEventListener('click', () => exportData('csv'));
+        document.getElementById('exportPrint').addEventListener('click', () => exportData('print'));
+        
+        // Modal buttons
+        document.getElementById('confirmDelete').addEventListener('click', deleteLC);
+        document.getElementById('printLC').addEventListener('click', printLC);
+        document.getElementById('downloadLC').addEventListener('click', downloadLC);
+        document.getElementById('submitAmend').addEventListener('click', submitAmend);
+      }
+
+      // View LC details
+      function viewLC(lcId) {
+        const lc = sampleLCData.find(item => item.id == lcId);
+        if (!lc) return;
+        
+        const modal = document.getElementById('lcDetails');
+        modal.innerHTML = `
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card mb-3">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0"><i class="bi bi-info-circle me-2"></i>LC Basic Information</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">LC Number</label>
+                      <p class="fw-bold">${lc.lcNumber}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Issue Date</label>
+                      <p class="fw-bold">${new Date(lc.issueDate).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Expiry Date</label>
+                      <p class="fw-bold">${new Date(lc.expiryDate).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Status</label>
+                      <p>
+                        <span class="badge-status badge-${lc.status}">
+                          ${lc.status.charAt(0).toUpperCase() + lc.status.slice(1)}
+                        </span>
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">LC Type</label>
+                      <p class="fw-bold">
+                        ${lc.lcType === 'SIGHT' ? 'Sight LC' : 
+                          lc.lcType === 'USANCE' ? 'Usance LC' : 
+                          lc.lcType === 'IRREVOCABLE' ? 'Irrevocable LC' : 
+                          lc.lcType === 'CONFIRMED' ? 'Confirmed LC' : 
+                          lc.lcType === 'TRANSFERABLE' ? 'Transferable LC' : 
+                          'Standby LC'}
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Latest Shipment Date</label>
+                      <p class="fw-bold">${new Date(lc.latestShipmentDate).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric', 
+                        year: 'numeric' 
+                      })}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Amendments</label>
+                      <p class="fw-bold">${lc.amendments}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Days to Expiry</label>
+                      <p class="fw-bold ${lc.daysToExpiry <= 30 ? 'text-warning' : ''}">
+                        ${lc.daysToExpiry > 0 ? lc.daysToExpiry + ' days' : 'Expired'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card mb-3">
+                    <div class="card-header bg-light">
+                      <h6 class="mb-0"><i class="bi bi-person-badge me-2"></i>Applicant (Buyer)</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="fw-bold mb-1">${lc.applicant}</p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-bank me-1"></i> ${lc.issuingBank}
+                      </p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-calendar me-1"></i> Created: ${new Date(lc.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card mb-3">
+                    <div class="card-header bg-light">
+                      <h6 class="mb-0"><i class="bi bi-building me-2"></i>Beneficiary (Supplier)</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="fw-bold mb-1">${lc.beneficiary}</p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-bank me-1"></i> ${lc.advisingBank}
+                      </p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-person me-1"></i> Created by: ${lc.createdBy}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card mb-3">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0"><i class="bi bi-currency-dollar me-2"></i>Financial Information</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">LC Amount</label>
+                      <p class="fw-bold fs-4">
+                        ${lc.currency === 'USD' ? '$' : 
+                          lc.currency === 'EUR' ? '€' : 
+                          lc.currency === 'GBP' ? '£' : '¥'}
+                        ${lc.lcAmount.toLocaleString('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })}
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Utilized Amount</label>
+                      <p class="fw-bold">
+                        ${lc.currency === 'USD' ? '$' : 
+                          lc.currency === 'EUR' ? '€' : 
+                          lc.currency === 'GBP' ? '£' : '¥'}
+                        ${lc.utilizedAmount.toLocaleString('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })}
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Utilization</label>
+                      <p class="fw-bold">
+                        <span class="badge ${lc.utilization === 100 ? 'bg-success' : 
+                                           lc.utilization >= 75 ? 'bg-warning' : 'bg-info'}">
+                          ${lc.utilization}%
+                        </span>
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Currency</label>
+                      <p class="fw-bold">${lc.currency}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0"><i class="bi bi-truck me-2"></i>Shipment Details</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label class="form-label text-muted">Port of Loading</label>
+                      <p class="fw-bold">${lc.portLoading}</p>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label text-muted">Port of Discharge</label>
+                      <p class="fw-bold">${lc.portDischarge}</p>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label text-muted">Latest Shipment Date</label>
+                      <p class="fw-bold">${new Date(lc.latestShipmentDate).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        const viewModal = new bootstrap.Modal(document.getElementById('viewLCModal'));
+        viewModal.show();
+      }
+
+      // Amend LC
+      function amendLC(lcId) {
+        currentAmendId = lcId;
+        const lc = sampleLCData.find(item => item.id == lcId);
+        if (!lc) return;
+        
+        document.getElementById('amendLCNumber').value = lc.lcNumber;
+        document.getElementById('amendExpiryDate').value = lc.expiryDate;
+        
+        const amendModal = new bootstrap.Modal(document.getElementById('amendLCModal'));
+        amendModal.show();
+      }
+
+      // Submit amendment
+      function submitAmend() {
+        const amendType = document.getElementById('amendType').value;
+        const amendReason = document.getElementById('amendReason').value;
+        
+        if (!amendType || !amendReason) {
+          showAlert('Please fill in all required fields', 'warning');
+          return;
+        }
+        
+        // In a real application, this would make an API call
+        showAlert('Submitting LC amendment...', 'info');
+        
+        // Simulate amendment submission
+        setTimeout(() => {
+          const amendModal = bootstrap.Modal.getInstance(document.getElementById('amendLCModal'));
+          amendModal.hide();
+          
+          // Update the LC in our data
+          const lc = sampleLCData.find(item => item.id == currentAmendId);
+          if (lc) {
+            lc.status = 'amended';
+            lc.amendments += 1;
+            lc.updatedAt = new Date().toISOString().split('T')[0];
+            
+            // Update expiry date if changed
+            const newExpiry = document.getElementById('amendExpiryDate').value;
+            if (newExpiry) {
+              lc.expiryDate = newExpiry;
+            }
+            
+            // Update amount if changed
+            const additionalAmount = parseFloat(document.getElementById('amendAmount').value) || 0;
+            if (additionalAmount > 0) {
+              lc.lcAmount += additionalAmount;
+            }
+            
+            // Refresh table
+            lcTable.clear().rows.add(sampleLCData).draw();
+            updateSummaryCards();
+          }
+          
+          showAlert('LC amendment submitted successfully!', 'success');
+          currentAmendId = null;
+        }, 1000);
+      }
+
+      // Copy LC
+      function copyLC(lcId) {
+        const lc = sampleLCData.find(item => item.id == lcId);
+        if (!lc) return;
+        
+        showAlert(`Copying LC ${lc.lcNumber}...`, 'info');
+        
+        // Simulate copy action
+        setTimeout(() => {
+          showAlert(`LC ${lc.lcNumber} copied successfully. You can now create a new LC based on this template.`, 'success');
+        }, 1000);
+      }
+
+      // Confirm delete
+      function confirmDelete(lcId) {
+        currentDeleteId = lcId;
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+      }
+
+      // Delete LC
+      function deleteLC() {
+        if (!currentDeleteId) return;
+        
+        // In a real application, this would make an API call
+        console.log('Deleting LC:', currentDeleteId);
+        
+        // Simulate delete
+        setTimeout(() => {
+          showAlert(`Letter of Credit deleted successfully!`, 'success');
+          const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+          deleteModal.hide();
+          
+          // Remove from UI
+          const rowIndex = sampleLCData.findIndex(item => item.id == currentDeleteId);
+          if (rowIndex !== -1) {
+            sampleLCData.splice(rowIndex, 1);
+            lcTable.clear().rows.add(sampleLCData).draw();
+            updateSummaryCards();
+          }
+          
+          currentDeleteId = null;
+        }, 1000);
+      }
+
+      // Apply filters
+      function applyFilters() {
+        const status = document.getElementById('filterStatus').value;
+        const lcType = document.getElementById('filterType').value;
+        const applicant = document.getElementById('filterApplicant').value;
+        const beneficiary = document.getElementById('filterBeneficiary').value;
+        const issuingBank = document.getElementById('filterIssuingBank').value;
+        const amount = document.getElementById('filterAmount').value;
+        const currency = document.getElementById('filterCurrency').value;
+        const dateFilter = document.getElementById('filterDate').value;
+        
+        let filteredData = [...sampleLCData];
+        
+        // Apply status filter
+        if (status) {
+          filteredData = filteredData.filter(item => item.status === status);
+        }
+        
+        // Apply LC type filter
+        if (lcType) {
+          filteredData = filteredData.filter(item => item.lcType === lcType);
+        }
+        
+        // Apply applicant filter
+        if (applicant) {
+          filteredData = filteredData.filter(item => item.applicant === applicant);
+        }
+        
+        // Apply beneficiary filter
+        if (beneficiary) {
+          filteredData = filteredData.filter(item => item.beneficiary === beneficiary);
+        }
+        
+        // Apply issuing bank filter
+        if (issuingBank) {
+          filteredData = filteredData.filter(item => item.issuingBank.includes(issuingBank));
+        }
+        
+        // Apply amount filter
+        if (amount) {
+          filteredData = filteredData.filter(item => {
+            const [min, max] = amount.split('-');
+            if (max === '+') {
+              return item.lcAmount >= parseInt(min);
+            }
+            return item.lcAmount >= parseInt(min) && item.lcAmount <= parseInt(max);
+          });
+        }
+        
+        // Apply currency filter
+        if (currency) {
+          filteredData = filteredData.filter(item => item.currency === currency);
+        }
+        
+        // Apply date filter
+        if (dateFilter) {
+          const today = new Date();
+          const startOfWeek = new Date(today);
+          startOfWeek.setDate(today.getDate() - today.getDay());
+          const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+          const startOfQuarter = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1);
+          const startOfYear = new Date(today.getFullYear(), 0, 1);
+          
+          filteredData = filteredData.filter(item => {
+            const issueDate = new Date(item.issueDate);
+            
+            switch(dateFilter) {
+              case 'today':
+                return issueDate.toDateString() === today.toDateString();
+              case 'week':
+                return issueDate >= startOfWeek;
+              case 'month':
+                return issueDate >= startOfMonth;
+              case 'quarter':
+                return issueDate >= startOfQuarter;
+              case 'year':
+                return issueDate >= startOfYear;
+              case 'custom':
+                const dateFrom = document.getElementById('dateFrom').value;
+                const dateTo = document.getElementById('dateTo').value;
+                if (dateFrom && dateTo) {
+                  const fromDate = new Date(dateFrom);
+                  const toDate = new Date(dateTo);
+                  toDate.setHours(23, 59, 59, 999);
+                  return issueDate >= fromDate && issueDate <= toDate;
+                }
+                return true;
+              default:
+                return true;
+            }
+          });
+        }
+        
+        // Update table
+        lcTable.clear().rows.add(filteredData).draw();
+        updateSummaryCards();
+        showAlert(`Filter applied: ${filteredData.length} records found`, 'success');
+      }
+
+      // Reset filters
+      function resetFilters() {
+        document.getElementById('filterStatus').value = '';
+        document.getElementById('filterType').value = '';
+        document.getElementById('filterApplicant').value = '';
+        document.getElementById('filterBeneficiary').value = '';
+        document.getElementById('filterIssuingBank').value = '';
+        document.getElementById('filterAmount').value = '';
+        document.getElementById('filterCurrency').value = '';
+        document.getElementById('filterDate').value = '';
+        document.getElementById('dateFrom').value = '';
+        document.getElementById('dateTo').value = '';
+        document.getElementById('customDateRange').style.display = 'none';
+        
+        lcTable.clear().rows.add(sampleLCData).draw();
+        updateSummaryCards();
+        showAlert('All filters reset', 'info');
+      }
+
+      // Bulk amend
+      function bulkAmend() {
+        if (selectedLCs.size === 0) {
+          showAlert('Please select at least one LC to amend', 'warning');
+          return;
+        }
+        
+        showAlert(`Amending ${selectedLCs.size} selected LCs...`, 'info');
+        
+        // In a real application, this would open amendment modal
+        setTimeout(() => {
+          showAlert('Amendment process initiated for selected LCs', 'success');
+        }, 1000);
+      }
+
+      // Bulk extend
+      function bulkExtend() {
+        if (selectedLCs.size === 0) {
+          showAlert('Please select at least one LC to extend', 'warning');
+          return;
+        }
+        
+        const lcNumbers = Array.from(selectedLCs).map(id => {
+          const lc = sampleLCData.find(item => item.id == id);
+          return lc ? lc.lcNumber : '';
+        }).filter(Boolean);
+        
+        showAlert(`Extending expiry for: ${lcNumbers.join(', ')}`, 'info');
+        
+        // Simulate extension
+        setTimeout(() => {
+          selectedLCs.forEach(id => {
+            const lc = sampleLCData.find(item => item.id == id);
+            if (lc) {
+              // Extend by 30 days
+              const expiry = new Date(lc.expiryDate);
+              expiry.setDate(expiry.getDate() + 30);
+              lc.expiryDate = expiry.toISOString().split('T')[0];
+              lc.status = 'amended';
+              lc.amendments += 1;
+              lc.updatedAt = new Date().toISOString().split('T')[0];
+            }
+          });
+          
+          lcTable.clear().rows.add(sampleLCData).draw();
+          updateSummaryCards();
+          selectedLCs.clear();
+          showAlert(`${selectedLCs.size} LCs extended by 30 days`, 'success');
+        }, 1000);
+      }
+
+      // Bulk set reminder
+      function bulkRemind() {
+        if (selectedLCs.size === 0) {
+          showAlert('Please select at least one LC to set reminder', 'warning');
+          return;
+        }
+        
+        showAlert(`Setting reminders for ${selectedLCs.size} selected LCs...`, 'info');
+        
+        // Simulate reminder setting
+        setTimeout(() => {
+          showAlert(`Reminders set for ${selectedLCs.size} LCs`, 'success');
+        }, 1000);
+      }
+
+      // Bulk download
+      function bulkDownload() {
+        if (selectedLCs.size === 0) {
+          showAlert('Please select at least one LC to download', 'warning');
+          return;
+        }
+        
+        showAlert(`Preparing ${selectedLCs.size} LCs for download...`, 'info');
+        
+        // Simulate download
+        setTimeout(() => {
+          showAlert(`Download started for ${selectedLCs.size} LCs`, 'success');
+        }, 1500);
+      }
+
+      // Bulk cancel
+      function bulkCancel() {
+        if (selectedLCs.size === 0) {
+          showAlert('Please select at least one LC to cancel', 'warning');
+          return;
+        }
+        
+        if (confirm(`Are you sure you want to cancel ${selectedLCs.size} selected LCs? This action cannot be undone.`)) {
+          showAlert(`Cancelling ${selectedLCs.size} selected LCs...`, 'info');
+          
+          // Simulate cancellation
+          setTimeout(() => {
+            selectedLCs.forEach(id => {
+              const lc = sampleLCData.find(item => item.id == id);
+              if (lc && lc.status !== 'cancelled' && lc.status !== 'closed') {
+                lc.status = 'cancelled';
+                lc.updatedAt = new Date().toISOString().split('T')[0];
+              }
+            });
+            
+            lcTable.clear().rows.add(sampleLCData).draw();
+            updateSummaryCards();
+            selectedLCs.clear();
+            showAlert(`${selectedLCs.size} LCs cancelled successfully`, 'success');
+          }, 1000);
+        }
+      }
+
+      // Refresh data
+      function refreshData() {
+        showAlert('Refreshing data...', 'info');
+        
+        // Simulate refresh
+        setTimeout(() => {
+          lcTable.clear().rows.add(sampleLCData).draw();
+          updateSummaryCards();
+          showAlert('Data refreshed successfully', 'success');
+        }, 1000);
+      }
+
+      // Export data
+      function exportData(format) {
+        let exportTitle = 'Letters_of_Credit';
+        
+        switch(format) {
+          case 'excel':
+            showAlert('Exporting to Excel...', 'info');
+            setTimeout(() => showAlert('Excel export started', 'success'), 500);
+            break;
+          case 'pdf':
+            showAlert('Generating PDF...', 'info');
+            setTimeout(() => showAlert('PDF generated successfully', 'success'), 500);
+            break;
+          case 'csv':
+            showAlert('Exporting to CSV...', 'info');
+            setTimeout(() => showAlert('CSV export started', 'success'), 500);
+            break;
+          case 'print':
+            window.print();
+            break;
+        }
+      }
+
+      // Update summary cards
+      function updateSummaryCards() {
+        const data = lcTable.rows().data().toArray();
+        
+        // Total LC
+        document.getElementById('totalLC').textContent = data.length;
+        
+        // Active LC
+        const active = data.filter(item => item.status === 'active').length;
+        document.getElementById('activeLC').textContent = active;
+        
+        // Expiring soon (within 30 days)
+        const today = new Date();
+        const expiring = data.filter(item => {
+          if (item.status === 'active' || item.status === 'issued') {
+            const expiryDate = new Date(item.expiryDate);
+            const diffTime = expiryDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays > 0 && diffDays <= 30;
+          }
+          return false;
+        }).length;
+        document.getElementById('expiringLC').textContent = expiring;
+        
+        // Total amount
+        const totalAmount = data.reduce((sum, item) => sum + item.lcAmount, 0);
+        document.getElementById('totalAmount').textContent = 
+          '$' + totalAmount.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+      }
+
+      // Print LC
+      function printLC() {
+        showAlert('Opening print dialog...', 'info');
+        setTimeout(() => {
+          window.print();
+        }, 500);
+      }
+
+      // Download LC as PDF
+      function downloadLC() {
+        showAlert('Generating PDF download...', 'info');
+        
+        // Simulate PDF generation
+        setTimeout(() => {
+          showAlert('PDF downloaded successfully', 'success');
+        }, 1500);
+      }
+
+      // Show alert message
+      function showAlert(message, type = 'info') {
+        // Remove existing alerts
+        const existingAlert = document.querySelector('.alert-dismissible');
+        if (existingAlert) {
+          existingAlert.remove();
+        }
+        
+        const alertClass = {
+          'success': 'alert-success',
+          'warning': 'alert-warning',
+          'info': 'alert-info',
+          'danger': 'alert-danger'
+        }[type];
+        
+        const iconClass = {
+          'success': 'bi-check-circle-fill',
+          'warning': 'bi-exclamation-triangle-fill',
+          'info': 'bi-info-circle-fill',
+          'danger': 'bi-x-circle-fill'
+        }[type];
+        
+        const alertHTML = `
+          <div class="alert ${alertClass} alert-dismissible fade show position-fixed top-0 end-0 m-3" style="z-index: 9999;" role="alert">
+            <i class="bi ${iconClass} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', alertHTML);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+          const alert = document.querySelector('.alert-dismissible');
+          if (alert) {
+            alert.remove();
+          }
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>

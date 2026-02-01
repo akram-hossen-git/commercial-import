@@ -1,0 +1,2360 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create PI - Commercial Import Module</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar (same as index.html) -->
+      <div class="sidebar-wrapper" id="sidebar-wrapper" style="width: 280px">
+        <div class="sidebar-heading text-white">
+          <div class="d-flex align-items-center mb-2">
+            <div class="user-avatar">ASG</div>
+            <div>
+              <h4 class="mb-0">Import Module</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-group list-group-flush">
+          <!-- Main Navigation -->
+          <div class="category-label mt-0">MAIN NAVIGATION</div>
+
+          <a
+            href="../index.html"
+            class="list-group-item list-group-item-action active"
+          >
+            <i class="bi bi-speedometer2"></i>Dashboard
+          </a>
+
+          <!-- PI Section -->
+          <div class="accordion" id="piAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#piCollapse"
+                >
+                  <i class="bi bi-file-earmark-text"></i>Proforma Invoice
+                </button>
+              </h2>
+              <div
+                id="piCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#piAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./pi-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create PI
+                  </a>
+                  <a
+                    href="./pi-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All PI
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CI Section -->
+          <div class="accordion" id="ciAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#ciCollapse"
+                >
+                  <i class="bi bi-receipt"></i>Commercial Invoice
+                </button>
+              </h2>
+              <div
+                id="ciCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#ciAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./cl-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create CI
+                  </a>
+                  <a
+                    href="ci-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All CI
+                  </a>
+                  <!-- <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-currency-exchange"></i>CI Reports
+                  </a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LC Section -->
+          <div class="accordion" id="lcAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#lcCollapse"
+                >
+                  <i class="bi bi-bank"></i>Letter of Credit
+                </button>
+              </h2>
+              <div
+                id="lcCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#lcAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./lc-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create LC
+                  </a>
+                  <a
+                    href="./lc-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All LC
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Content -->
+      <div id="page-content-wrapper" style="flex: 1">
+        <!-- Main Content -->
+        <div class="container mt-4">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="lc-view.html">LC</a></li>
+              <li class="breadcrumb-item active">Create LC</li>
+            </ol>
+          </nav>
+
+          <div class="card">
+            <div
+              class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+            >
+              <h4 class="mb-0">
+                <i class="bi bi-bank me-2"></i>Create Letter of Credit
+              </h4>
+              <div>
+                <span class="badge bg-light text-dark me-2">Status: Draft</span>
+                <button
+                  type="button"
+                  class="btn btn-light btn-sm"
+                  id="previewLCBtn"
+                >
+                  <i class="bi bi-eye me-1"></i> Preview
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <form id="lcForm">
+                <!-- Basic LC Information -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-info-circle me-2"></i>LC Basic Information
+                    </h5>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">LC Reference Number</label>
+                    <div class="input-group">
+                      <span class="input-group-text bg-light">LC-</span>
+                      <input
+                        type="text"
+                        class="form-control form-control-sm"
+                        id="lcNumber"
+                        value="2024-001"
+                        readonly
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">LC Issue Date</label>
+                    <input
+                      type="date"
+                      class="form-control form-control-sm"
+                      id="issueDate"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">LC Expiry Date</label>
+                    <input
+                      type="date"
+                      class="form-control form-control-sm"
+                      id="expiryDate"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">LC Type</label>
+                    <select class="form-select" id="lcType" required>
+                      <option value="SIGHT">Sight LC</option>
+                      <option value="USANCE">
+                        Usance LC (Deferred Payment)
+                      </option>
+                      <option value="REVOCABLE">Revocable LC</option>
+                      <option value="IRREVOCABLE" selected>
+                        Irrevocable LC
+                      </option>
+                      <option value="CONFIRMED">Confirmed LC</option>
+                      <option value="TRANSFERABLE">Transferable LC</option>
+                      <option value="STANDBY">Standby LC</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Parties Involved -->
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-person-badge me-2"></i>Applicant (Buyer)
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Select Buyer</label>
+                        <select class="form-select" id="buyerSelect" required>
+                          <option value="">-- Select Buyer --</option>
+                          <option value="1">ABC Trading Company</option>
+                          <option value="2">XYZ Importers Ltd</option>
+                          <option value="3">Global Trade Solutions</option>
+                          <option value="4">International Merchants</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <div
+                          id="buyerInfo"
+                          class="card bg-light p-3"
+                          style="display: none"
+                        >
+                          <div class="row">
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Company Name</small
+                              >
+                              <span id="buyerCompany">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Contact Person</small
+                              >
+                              <span id="buyerContact">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Address</small>
+                              <span id="buyerAddress">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Phone</small>
+                              <span id="buyerPhone">-</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-building me-2"></i>Beneficiary (Supplier)
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Select Supplier</label>
+                        <select
+                          class="form-select"
+                          id="supplierSelect"
+                          required
+                        >
+                          <option value="">-- Select Supplier --</option>
+                          <option value="1">Global Tech Inc. (USA)</option>
+                          <option value="2">
+                            Euro Suppliers Ltd (Germany)
+                          </option>
+                          <option value="3">Asia Imports Co. (China)</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <div
+                          id="supplierInfo"
+                          class="card bg-light p-3"
+                          style="display: none"
+                        >
+                          <div class="row">
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Company Name</small
+                              >
+                              <span id="supplierCompany">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Contact Person</small
+                              >
+                              <span id="supplierContact">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Address</small>
+                              <span id="supplierAddress">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Phone</small>
+                              <span id="supplierPhone">-</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Banking Information -->
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-bank me-2"></i>Issuing Bank
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Select Bank</label>
+                        <select
+                          class="form-select"
+                          id="issuingBankSelect"
+                          required
+                        >
+                          <option value="">-- Select Issuing Bank --</option>
+                          <option value="HSBC">HSBC Bank</option>
+                          <option value="CITI">Citibank</option>
+                          <option value="STANDARD">
+                            Standard Chartered Bank
+                          </option>
+                          <option value="DEUTSCHE">Deutsche Bank</option>
+                          <option value="BNP">BNP Paribas</option>
+                          <option value="OTHER">Other Bank</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <div
+                          id="issuingBankInfo"
+                          class="card bg-light p-3"
+                          style="display: none"
+                        >
+                          <div class="row">
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Bank Name</small
+                              >
+                              <span id="issuingBankName">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Swift Code</small
+                              >
+                              <span id="issuingBankSwift">-</span>
+                            </div>
+                            <div class="col-md-12">
+                              <small class="text-muted d-block"
+                                >Bank Address</small
+                              >
+                              <span id="issuingBankAddress">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Phone</small>
+                              <span id="issuingBankPhone">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Email</small>
+                              <span id="issuingBankEmail">-</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label"
+                          >Applicant Account Number</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="issuingBankAccount"
+                          placeholder="Enter applicant's account number"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-building me-2"></i>Advising/Negotiating
+                      Bank
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Select Bank</label>
+                        <select
+                          class="form-select"
+                          id="advisingBankSelect"
+                          required
+                        >
+                          <option value="">-- Select Advising Bank --</option>
+                          <option value="DBS">DBS Bank</option>
+                          <option value="UOB">UOB Bank</option>
+                          <option value="OCBC">OCBC Bank</option>
+                          <option value="ICICI">ICICI Bank</option>
+                          <option value="HDFC">HDFC Bank</option>
+                          <option value="BANKCOMM">
+                            Bank of Communications
+                          </option>
+                          <option value="OTHER">Other Bank</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12">
+                        <div
+                          id="advisingBankInfo"
+                          class="card bg-light p-3"
+                          style="display: none"
+                        >
+                          <div class="row">
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Bank Name</small
+                              >
+                              <span id="advisingBankName">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block"
+                                >Swift Code</small
+                              >
+                              <span id="advisingBankSwift">-</span>
+                            </div>
+                            <div class="col-md-12">
+                              <small class="text-muted d-block"
+                                >Bank Address</small
+                              >
+                              <span id="advisingBankAddress">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Phone</small>
+                              <span id="advisingBankPhone">-</span>
+                            </div>
+                            <div class="col-md-6">
+                              <small class="text-muted d-block">Email</small>
+                              <span id="advisingBankEmail">-</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-3">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label"
+                          >Beneficiary Account Number</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="beneficiaryAccount"
+                          placeholder="Enter beneficiary's account number"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- LC Terms & Conditions -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-file-text me-2"></i>LC Terms & Conditions
+                    </h5>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">LC Amount</label>
+                    <div class="input-group">
+                      <span class="input-group-text">$</span>
+                      <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        id="lcAmount"
+                        min="0"
+                        step="0.01"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Currency</label>
+                    <select class="form-select" id="currency" required>
+                      <option value="USD" selected>USD ($)</option>
+                      <option value="EUR">EUR (€)</option>
+                      <option value="GBP">GBP (£)</option>
+                      <option value="JPY">JPY (¥)</option>
+                      <option value="CNY">CNY (¥)</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Tolerance (+/- %)</label>
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        id="tolerance"
+                        value="10"
+                        min="0"
+                        max="100"
+                      />
+                      <span class="input-group-text">%</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Partial Shipment</label>
+                    <select class="form-select" id="partialShipment" required>
+                      <option value="ALLOWED">Allowed</option>
+                      <option value="NOT_ALLOWED">Not Allowed</option>
+                      <option value="CONDITIONAL">Conditional</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Transhipment</label>
+                    <select class="form-select" id="transhipment" required>
+                      <option value="ALLOWED">Allowed</option>
+                      <option value="NOT_ALLOWED">Not Allowed</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Latest Shipment Date</label>
+                    <input
+                      type="date"
+                      class="form-control form-control-sm"
+                      id="latestShipmentDate"
+                      required
+                    />
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Period for Presentation</label>
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        class="form-control form-control-sm"
+                        id="presentationDays"
+                        value="21"
+                        min="1"
+                        max="60"
+                      />
+                      <span class="input-group-text">days</span>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-3">
+                    <label class="form-label">Credit Availability</label>
+                    <select
+                      class="form-select"
+                      id="creditAvailability"
+                      required
+                    >
+                      <option value="BY_PAYMENT">By Payment</option>
+                      <option value="BY_DEFERRED_PAYMENT">
+                        By Deferred Payment
+                      </option>
+                      <option value="BY_ACCEPTANCE">By Acceptance</option>
+                      <option value="BY_NEGOTIATION">By Negotiation</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Shipping & Delivery Terms -->
+                <div class="row mb-4">
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-truck me-2"></i>Shipping Details
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Port of Loading</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="portLoading"
+                          placeholder="e.g., Shanghai Port"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Port of Discharge</label>
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="portDischarge"
+                          placeholder="e.g., Mumbai Port"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label"
+                          >Place of Final Destination</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          id="finalDestination"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Incoterms</label>
+                        <select class="form-select" id="incoterms" required>
+                          <option value="FOB">FOB (Free On Board)</option>
+                          <option value="CIF" selected>
+                            CIF (Cost, Insurance & Freight)
+                          </option>
+                          <option value="CFR">CFR (Cost and Freight)</option>
+                          <option value="EXW">EXW (Ex Works)</option>
+                          <option value="DAP">DAP (Delivered At Place)</option>
+                          <option value="DDP">DDP (Delivered Duty Paid)</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label class="form-label">Shipment Mode</label>
+                        <select class="form-select" id="shipmentMode" required>
+                          <option value="SEA" selected>Sea Freight</option>
+                          <option value="AIR">Air Freight</option>
+                          <option value="LAND">Land Transport</option>
+                          <option value="MULTIMODAL">Multimodal</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 mb-4">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-file-earmark-check me-2"></i>Required
+                      Documents
+                    </h5>
+                    <div class="row document-list">
+                      <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="docCommercialInvoice"
+                            checked
+                          />
+                          <label
+                            class="form-check-label"
+                            for="docCommercialInvoice"
+                          >
+                            Commercial Invoice (3 copies)
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="docPackingList"
+                            checked
+                          />
+                          <label class="form-check-label" for="docPackingList">
+                            Packing List (3 copies)
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="docBillOfLading"
+                            checked
+                          />
+                          <label class="form-check-label" for="docBillOfLading">
+                            Full Set of Clean on Board Bill of Lading
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="docCertificateOfOrigin"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="docCertificateOfOrigin"
+                          >
+                            Certificate of Origin
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="docInsurancePolicy"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="docInsurancePolicy"
+                          >
+                            Insurance Policy/Certificate
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="docInspectionCertificate"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="docInspectionCertificate"
+                          >
+                            Inspection Certificate
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12 mb-2">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="docPhytosanitaryCertificate"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="docPhytosanitaryCertificate"
+                          >
+                            Phytosanitary Certificate
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <label class="form-label mt-2"
+                          >Additional Documents</label
+                        >
+                        <textarea
+                          class="form-control form-control-sm"
+                          id="additionalDocuments"
+                          rows="2"
+                          placeholder="Any other required documents..."
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Description of Goods -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5
+                      class="border-bottom pb-2 mb-3 d-flex justify-content-between align-items-center"
+                    >
+                      <span
+                        ><i class="bi bi-box-seam me-2"></i>Description of
+                        Goods</span
+                      >
+                      <div>
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm me-2"
+                          id="loadSampleData"
+                        >
+                          <i class="bi bi-upload me-1"></i> Load Sample Data
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary btn-sm"
+                          id="clearGoods"
+                        >
+                          <i class="bi bi-trash me-1"></i> Clear
+                        </button>
+                      </div>
+                    </h5>
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row g-3 mb-3">
+                          <div class="col-md-8">
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i class="bi bi-link"></i>
+                              </span>
+                              <input
+                                type="text"
+                                class="form-control form-control-sm"
+                                id="piReference"
+                                placeholder="Link to Proforma Invoice (PI Number)"
+                              />
+                              <button
+                                class="btn btn-outline-primary"
+                                type="button"
+                                id="searchPI"
+                              >
+                                <i class="bi bi-search"></i> Search PI
+                              </button>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i class="bi bi-calculator"></i>
+                              </span>
+                              <input
+                                type="number"
+                                class="form-control form-control-sm"
+                                id="addQuantity"
+                                placeholder="Add quantity"
+                                min="1"
+                                value="1"
+                              />
+                              <button
+                                class="btn btn-outline-success"
+                                type="button"
+                                id="addGoodsRow"
+                              >
+                                <i class="bi bi-plus-circle"></i> Add Row
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="table-responsive mb-3">
+                          <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                              <tr>
+                                <th width="50">#</th>
+                                <th>Description of Goods</th>
+                                <th width="100">HS Code</th>
+                                <th width="120">Quantity</th>
+                                <th width="150">Unit Price</th>
+                                <th width="150">Total Amount</th>
+                                <th width="80">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody id="goodsDescription">
+                              <!-- Goods will be populated here -->
+                              <tr id="noGoodsRow">
+                                <td
+                                  colspan="7"
+                                  class="text-center text-muted py-4"
+                                >
+                                  <div class="mb-3">
+                                    <i
+                                      class="bi bi-box display-6 d-block mb-2"
+                                    ></i>
+                                    <h5>No goods description added</h5>
+                                    <p class="mb-3">
+                                      Link to a Proforma Invoice or add goods
+                                      manually
+                                    </p>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-primary"
+                                      id="quickAddElectronics"
+                                    >
+                                      <i class="bi bi-laptop me-1"></i> Add
+                                      Electronics Sample
+                                    </button>
+                                    <button
+                                      type="button"
+                                      class="btn btn-outline-success ms-2"
+                                      id="quickAddTextiles"
+                                    >
+                                      <i class="bi bi-basket me-1"></i> Add
+                                      Textiles Sample
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tfoot class="table-secondary">
+                              <tr>
+                                <td colspan="5" class="text-end fw-bold">
+                                  Subtotal:
+                                </td>
+                                <td id="goodsSubtotal" class="fw-bold">
+                                  $0.00
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <td colspan="5" class="text-end">
+                                  Shipping & Insurance:
+                                </td>
+                                <td>
+                                  <div class="input-group input-group-sm">
+                                    <span class="input-group-text">$</span>
+                                    <input
+                                      type="number"
+                                      class="form-control form-control-sm"
+                                      id="shippingInsurance"
+                                      value="0"
+                                      min="0"
+                                      step="0.01"
+                                    />
+                                  </div>
+                                </td>
+                                <td></td>
+                              </tr>
+                              <tr class="table-primary">
+                                <td colspan="5" class="text-end fw-bold fs-5">
+                                  Total LC Amount:
+                                </td>
+                                <td id="totalLCAmount" class="fw-bold fs-5">
+                                  $0.00
+                                </td>
+                                <td></td>
+                              </tr>
+                            </tfoot>
+                          </table>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12 mb-3">
+                            <label class="form-label"
+                              >Additional Description/Comments</label
+                            >
+                            <textarea
+                              class="form-control form-control-sm"
+                              id="manualDescription"
+                              rows="3"
+                              placeholder="Additional details about the goods, packaging requirements, quality specifications, etc..."
+                            ></textarea>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">Country of Origin</label>
+                            <input
+                              type="text"
+                              class="form-control form-control-sm"
+                              id="countryOfOrigin"
+                              placeholder="e.g., China"
+                            />
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label"
+                              >Final Destination Country</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control form-control-sm"
+                              id="destinationCountry"
+                              placeholder="e.g., USA"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Supporting Documents Upload -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-paperclip me-2"></i>Supporting Documents
+                      Upload
+                    </h5>
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-12 mb-4">
+                            <div
+                              class="dropzone p-4 border rounded text-center"
+                              id="documentDropzone"
+                            >
+                              <i
+                                class="bi bi-cloud-upload display-4 text-muted d-block mb-3"
+                              ></i>
+                              <h5>Drag & Drop Files Here</h5>
+                              <p class="text-muted">or click to browse</p>
+                              <input
+                                type="file"
+                                class="d-none"
+                                id="fileInput"
+                                multiple
+                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xls,.xlsx"
+                              />
+                              <button
+                                type="button"
+                                class="btn btn-outline-primary mt-2"
+                                id="browseFiles"
+                              >
+                                <i class="bi bi-folder2-open me-2"></i> Browse
+                                Files
+                              </button>
+                              <p class="text-muted mt-2 mb-0">
+                                Supported formats: PDF, DOC, DOCX, JPG, PNG,
+                                XLS, XLSX (Max: 10MB each)
+                              </p>
+                            </div>
+                          </div>
+
+                          <div class="col-md-12">
+                            <h6 class="mb-3">Uploaded Documents</h6>
+                            <div class="table-responsive">
+                              <table
+                                class="table table-bordered"
+                                id="uploadedDocuments"
+                              >
+                                <thead class="table-light">
+                                  <tr>
+                                    <th width="50">#</th>
+                                    <th>Document Name</th>
+                                    <th width="120">Type</th>
+                                    <th width="120">Size</th>
+                                    <th width="150">Upload Date</th>
+                                    <th width="100">Status</th>
+                                    <th width="100">Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="documentsList">
+                                  <tr id="noDocumentsRow">
+                                    <td
+                                      colspan="7"
+                                      class="text-center text-muted py-3"
+                                    >
+                                      <i
+                                        class="bi bi-file-earmark display-6 d-block mb-2"
+                                      ></i>
+                                      <p>No documents uploaded yet</p>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+
+                            <div class="mt-3">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <label class="form-label"
+                                    >Document Remarks</label
+                                  >
+                                  <textarea
+                                    class="form-control form-control-sm"
+                                    id="documentRemarks"
+                                    rows="2"
+                                    placeholder="Any remarks about uploaded documents..."
+                                  ></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                  <label class="form-label"
+                                    >Document Checklist</label
+                                  >
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      id="checkAllVerified"
+                                    />
+                                    <label
+                                      class="form-check-label"
+                                      for="checkAllVerified"
+                                    >
+                                      All supporting documents verified
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      id="checkBankRequirements"
+                                    />
+                                    <label
+                                      class="form-check-label"
+                                      for="checkBankRequirements"
+                                    >
+                                      Meets bank document requirements
+                                    </label>
+                                  </div>
+                                  <div class="form-check">
+                                    <input
+                                      class="form-check-input"
+                                      type="checkbox"
+                                      id="checkLegalCompliance"
+                                    />
+                                    <label
+                                      class="form-check-label"
+                                      for="checkLegalCompliance"
+                                    >
+                                      Complies with trade regulations
+                                    </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Special Conditions -->
+                <div class="row mb-4">
+                  <div class="col-md-12">
+                    <h5 class="border-bottom pb-2 mb-3">
+                      <i class="bi bi-chat-square-text me-2"></i>Special
+                      Conditions & Instructions
+                    </h5>
+                    <div class="row">
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label"
+                          >Special Instructions to Advising Bank</label
+                        >
+                        <textarea
+                          class="form-control form-control-sm"
+                          id="advisingBankInstructions"
+                          rows="2"
+                          placeholder="Any special instructions for the advising bank..."
+                        ></textarea>
+                      </div>
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Additional Conditions</label>
+                        <textarea
+                          class="form-control form-control-sm"
+                          id="additionalConditions"
+                          rows="3"
+                          placeholder="Any additional conditions for the LC..."
+                        ></textarea>
+                      </div>
+                      <div class="col-md-12 mb-3">
+                        <label class="form-label">Charges (Who Pays)</label>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="charges"
+                            id="chargesApplicant"
+                            checked
+                          />
+                          <label
+                            class="form-check-label"
+                            for="chargesApplicant"
+                          >
+                            All banking charges are for applicant's account
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="charges"
+                            id="chargesBeneficiary"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="chargesBeneficiary"
+                          >
+                            All banking charges are for beneficiary's account
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="charges"
+                            id="chargesShared"
+                          />
+                          <label class="form-check-label" for="chargesShared">
+                            Charges shared as per bank's schedule
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div
+                  class="d-flex justify-content-between align-items-center border-top pt-4"
+                >
+                  <div>
+                    <a href="lc-view.html" class="btn btn-outline-secondary">
+                      <i class="bi bi-arrow-left me-2"></i>Back to List
+                    </a>
+                    <button
+                      type="button"
+                      class="btn btn-outline-warning ms-2"
+                      id="saveDraftBtn"
+                    >
+                      <i class="bi bi-file-earmark me-2"></i>Save as Draft
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger me-2"
+                      id="resetBtn"
+                    >
+                      <i class="bi bi-x-circle me-2"></i>Reset
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-success"
+                      id="submitBtn"
+                    >
+                      <i class="bi bi-check-circle me-2"></i>Create Letter of
+                      Credit
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer (same as index.html) -->
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+
+    <style>
+    /* Custom styles for LC page */
+    .card-header {
+        background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    }
+    
+    h5 {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+    
+    .form-label {
+        font-weight: 500;
+        color: #495057;
+        margin-bottom: 0.5rem;
+    }
+    
+    .table th {
+        font-weight: 600;
+        background-color: #f8f9fa;
+    }
+    
+    .form-control form-control-sm:focus, .form-select:focus {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    
+    .form-check-input:checked {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+    }
+    
+    #noGoodsRow, #noDocumentsRow {
+        background-color: #f8f9fa;
+    }
+    
+    .badge {
+        font-size: 0.75em;
+        padding: 0.35em 0.65em;
+    }
+    
+    /* Bank info cards */
+    .bank-info-card {
+        background-color: #f8f9fa;
+        border-left: 4px solid #0d6efd;
+        transition: all 0.3s ease;
+    }
+    
+    .bank-info-card:hover {
+        background-color: #e7f1ff;
+    }
+    
+    /* Document dropzone */
+    .dropzone {
+        background-color: #f8f9fa;
+        border: 2px dashed #dee2e6;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .dropzone:hover {
+        background-color: #e7f1ff;
+        border-color: #86b7fe;
+    }
+    
+    .dropzone.dragover {
+        background-color: #cfe2ff;
+        border-color: #0d6efd;
+    }
+    
+    /* Document status badges */
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+    
+    .status-uploaded {
+        background-color: #d1e7dd;
+        color: #0f5132;
+    }
+    
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    
+    .status-processing {
+        background-color: #cff4fc;
+        color: #055160;
+    }
+    
+    /* Interactive goods table */
+    .goods-table tbody tr:hover {
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+    
+    /* Quick action buttons */
+    .quick-action-btn {
+        transition: all 0.2s ease;
+    }
+    
+    .quick-action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 1rem;
+        }
+        
+        .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+        
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .table-responsive {
+            font-size: 0.875rem;
+        }
+    }
+    
+    /* Animation for new rows */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.3s ease-in;
+    }
+</style>
+
+<script>
+    // Sample data
+    const buyers = {
+        1: {
+            company: 'ABC Trading Company',
+            contact: 'John Smith',
+            address: '123 Business Ave, New York, NY 10001, USA',
+            phone: '+1-212-555-0123'
+        },
+        2: {
+            company: 'XYZ Importers Ltd',
+            contact: 'Robert Johnson',
+            address: '456 Trade Street, London EC1A 1BB, UK',
+            phone: '+44-20-7123-4567'
+        },
+        3: {
+            company: 'Global Trade Solutions',
+            contact: 'Maria Garcia',
+            address: '789 Commerce Blvd, Dubai, UAE',
+            phone: '+971-4-123-4567'
+        }
+    };
+
+    const suppliers = {
+        1: {
+            company: 'Global Tech Inc.',
+            contact: 'Michael Chen',
+            address: '123 Tech Street, Silicon Valley, CA 94000, USA',
+            phone: '+1-650-555-0123'
+        },
+        2: {
+            company: 'Euro Suppliers Ltd',
+            contact: 'Hans Schmidt',
+            address: 'Berliner Strasse 45, 10115 Berlin, Germany',
+            phone: '+49-30-123456'
+        },
+        3: {
+            company: 'Asia Imports Co.',
+            contact: 'Li Wei',
+            address: 'No. 88 Nanjing Road, Shanghai 200000, China',
+            phone: '+86-21-87654321'
+        }
+    };
+
+    // Bank data
+    const banks = {
+        // Issuing Banks (Buyer's Banks)
+        HSBC: {
+            name: 'HSBC Bank',
+            swift: 'HSBCUS33',
+            address: '452 Fifth Avenue, New York, NY 10018, USA',
+            phone: '+1-212-525-5000',
+            email: 'trade.finance.us@hsbc.com',
+            type: 'issuing'
+        },
+        CITI: {
+            name: 'Citibank',
+            swift: 'CITIUS33',
+            address: '399 Park Avenue, New York, NY 10043, USA',
+            phone: '+1-212-559-1000',
+            email: 'trade.services@citi.com',
+            type: 'issuing'
+        },
+        STANDARD: {
+            name: 'Standard Chartered Bank',
+            swift: 'SCBLUS33',
+            address: '1095 Avenue of the Americas, New York, NY 10036, USA',
+            phone: '+1-212-667-0700',
+            email: 'trade.ny@sc.com',
+            type: 'issuing'
+        },
+        DEUTSCHE: {
+            name: 'Deutsche Bank',
+            swift: 'DEUTUS33',
+            address: '60 Wall Street, New York, NY 10005, USA',
+            phone: '+1-212-250-2500',
+            email: 'trade.finance.ny@db.com',
+            type: 'issuing'
+        },
+        BNP: {
+            name: 'BNP Paribas',
+            swift: 'BNPAUS33',
+            address: '787 Seventh Avenue, New York, NY 10019, USA',
+            phone: '+1-212-841-2000',
+            email: 'trade.americas@bnpparibas.com',
+            type: 'issuing'
+        },
+        
+        // Advising Banks (Supplier's Banks)
+        DBS: {
+            name: 'DBS Bank',
+            swift: 'DBSSSGSG',
+            address: '12 Marina Boulevard, Marina Bay Financial Centre Tower 3, Singapore 018982',
+            phone: '+65-6878-8888',
+            email: 'trade@dbs.com',
+            type: 'advising'
+        },
+        UOB: {
+            name: 'United Overseas Bank',
+            swift: 'UOVBSGSG',
+            address: '80 Raffles Place, UOB Plaza 1, Singapore 048624',
+            phone: '+65-6222-2121',
+            email: 'trade.finance@uobgroup.com',
+            type: 'advising'
+        },
+        OCBC: {
+            name: 'OCBC Bank',
+            swift: 'OCBCSGSG',
+            address: '65 Chulia Street, OCBC Centre, Singapore 049513',
+            phone: '+65-6363-3333',
+            email: 'trade.services@ocbc.com',
+            type: 'advising'
+        },
+        ICICI: {
+            name: 'ICICI Bank',
+            swift: 'ICICINBB',
+            address: 'ICICI Bank Towers, Bandra-Kurla Complex, Mumbai 400051, India',
+            phone: '+91-22-2653-1414',
+            email: 'trade.services@icicibank.com',
+            type: 'advising'
+        },
+        HDFC: {
+            name: 'HDFC Bank',
+            swift: 'HDFCINBB',
+            address: 'HDFC Bank House, Senapati Bapat Marg, Lower Parel, Mumbai 400013, India',
+            phone: '+91-22-6652-1000',
+            email: 'trade@hdfcbank.com',
+            type: 'advising'
+        },
+        BANKCOMM: {
+            name: 'Bank of Communications',
+            swift: 'COMMCNSH',
+            address: 'No. 188, Yincheng Middle Road, Pudong New Area, Shanghai 200120, China',
+            phone: '+86-21-5876-8888',
+            email: 'trade.service@bankcomm.com',
+            type: 'advising'
+        },
+        OTHER: {
+            name: 'Other Bank',
+            swift: '',
+            address: '',
+            phone: '',
+            email: '',
+            type: 'both'
+        }
+    };
+
+    // Sample goods data
+    const sampleGoods = {
+        electronics: [
+            { description: 'Laptop Computers - Model X1 Pro', hsCode: '84713000', quantity: 50, unitPrice: 850.00 },
+            { description: 'Wireless Mechanical Keyboards', hsCode: '84716090', quantity: 100, unitPrice: 45.00 },
+            { description: '24" LED Monitors - 4K Resolution', hsCode: '85285210', quantity: 75, unitPrice: 220.00 },
+            { description: 'Bluetooth Wireless Headphones', hsCode: '85183000', quantity: 150, unitPrice: 120.00 }
+        ],
+        textiles: [
+            { description: '100% Cotton Fabric Roll (White)', hsCode: '52081100', quantity: 200, unitPrice: 25.50 },
+            { description: 'Textile Dyes - Red Color', hsCode: '32041600', quantity: 50, unitPrice: 12.75 },
+            { description: 'Polyester Blend Fabric', hsCode: '54074200', quantity: 150, unitPrice: 18.25 },
+            { description: 'Silk Embroidery Thread', hsCode: '50072000', quantity: 300, unitPrice: 8.50 }
+        ],
+        machinery: [
+            { description: 'CNC Milling Machine - Model M200', hsCode: '84596100', quantity: 2, unitPrice: 12500.00 },
+            { description: 'Industrial Hydraulic Press', hsCode: '84629100', quantity: 5, unitPrice: 8500.00 }
+        ],
+        chemicals: [
+            { description: 'Industrial Chemical Compound - Grade A', hsCode: '38160000', quantity: 100, unitPrice: 85.75 },
+            { description: 'Pharmaceutical Raw Materials', hsCode: '29379000', quantity: 50, unitPrice: 220.50 }
+        ]
+    };
+
+    // Sample PI data
+    const samplePIs = [
+        {
+            piNumber: 'PI-2024-001',
+            goods: sampleGoods.electronics,
+            total: 850.00 * 50 + 45.00 * 100 + 220.00 * 75 + 120.00 * 150
+        },
+        {
+            piNumber: 'PI-2024-002',
+            goods: sampleGoods.textiles,
+            total: 25.50 * 200 + 12.75 * 50 + 18.25 * 150 + 8.50 * 300
+        },
+        {
+            piNumber: 'PI-2024-003',
+            goods: sampleGoods.machinery,
+            total: 12500.00 * 2 + 8500.00 * 5
+        },
+        {
+            piNumber: 'PI-2024-004',
+            goods: sampleGoods.chemicals,
+            total: 85.75 * 100 + 220.50 * 50
+        }
+    ];
+
+    // Variables
+    let goodsCounter = 1;
+    let documentCounter = 1;
+    const uploadedFiles = [];
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set today's date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('issueDate').value = today;
+        
+        // Set expiry date (90 days from today)
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 90);
+        document.getElementById('expiryDate').value = expiryDate.toISOString().split('T')[0];
+        
+        // Set latest shipment date (60 days from today)
+        const shipDate = new Date();
+        shipDate.setDate(shipDate.getDate() + 60);
+        document.getElementById('latestShipmentDate').value = shipDate.toISOString().split('T')[0];
+        
+        // Initialize event listeners
+        initializeEventListeners();
+        
+        // Initialize goods total calculation
+        calculateGoodsTotal();
+    });
+
+    // Initialize event listeners
+    function initializeEventListeners() {
+        // Buyer selection
+        document.getElementById('buyerSelect').addEventListener('change', function() {
+            updatePartyInfo(this.value, buyers, 'buyer');
+        });
+
+        // Supplier selection
+        document.getElementById('supplierSelect').addEventListener('change', function() {
+            updatePartyInfo(this.value, suppliers, 'supplier');
+        });
+
+        // Bank selection
+        document.getElementById('issuingBankSelect').addEventListener('change', function() {
+            updateBankInfo(this.value, 'issuing');
+        });
+
+        document.getElementById('advisingBankSelect').addEventListener('change', function() {
+            updateBankInfo(this.value, 'advising');
+        });
+
+        // Goods description
+        document.getElementById('searchPI').addEventListener('click', searchPI);
+        document.getElementById('loadSampleData').addEventListener('click', loadSampleData);
+        document.getElementById('clearGoods').addEventListener('click', clearGoods);
+        document.getElementById('quickAddElectronics').addEventListener('click', () => addSampleGoods('electronics'));
+        document.getElementById('quickAddTextiles').addEventListener('click', () => addSampleGoods('textiles'));
+        document.getElementById('addGoodsRow').addEventListener('click', addGoodsRow);
+
+        // File upload
+        document.getElementById('browseFiles').addEventListener('click', () => document.getElementById('fileInput').click());
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+        setupDragAndDrop();
+
+        // Total calculation
+        document.getElementById('lcAmount').addEventListener('input', calculateGoodsTotal);
+        document.getElementById('shippingInsurance').addEventListener('input', calculateGoodsTotal);
+
+        // Form submission
+        document.getElementById('lcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitLC();
+        });
+
+        // Save draft button
+        document.getElementById('saveDraftBtn').addEventListener('click', saveAsDraft);
+
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
+
+        // Preview button
+        document.getElementById('previewLCBtn').addEventListener('click', previewLC);
+    }
+
+    // Update party information
+    function updatePartyInfo(id, data, type) {
+        const infoElement = document.getElementById(`${type}Info`);
+        
+        if (id && data[id]) {
+            const party = data[id];
+            document.getElementById(`${type}Company`).textContent = party.company;
+            document.getElementById(`${type}Contact`).textContent = party.contact;
+            document.getElementById(`${type}Address`).textContent = party.address;
+            document.getElementById(`${type}Phone`).textContent = party.phone;
+            infoElement.style.display = 'block';
+        } else {
+            infoElement.style.display = 'none';
+        }
+    }
+
+    // Update bank information
+    function updateBankInfo(bankCode, type) {
+        const infoElement = document.getElementById(`${type}BankInfo`);
+        
+        if (bankCode && banks[bankCode]) {
+            const bank = banks[bankCode];
+            document.getElementById(`${type}BankName`).textContent = bank.name;
+            document.getElementById(`${type}BankSwift`).textContent = bank.swift || 'N/A';
+            document.getElementById(`${type}BankAddress`).textContent = bank.address || 'N/A';
+            document.getElementById(`${type}BankPhone`).textContent = bank.phone || 'N/A';
+            document.getElementById(`${type}BankEmail`).textContent = bank.email || 'N/A';
+            infoElement.style.display = 'block';
+        } else {
+            infoElement.style.display = 'none';
+        }
+    }
+
+    // Search PI
+    function searchPI() {
+        const piRef = document.getElementById('piReference').value.trim();
+        if (!piRef) {
+            alert('Please enter a PI number to search.');
+            return;
+        }
+
+        // Find matching PI
+        const pi = samplePIs.find(p => p.piNumber === piRef);
+        if (pi) {
+            populateGoodsFromPI(pi);
+            // Update LC amount
+            document.getElementById('lcAmount').value = pi.total.toFixed(2);
+            calculateGoodsTotal();
+            showAlert(`PI ${piRef} loaded successfully!`, 'success');
+        } else {
+            alert(`PI ${piRef} not found. Try: PI-2024-001, PI-2024-002, PI-2024-003, or PI-2024-004`);
+        }
+    }
+
+    // Load sample data
+    function loadSampleData() {
+        // Randomly select a sample PI
+        const randomPI = samplePIs[Math.floor(Math.random() * samplePIs.length)];
+        document.getElementById('piReference').value = randomPI.piNumber;
+        populateGoodsFromPI(randomPI);
+        document.getElementById('lcAmount').value = randomPI.total.toFixed(2);
+        
+        // Set sample values for other fields
+        document.getElementById('buyerSelect').value = '1';
+        updatePartyInfo('1', buyers, 'buyer');
+        
+        document.getElementById('supplierSelect').value = '1';
+        updatePartyInfo('1', suppliers, 'supplier');
+        
+        document.getElementById('issuingBankSelect').value = 'HSBC';
+        updateBankInfo('HSBC', 'issuing');
+        
+        document.getElementById('advisingBankSelect').value = 'DBS';
+        updateBankInfo('DBS', 'advising');
+        
+        document.getElementById('portLoading').value = 'Shanghai Port, China';
+        document.getElementById('portDischarge').value = 'Los Angeles Port, USA';
+        document.getElementById('finalDestination').value = 'New York Warehouse, USA';
+        document.getElementById('countryOfOrigin').value = 'China';
+        document.getElementById('destinationCountry').value = 'USA';
+        
+        document.getElementById('issuingBankAccount').value = '9876543210';
+        document.getElementById('beneficiaryAccount').value = '1234567890';
+        
+        calculateGoodsTotal();
+        showAlert('Sample data loaded successfully!', 'success');
+    }
+
+    // Add sample goods
+    function addSampleGoods(category) {
+        const goods = sampleGoods[category];
+        if (!goods) return;
+
+        const tbody = document.getElementById('goodsDescription');
+        const noGoodsRow = document.getElementById('noGoodsRow');
+        
+        // Remove "no goods" row if it exists
+        if (noGoodsRow) {
+            noGoodsRow.remove();
+        }
+
+        goods.forEach(item => {
+            addGoodsRowToTable(item);
+        });
+
+        calculateGoodsTotal();
+        showAlert(`${category.charAt(0).toUpperCase() + category.slice(1)} goods added!`, 'success');
+    }
+
+    // Add goods row
+    function addGoodsRow() {
+        const quantity = parseInt(document.getElementById('addQuantity').value) || 1;
+        const newItem = {
+            description: 'New Item Description',
+            hsCode: 'XXXXXX00',
+            quantity: quantity,
+            unitPrice: 0.00
+        };
+        
+        const tbody = document.getElementById('goodsDescription');
+        const noGoodsRow = document.getElementById('noGoodsRow');
+        
+        // Remove "no goods" row if it exists
+        if (noGoodsRow) {
+            noGoodsRow.remove();
+        }
+        
+        addGoodsRowToTable(newItem);
+        calculateGoodsTotal();
+    }
+
+    // Add goods row to table
+    function addGoodsRowToTable(item) {
+        const tbody = document.getElementById('goodsDescription');
+        const row = document.createElement('tr');
+        row.className = 'fade-in';
+        const total = item.quantity * item.unitPrice;
+        
+        row.innerHTML = `
+            <td>${goodsCounter++}</td>
+            <td>
+                <input type="text" class="form-control form-control-sm form-control form-control-sm-sm" value="${item.description}" 
+                       onchange="updateGoodsTotal()" placeholder="Enter description">
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-sm form-control form-control-sm-sm" value="${item.hsCode}" 
+                       onchange="updateGoodsTotal()" placeholder="HS Code">
+            </td>
+            <td>
+                <div class="input-group input-group-sm">
+                    <input type="number" class="form-control form-control-sm" value="${item.quantity}" min="1" 
+                           onchange="updateGoodsTotal()">
+                    <span class="input-group-text">pcs</span>
+                </div>
+            </td>
+            <td>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control form-control-sm" value="${item.unitPrice.toFixed(2)}" 
+                           step="0.01" min="0" onchange="updateGoodsTotal()">
+                </div>
+            </td>
+            <td class="fw-bold item-total">$${total.toFixed(2)}</td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeGoodsRow(this)">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        `;
+        
+        tbody.appendChild(row);
+    }
+
+    // Remove goods row
+    window.removeGoodsRow = function(button) {
+        const row = button.closest('tr');
+        row.remove();
+        
+        // Update row numbers
+        updateGoodsRowNumbers();
+        calculateGoodsTotal();
+    };
+
+    // Update goods row numbers
+    function updateGoodsRowNumbers() {
+        const rows = document.querySelectorAll('#goodsDescription tr');
+        goodsCounter = 1;
+        rows.forEach(row => {
+            if (!row.id.includes('noGoodsRow')) {
+                row.cells[0].textContent = goodsCounter++;
+            }
+        });
+    }
+
+    // Populate goods from PI
+    function populateGoodsFromPI(pi) {
+        const tbody = document.getElementById('goodsDescription');
+        tbody.innerHTML = '';
+        goodsCounter = 1;
+        
+        pi.goods.forEach(item => {
+            addGoodsRowToTable(item);
+        });
+        
+        calculateGoodsTotal();
+    }
+
+    // Clear goods
+    function clearGoods() {
+        if (confirm('Are you sure you want to clear all goods?')) {
+            const tbody = document.getElementById('goodsDescription');
+            tbody.innerHTML = `
+                <tr id="noGoodsRow">
+                    <td colspan="7" class="text-center text-muted py-4">
+                        <div class="mb-3">
+                            <i class="bi bi-box display-6 d-block mb-2"></i>
+                            <h5>No goods description added</h5>
+                            <p class="mb-3">Link to a Proforma Invoice or add goods manually</p>
+                            <button type="button" class="btn btn-outline-primary" id="quickAddElectronics">
+                                <i class="bi bi-laptop me-1"></i> Add Electronics Sample
+                            </button>
+                            <button type="button" class="btn btn-outline-success ms-2" id="quickAddTextiles">
+                                <i class="bi bi-basket me-1"></i> Add Textiles Sample
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            
+            // Re-attach event listeners for quick add buttons
+            document.getElementById('quickAddElectronics').addEventListener('click', () => addSampleGoods('electronics'));
+            document.getElementById('quickAddTextiles').addEventListener('click', () => addSampleGoods('textiles'));
+            
+            document.getElementById('lcAmount').value = '';
+            calculateGoodsTotal();
+        }
+    }
+
+    // Calculate goods total
+    function calculateGoodsTotal() {
+        let subtotal = 0;
+        
+        // Calculate from table rows
+        const rows = document.querySelectorAll('#goodsDescription tr');
+        rows.forEach(row => {
+            if (!row.id.includes('noGoodsRow')) {
+                const quantity = parseFloat(row.querySelector('input[type="number"]').value) || 0;
+                const unitPrice = parseFloat(row.querySelector('.input-group:nth-child(5) input').value) || 0;
+                const total = quantity * unitPrice;
+                subtotal += total;
+                
+                // Update row total
+                const totalCell = row.querySelector('.item-total');
+                if (totalCell) {
+                    totalCell.textContent = `$${total.toFixed(2)}`;
+                }
+            }
+        });
+        
+        // Get LC amount (fallback to subtotal if not entered)
+        const lcAmount = parseFloat(document.getElementById('lcAmount').value) || subtotal;
+        const shippingInsurance = parseFloat(document.getElementById('shippingInsurance').value) || 0;
+        const totalAmount = lcAmount + shippingInsurance;
+        
+        // Update displays
+        document.getElementById('goodsSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('totalLCAmount').textContent = `$${totalAmount.toFixed(2)}`;
+        
+        // Update LC amount field if it's empty
+        if (!document.getElementById('lcAmount').value && subtotal > 0) {
+            document.getElementById('lcAmount').value = subtotal.toFixed(2);
+        }
+    }
+
+    // Update goods total (global function)
+    window.updateGoodsTotal = calculateGoodsTotal;
+
+    // Setup drag and drop
+    function setupDragAndDrop() {
+        const dropzone = document.getElementById('documentDropzone');
+        const fileInput = document.getElementById('fileInput');
+        
+        // Drag events
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+        });
+        
+        dropzone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+        });
+        
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+        
+        // Click on dropzone
+        dropzone.addEventListener('click', () => {
+            fileInput.click();
+        });
+    }
+
+    // Handle file select
+    function handleFileSelect(e) {
+        const files = e.target.files;
+        handleFiles(files);
+    }
+
+    // Handle files
+    function handleFiles(files) {
+        const validTypes = ['application/pdf', 'application/msword', 
+                          'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                          'image/jpeg', 'image/png', 'image/jpg',
+                          'application/vnd.ms-excel',
+                          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+        
+        for (let file of files) {
+            // Validate file type
+            if (!validTypes.includes(file.type)) {
+                showAlert(`File "${file.name}" has unsupported format.`, 'warning');
+                continue;
+            }
+            
+            // Validate file size (10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                showAlert(`File "${file.name}" exceeds 10MB limit.`, 'warning');
+                continue;
+            }
+            
+            // Add to uploaded files
+            uploadedFiles.push({
+                id: documentCounter,
+                name: file.name,
+                type: file.type,
+                size: formatFileSize(file.size),
+                uploadDate: new Date().toLocaleDateString(),
+                status: 'Uploaded',
+                file: file
+            });
+            
+            documentCounter++;
+        }
+        
+        // Update documents table
+        updateDocumentsTable();
+        showAlert(`${files.length} file(s) uploaded successfully!`, 'success');
+    }
+
+    // Format file size
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Update documents table
+    function updateDocumentsTable() {
+        const tbody = document.getElementById('documentsList');
+        const noDocumentsRow = document.getElementById('noDocumentsRow');
+        
+        if (uploadedFiles.length === 0) {
+            tbody.innerHTML = `
+                <tr id="noDocumentsRow">
+                    <td colspan="7" class="text-center text-muted py-3">
+                        <i class="bi bi-file-earmark display-6 d-block mb-2"></i>
+                        <p>No documents uploaded yet</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+        
+        // Remove "no documents" row if it exists
+        if (noDocumentsRow) {
+            noDocumentsRow.remove();
+        }
+        
+        tbody.innerHTML = '';
+        uploadedFiles.forEach(file => {
+            const row = document.createElement('tr');
+            row.className = 'fade-in';
+            row.innerHTML = `
+                <td>${file.id}</td>
+                <td>
+                    <i class="bi ${getFileIcon(file.type)} me-2"></i>
+                    ${file.name}
+                </td>
+                <td>${getFileType(file.type)}</td>
+                <td>${file.size}</td>
+                <td>${file.uploadDate}</td>
+                <td>
+                    <span class="status-badge status-uploaded">${file.status}</span>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-primary me-1" onclick="previewFile(${file.id})">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeFile(${file.id})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    // Get file icon
+    function getFileIcon(fileType) {
+        if (fileType.includes('pdf')) return 'bi-file-pdf';
+        if (fileType.includes('word') || fileType.includes('document')) return 'bi-file-word';
+        if (fileType.includes('excel') || fileType.includes('spreadsheet')) return 'bi-file-excel';
+        if (fileType.includes('image')) return 'bi-file-image';
+        return 'bi-file-earmark';
+    }
+
+    // Get file type
+    function getFileType(fileType) {
+        if (fileType.includes('pdf')) return 'PDF';
+        if (fileType.includes('word') || fileType.includes('document')) return 'Word';
+        if (fileType.includes('excel') || fileType.includes('spreadsheet')) return 'Excel';
+        if (fileType.includes('image')) return 'Image';
+        return 'Document';
+    }
+
+    // Preview file
+    window.previewFile = function(fileId) {
+        const file = uploadedFiles.find(f => f.id === fileId);
+        if (file) {
+            // In a real application, this would open the file
+            showAlert(`Previewing file: ${file.name}`, 'info');
+            console.log('Preview file:', file);
+        }
+    };
+
+    // Remove file
+    window.removeFile = function(fileId) {
+        if (confirm('Are you sure you want to remove this file?')) {
+            const index = uploadedFiles.findIndex(f => f.id === fileId);
+            if (index !== -1) {
+                uploadedFiles.splice(index, 1);
+                updateDocumentsTable();
+                showAlert('File removed successfully!', 'success');
+            }
+        }
+    };
+
+    // Save as draft
+    function saveAsDraft() {
+        const lcData = collectLCData();
+        lcData.status = 'draft';
+        
+        console.log('Saving LC as draft:', lcData);
+        
+        showAlert('Letter of Credit saved as draft successfully!', 'success');
+        
+        // Simulate saving
+        setTimeout(() => {
+            // Update LC number for next entry
+            const lcNumber = document.getElementById('lcNumber');
+            const currentNum = parseInt(lcNumber.value.split('-')[1]);
+            lcNumber.value = `2024-${String(currentNum + 1).padStart(3, '0')}`;
+        }, 1000);
+    }
+
+    // Submit LC
+    function submitLC() {
+        const lcAmount = parseFloat(document.getElementById('lcAmount').value);
+        if (!lcAmount || lcAmount <= 0) {
+            showAlert('Please enter a valid LC amount.', 'warning');
+            return;
+        }
+
+        const lcData = collectLCData();
+        lcData.status = 'submitted';
+        
+        console.log('Submitting LC:', lcData);
+        
+        // Show success message
+        showAlert(`Letter of Credit LC-${lcData.lcNumber} has been created successfully!`, 'success');
+        
+        // Reset form for next entry
+        setTimeout(() => {
+            resetFormForNext();
+        }, 2000);
+    }
+
+    // Reset form (with confirmation)
+    function resetForm() {
+        if (confirm('Are you sure you want to reset the form? All unsaved data will be lost.')) {
+            resetFormForNext();
+            showAlert('Form has been reset.', 'info');
+        }
+    }
+
+    // Reset form for next entry
+    function resetFormForNext() {
+        // Clear form fields
+        document.getElementById('buyerSelect').value = '';
+        document.getElementById('supplierSelect').value = '';
+        document.getElementById('buyerInfo').style.display = 'none';
+        document.getElementById('supplierInfo').style.display = 'none';
+        document.getElementById('issuingBankSelect').value = '';
+        document.getElementById('advisingBankSelect').value = '';
+        document.getElementById('issuingBankInfo').style.display = 'none';
+        document.getElementById('advisingBankInfo').style.display = 'none';
+        document.getElementById('issuingBankAccount').value = '';
+        document.getElementById('beneficiaryAccount').value = '';
+        document.getElementById('lcAmount').value = '';
+        document.getElementById('portLoading').value = '';
+        document.getElementById('portDischarge').value = '';
+        document.getElementById('finalDestination').value = '';
+        document.getElementById('piReference').value = '';
+        document.getElementById('manualDescription').value = '';
+        document.getElementById('advisingBankInstructions').value = '';
+        document.getElementById('additionalConditions').value = '';
+        document.getElementById('countryOfOrigin').value = '';
+        document.getElementById('destinationCountry').value = '';
+        document.getElementById('shippingInsurance').value = '0';
+        document.getElementById('documentRemarks').value = '';
+        
+        // Reset goods description
+        clearGoods();
+        
+        // Clear uploaded files
+        uploadedFiles.length = 0;
+        updateDocumentsTable();
+        
+        // Reset dates
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('issueDate').value = today;
+        
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 90);
+        document.getElementById('expiryDate').value = expiryDate.toISOString().split('T')[0];
+        
+        const shipDate = new Date();
+        shipDate.setDate(shipDate.getDate() + 60);
+        document.getElementById('latestShipmentDate').value = shipDate.toISOString().split('T')[0];
+        
+        // Update LC number
+        const lcNumber = document.getElementById('lcNumber');
+        const currentNum = parseInt(lcNumber.value.split('-')[1]);
+        lcNumber.value = `2024-${String(currentNum + 1).padStart(3, '0')}`;
+        
+        // Reset totals
+        calculateGoodsTotal();
+    }
+
+    // Collect LC data
+    function collectLCData() {
+        const formData = {
+            lcNumber: document.getElementById('lcNumber').value,
+            issueDate: document.getElementById('issueDate').value,
+            expiryDate: document.getElementById('expiryDate').value,
+            lcType: document.getElementById('lcType').value,
+            buyer: document.getElementById('buyerSelect').value,
+            supplier: document.getElementById('supplierSelect').value,
+            issuingBank: document.getElementById('issuingBankSelect').value,
+            issuingBankAccount: document.getElementById('issuingBankAccount').value,
+            advisingBank: document.getElementById('advisingBankSelect').value,
+            beneficiaryAccount: document.getElementById('beneficiaryAccount').value,
+            lcAmount: parseFloat(document.getElementById('lcAmount').value) || 0,
+            currency: document.getElementById('currency').value,
+            tolerance: document.getElementById('tolerance').value,
+            partialShipment: document.getElementById('partialShipment').value,
+            transhipment: document.getElementById('transhipment').value,
+            latestShipmentDate: document.getElementById('latestShipmentDate').value,
+            presentationDays: document.getElementById('presentationDays').value,
+            creditAvailability: document.getElementById('creditAvailability').value,
+            portLoading: document.getElementById('portLoading').value,
+            portDischarge: document.getElementById('portDischarge').value,
+            finalDestination: document.getElementById('finalDestination').value,
+            incoterms: document.getElementById('incoterms').value,
+            shipmentMode: document.getElementById('shipmentMode').value,
+            piReference: document.getElementById('piReference').value,
+            manualDescription: document.getElementById('manualDescription').value,
+            countryOfOrigin: document.getElementById('countryOfOrigin').value,
+            destinationCountry: document.getElementById('destinationCountry').value,
+            shippingInsurance: parseFloat(document.getElementById('shippingInsurance').value) || 0,
+            advisingBankInstructions: document.getElementById('advisingBankInstructions').value,
+            additionalConditions: document.getElementById('additionalConditions').value,
+            charges: document.querySelector('input[name="charges"]:checked').value,
+            documentRemarks: document.getElementById('documentRemarks').value,
+            uploadedFiles: uploadedFiles.map(f => f.name),
+            createdAt: new Date().toISOString()
+        };
+        
+        // Collect required documents
+        formData.requiredDocuments = [];
+        if (document.getElementById('docCommercialInvoice').checked) formData.requiredDocuments.push('Commercial Invoice');
+        if (document.getElementById('docPackingList').checked) formData.requiredDocuments.push('Packing List');
+        if (document.getElementById('docBillOfLading').checked) formData.requiredDocuments.push('Bill of Lading');
+        if (document.getElementById('docCertificateOfOrigin').checked) formData.requiredDocuments.push('Certificate of Origin');
+        if (document.getElementById('docInsurancePolicy').checked) formData.requiredDocuments.push('Insurance Policy');
+        if (document.getElementById('docInspectionCertificate').checked) formData.requiredDocuments.push('Inspection Certificate');
+        if (document.getElementById('docPhytosanitaryCertificate').checked) formData.requiredDocuments.push('Phytosanitary Certificate');
+        
+        // Collect checklist
+        formData.checklist = {
+            allVerified: document.getElementById('checkAllVerified').checked,
+            bankRequirements: document.getElementById('checkBankRequirements').checked,
+            legalCompliance: document.getElementById('checkLegalCompliance').checked
+        };
+        
+        return formData;
+    }
+
+    // Preview LC
+    function previewLC() {
+        const lcAmount = parseFloat(document.getElementById('lcAmount').value);
+        if (!lcAmount || lcAmount <= 0) {
+            showAlert('Please enter a valid LC amount to preview.', 'warning');
+            return;
+        }
+        
+        // In a real application, this would open a preview modal or page
+        const lcData = collectLCData();
+        console.log('Preview LC Data:', lcData);
+        
+        // Simulate preview
+        showAlert('LC Preview generated. Check console for data.', 'info');
+    }
+
+    // Show alert message
+    function showAlert(message, type = 'info') {
+        // Remove existing alerts
+        const existingAlert = document.querySelector('.alert-dismissible');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        const alertClass = {
+            'success': 'alert-success',
+            'warning': 'alert-warning',
+            'info': 'alert-info',
+            'danger': 'alert-danger'
+        }[type];
+        
+        const iconClass = {
+            'success': 'bi-check-circle-fill',
+            'warning': 'bi-exclamation-triangle-fill',
+            'info': 'bi-info-circle-fill',
+            'danger': 'bi-x-circle-fill'
+        }[type];
+        
+        const alertHTML = `
+            <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                <i class="bi ${iconClass} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+        
+        const cardBody = document.querySelector('.card-body');
+        cardBody.insertAdjacentHTML('afterbegin', alertHTML);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            const alert = document.querySelector('.alert-dismissible');
+            if (alert) {
+                alert.remove();
+            }
+        }, 5000);
+    }
+</script>
+  </body>
+</html>

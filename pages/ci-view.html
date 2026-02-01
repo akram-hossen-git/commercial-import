@@ -1,0 +1,1576 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View CI - Commercial Import Module</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+  </head>
+
+  <body>
+    <div class="d-flex p-4 pt-0 pb-0" id="wrapper">
+      <!-- Sidebar (same as ci-create.html) -->
+      <div class="sidebar-wrapper" id="sidebar-wrapper" style="width: 280px">
+        <div class="sidebar-heading text-white">
+          <div class="d-flex align-items-center mb-2">
+            <div class="user-avatar">ASG</div>
+            <div>
+              <h4 class="mb-0">Import Module</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-group list-group-flush">
+          <!-- Main Navigation -->
+          <div class="category-label mt-0">MAIN NAVIGATION</div>
+
+          <a
+            href="../index.html"
+            class="list-group-item list-group-item-action"
+          >
+            <i class="bi bi-speedometer2"></i>Dashboard
+          </a>
+
+          <!-- PI Section -->
+          <div class="accordion" id="piAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#piCollapse"
+                >
+                  <i class="bi bi-file-earmark-text"></i>Proforma Invoice
+                </button>
+              </h2>
+              <div
+                id="piCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#piAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./pi-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create PI
+                  </a>
+                  <a
+                    href="./pi-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All PI
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CI Section -->
+          <div class="accordion" id="ciAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#ciCollapse"
+                >
+                  <i class="bi bi-receipt"></i>Commercial Invoice
+                </button>
+              </h2>
+              <div
+                id="ciCollapse"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#ciAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./cl-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create CI
+                  </a>
+                  <a
+                    href="./ci-view.html"
+                    class="list-group-item list-group-item-action active"
+                  >
+                    <i class="bi bi-list-ul"></i>View All CI
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LC Section -->
+          <div class="accordion" id="lcAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#lcCollapse"
+                >
+                  <i class="bi bi-bank"></i>Letter of Credit
+                </button>
+              </h2>
+              <div
+                id="lcCollapse"
+                class="accordion-collapse collapse"
+                data-bs-parent="#lcAccordion"
+              >
+                <div class="accordion-body">
+                  <a
+                    href="./lc-create.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-plus-circle"></i>Create LC
+                  </a>
+                  <a
+                    href="./lc-view.html"
+                    class="list-group-item list-group-item-action"
+                  >
+                    <i class="bi bi-list-ul"></i>View All LC
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- User Profile Section -->
+        </div>
+      </div>
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper" style="flex: 1">
+        <!-- Main Content -->
+        <div class="container mt-4">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+              <li class="breadcrumb-item active">Commercial Invoice</li>
+              <li class="breadcrumb-item active">View All CI</li>
+            </ol>
+          </nav>
+
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0">
+                    <i class="bi bi-receipt me-2"></i>Commercial Invoices List
+                  </h5>
+                  <div>
+                    <a href="./cl-create.html" class="btn btn-light btn-sm">
+                      <i class="bi bi-plus-circle me-1"></i> Create New CI
+                    </a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <!-- Summary Cards -->
+                  <div class="row mb-4">
+                    <div class="col-md-3">
+                      <div class="card border-primary border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Total Invoices</h6>
+                              <h3 class="card-title" id="totalInvoices">0</h3>
+                            </div>
+                            <div class="text-primary">
+                              <i class="bi bi-receipt display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">All CI records</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="card border-success border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Total Amount</h6>
+                              <h3 class="card-title" id="totalAmount">$0</h3>
+                            </div>
+                            <div class="text-success">
+                              <i class="bi bi-currency-dollar display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">Sum of all invoices</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="card border-warning border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Pending</h6>
+                              <h3 class="card-title" id="pendingInvoices">0</h3>
+                            </div>
+                            <div class="text-warning">
+                              <i class="bi bi-clock-history display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">Awaiting approval/payment</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="card border-danger border-2">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                              <h6 class="card-subtitle mb-2 text-muted">Overdue</h6>
+                              <h3 class="card-title" id="overdueInvoices">0</h3>
+                            </div>
+                            <div class="text-danger">
+                              <i class="bi bi-exclamation-triangle display-6"></i>
+                            </div>
+                          </div>
+                          <small class="text-muted">Past due date</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- CI List Table -->
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-header bg-secondary d-flex justify-content-between align-items-center">
+                          <h6 class="mb-0 text-light"><i class="bi bi-table me-2"></i>Commercial Invoices</h6>
+                          <div class="dropdown">
+                            <button class="btn btn-outline-success btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                              <i class="bi bi-download me-1"></i> Export
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="#" id="exportExcel"><i class="bi bi-file-earmark-excel me-2"></i> Excel</a></li>
+                              <li><a class="dropdown-item" href="#" id="exportPDF"><i class="bi bi-file-earmark-pdf me-2"></i> PDF</a></li>
+                              <li><a class="dropdown-item" href="#" id="exportCSV"><i class="bi bi-filetype-csv me-2"></i> CSV</a></li>
+                              <li><a class="dropdown-item" href="#" id="exportPrint"><i class="bi bi-printer me-2"></i> Print</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="card-body">
+                          <div class="table-responsive">
+                            <table id="ciTable" class="table table-hover table-striped" style="width:100%">
+                              <thead class="table-light">
+                                <tr>
+                                  <th width="50">#</th>
+                                  <th>CI Number</th>
+                                  <th>Invoice Date</th>
+                                  <th>Due Date</th>
+                                  <th>Exporter</th>
+                                  <th>Importer</th>
+                                  <th>Amount</th>
+                                  <th>Currency</th>
+                                  <th>Status</th>
+                                  <th>Payment</th>
+                                  <th width="120">Actions</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <!-- Data will be populated by JavaScript -->
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                  <th></th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Quick Actions -->
+                  <div class="row mt-4">
+                    <div class="col-12">
+                      <div class="card">
+                        <div class="card-header bg-light">
+                          <h6 class="mb-0"><i class="bi bi-lightning-charge me-2"></i>Quick Actions</h6>
+                        </div>
+                        <div class="card-body">
+                          <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-success" id="bulkApprove">
+                              <i class="bi bi-check-circle me-1"></i> Approve Selected
+                            </button>
+                            <button class="btn btn-outline-primary" id="bulkDownload">
+                              <i class="bi bi-download me-1"></i> Download Selected
+                            </button>
+                            <button class="btn btn-outline-warning" id="bulkEmail">
+                              <i class="bi bi-envelope me-1"></i> Email Selected
+                            </button>
+                            <button class="btn btn-outline-danger" id="bulkDelete">
+                              <i class="bi bi-trash me-1"></i> Delete Selected
+                            </button>
+                            <button class="btn btn-outline-info" id="refreshData">
+                              <i class="bi bi-arrow-clockwise me-1"></i> Refresh Data
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer (same as other pages) -->
+        <footer class="footer mt-auto py-3 bg-light border-top">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6">
+                <span class="text-muted"
+                  >© 2024 Import Module System. All rights reserved.</span
+                >
+              </div>
+              <div class="col-md-6 text-end">
+                <span class="text-muted">Version 2.1.0</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- View CI Modal -->
+    <div class="modal fade" id="viewCIModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title"><i class="bi bi-receipt me-2"></i>Commercial Invoice Details</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="ciDetails">
+            <!-- Details will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-success" id="printCI"><i class="bi bi-printer me-1"></i> Print</button>
+            <button type="button" class="btn btn-primary" id="downloadCI"><i class="bi bi-download me-1"></i> Download PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete this Commercial Invoice? This action cannot be undone.</p>
+            <p class="text-danger"><strong>Warning:</strong> Deleting this invoice will remove all associated data.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+
+    <style>
+      /* Custom styles for CI list page */
+      .card-header {
+          /* background: linear-gradient(135deg, #198754 0%, #157347 100%); */
+      }
+      
+      .card.border-primary {
+          border-left: 4px solid #0d6efd !important;
+      }
+      
+      .card.border-success {
+          border-left: 4px solid #198754 !important;
+      }
+      
+      .card.border-warning {
+          border-left: 4px solid #ffc107 !important;
+      }
+      
+      .card.border-danger {
+          border-left: 4px solid #dc3545 !important;
+      }
+      
+      .table th {
+          font-weight: 600;
+          background-color: #f8f9fa;
+      }
+      
+      .dataTables_wrapper .dataTables_filter input {
+          border: 1px solid #dee2e6;
+          border-radius: 0.375rem;
+          padding: 0.375rem 0.75rem;
+      }
+      
+      .dataTables_wrapper .dataTables_length select {
+          border: 1px solid #dee2e6;
+          border-radius: 0.375rem;
+          padding: 0.375rem 2rem 0.375rem 0.75rem;
+      }
+      
+      /* Status badges */
+      .badge-status {
+          padding: 0.25rem 0.5rem;
+          font-size: 0.75rem;
+          font-weight: 500;
+          border-radius: 0.25rem;
+      }
+      
+      .badge-draft {
+          background-color: #6c757d;
+          color: white;
+      }
+      
+      .badge-pending {
+          background-color: #ffc107;
+          color: #212529;
+      }
+      
+      .badge-approved {
+          background-color: #198754;
+          color: white;
+      }
+      
+      .badge-submitted {
+          background-color: #0dcaf0;
+          color: #212529;
+      }
+      
+      .badge-paid {
+          background-color: #198754;
+          color: white;
+      }
+      
+      .badge-overdue {
+          background-color: #dc3545;
+          color: white;
+      }
+      
+      .badge-cancelled {
+          background-color: #6c757d;
+          color: white;
+      }
+      
+      /* Action buttons */
+      .action-buttons .btn {
+          padding: 0.25rem 0.5rem;
+          font-size: 0.875rem;
+      }
+      
+      /* Hover effects */
+      .table-hover tbody tr:hover {
+          background-color: rgba(25, 135, 84, 0.05);
+      }
+      
+      /* DataTables custom styling */
+      .dataTables_wrapper .dataTables_paginate .paginate_button {
+          border-radius: 0.375rem;
+          margin: 0 2px;
+      }
+      
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+          background: #198754 !important;
+          border-color: #198754 !important;
+          color: white !important;
+      }
+      
+      .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+          background: #157347 !important;
+          border-color: #157347 !important;
+          color: white !important;
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+          .card-body {
+              padding: 1rem;
+          }
+          
+          .btn {
+              margin-bottom: 0.5rem;
+          }
+          
+          .d-flex.flex-wrap {
+              gap: 0.5rem !important;
+          }
+          
+          .modal-dialog {
+              margin: 0.5rem;
+          }
+      }
+      
+      /* Selected row styling */
+      .selected {
+          background-color: rgba(25, 135, 84, 0.1) !important;
+      }
+      
+      /* Animation */
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+      }
+      
+      .fade-in {
+          animation: fadeIn 0.3s ease-in;
+      }
+      
+      /* Export button styling */
+      .dropdown-item:hover {
+          background-color: #198754;
+          color: white;
+      }
+    </style>
+
+    <script>
+      // Sample CI data
+      const sampleCIData = [
+        {
+          id: 1,
+          ciNumber: 'CI-2024-001',
+          invoiceDate: '2024-01-15',
+          dueDate: '2024-02-14',
+          exporter: 'Global Tech Inc.',
+          importer: 'ABC Trading Company',
+          amount: 125000.50,
+          currency: 'USD',
+          status: 'paid',
+          paymentTerms: 'NET30',
+          poNumber: 'PO-2024-001',
+          lcReference: 'LC-2024-001',
+          incoterms: 'CIF',
+          portLoading: 'Shanghai Port',
+          portDischarge: 'Mumbai Port',
+          createdAt: '2024-01-14',
+          updatedAt: '2024-02-01',
+          createdBy: 'John Doe'
+        },
+        {
+          id: 2,
+          ciNumber: 'CI-2024-002',
+          invoiceDate: '2024-01-20',
+          dueDate: '2024-03-20',
+          exporter: 'Euro Suppliers Ltd',
+          importer: 'XYZ Importers Ltd',
+          amount: 85000.75,
+          currency: 'EUR',
+          status: 'approved',
+          paymentTerms: 'NET60',
+          poNumber: 'PO-2024-002',
+          lcReference: 'LC-2024-002',
+          incoterms: 'FOB',
+          portLoading: 'Hamburg Port',
+          portDischarge: 'London Port',
+          createdAt: '2024-01-19',
+          updatedAt: '2024-01-25',
+          createdBy: 'Jane Smith'
+        },
+        {
+          id: 3,
+          ciNumber: 'CI-2024-003',
+          invoiceDate: '2024-02-01',
+          dueDate: '2024-03-02',
+          exporter: 'Asia Imports Co.',
+          importer: 'Global Trade Solutions',
+          amount: 45000.00,
+          currency: 'USD',
+          status: 'pending',
+          paymentTerms: 'IMMEDIATE',
+          poNumber: 'PO-2024-003',
+          lcReference: '',
+          incoterms: 'EXW',
+          portLoading: 'Shanghai Port',
+          portDischarge: 'Dubai Port',
+          createdAt: '2024-01-31',
+          updatedAt: '2024-01-31',
+          createdBy: 'Mike Johnson'
+        },
+        {
+          id: 4,
+          ciNumber: 'CI-2024-004',
+          invoiceDate: '2024-02-10',
+          dueDate: '2024-02-25',
+          exporter: 'Ocean Trading Ltd',
+          importer: 'International Merchants',
+          amount: 150000.25,
+          currency: 'GBP',
+          status: 'overdue',
+          paymentTerms: 'NET30',
+          poNumber: 'PO-2024-004',
+          lcReference: 'LC-2024-003',
+          incoterms: 'CIF',
+          portLoading: 'Singapore Port',
+          portDischarge: 'New York Port',
+          createdAt: '2024-02-09',
+          updatedAt: '2024-02-09',
+          createdBy: 'Sarah Wilson'
+        },
+        {
+          id: 5,
+          ciNumber: 'CI-2024-005',
+          invoiceDate: '2024-02-15',
+          dueDate: '2024-03-15',
+          exporter: 'Global Tech Inc.',
+          importer: 'ABC Trading Company',
+          amount: 75000.00,
+          currency: 'USD',
+          status: 'draft',
+          paymentTerms: 'NET30',
+          poNumber: 'PO-2024-005',
+          lcReference: '',
+          incoterms: 'DDP',
+          portLoading: 'Los Angeles Port',
+          portDischarge: 'Tokyo Port',
+          createdAt: '2024-02-14',
+          updatedAt: '2024-02-14',
+          createdBy: 'John Doe'
+        },
+        {
+          id: 6,
+          ciNumber: 'CI-2024-006',
+          invoiceDate: '2024-02-20',
+          dueDate: '2024-04-20',
+          exporter: 'Euro Suppliers Ltd',
+          importer: 'XYZ Importers Ltd',
+          amount: 95000.50,
+          currency: 'EUR',
+          status: 'submitted',
+          paymentTerms: 'NET60',
+          poNumber: 'PO-2024-006',
+          lcReference: 'LC-2024-004',
+          incoterms: 'CIF',
+          portLoading: 'Rotterdam Port',
+          portDischarge: 'Singapore Port',
+          createdAt: '2024-02-19',
+          updatedAt: '2024-02-21',
+          createdBy: 'Jane Smith'
+        },
+        {
+          id: 7,
+          ciNumber: 'CI-2024-007',
+          invoiceDate: '2024-03-01',
+          dueDate: '2024-03-31',
+          exporter: 'Asia Imports Co.',
+          importer: 'Global Trade Solutions',
+          amount: 35000.75,
+          currency: 'USD',
+          status: 'approved',
+          paymentTerms: 'IMMEDIATE',
+          poNumber: 'PO-2024-007',
+          lcReference: '',
+          incoterms: 'FOB',
+          portLoading: 'Guangzhou Port',
+          portDischarge: 'Jeddah Port',
+          createdAt: '2024-02-28',
+          updatedAt: '2024-03-05',
+          createdBy: 'Mike Johnson'
+        },
+        {
+          id: 8,
+          ciNumber: 'CI-2024-008',
+          invoiceDate: '2024-03-05',
+          dueDate: '2024-04-04',
+          exporter: 'Ocean Trading Ltd',
+          importer: 'International Merchants',
+          amount: 180000.00,
+          currency: 'GBP',
+          status: 'pending',
+          paymentTerms: 'NET30',
+          poNumber: 'PO-2024-008',
+          lcReference: 'LC-2024-005',
+          incoterms: 'CIF',
+          portLoading: 'Hong Kong Port',
+          portDischarge: 'Rotterdam Port',
+          createdAt: '2024-03-04',
+          updatedAt: '2024-03-04',
+          createdBy: 'Sarah Wilson'
+        },
+        {
+          id: 9,
+          ciNumber: 'CI-2024-009',
+          invoiceDate: '2024-03-10',
+          dueDate: '2024-04-09',
+          exporter: 'Global Tech Inc.',
+          importer: 'ABC Trading Company',
+          amount: 62000.25,
+          currency: 'USD',
+          status: 'cancelled',
+          paymentTerms: 'NET30',
+          poNumber: 'PO-2024-009',
+          lcReference: '',
+          incoterms: 'EXW',
+          portLoading: 'Seattle Port',
+          portDischarge: 'Sydney Port',
+          createdAt: '2024-03-09',
+          updatedAt: '2024-03-12',
+          createdBy: 'John Doe'
+        },
+        {
+          id: 10,
+          ciNumber: 'CI-2024-010',
+          invoiceDate: '2024-03-15',
+          dueDate: '2024-05-14',
+          exporter: 'Euro Suppliers Ltd',
+          importer: 'XYZ Importers Ltd',
+          amount: 110000.00,
+          currency: 'EUR',
+          status: 'paid',
+          paymentTerms: 'NET60',
+          poNumber: 'PO-2024-010',
+          lcReference: 'LC-2024-006',
+          incoterms: 'DDP',
+          portLoading: 'Antwerp Port',
+          portDischarge: 'Mumbai Port',
+          createdAt: '2024-03-14',
+          updatedAt: '2024-04-15',
+          createdBy: 'Jane Smith'
+        }
+      ];
+
+      // Variables
+      let ciTable;
+      let selectedCIs = new Set();
+      let currentDeleteId = null;
+
+      // Initialize page
+      document.addEventListener('DOMContentLoaded', function() {
+        initializeDataTable();
+        initializeEventListeners();
+        updateSummaryCards();
+        
+        // Set custom date range visibility
+        document.getElementById('filterDate').addEventListener('change', function() {
+          const customRangeDiv = document.getElementById('customDateRange');
+          customRangeDiv.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+      });
+
+      // Initialize DataTable
+      function initializeDataTable() {
+        ciTable = $('#ciTable').DataTable({
+          data: sampleCIData,
+          columns: [
+            {
+              data: 'id',
+              render: function(data, type, row) {
+                return `<div class="form-check">
+                  <input class="form-check-input ci-checkbox" type="checkbox" value="${data}">
+                </div>`;
+              },
+              orderable: false
+            },
+            { 
+              data: 'ciNumber',
+              render: function(data, type, row) {
+                return `<a href="#" class="text-decoration-none view-ci" data-id="${row.id}">
+                  <strong>${data}</strong>
+                </a>`;
+              }
+            },
+            { 
+              data: 'invoiceDate',
+              render: function(data) {
+                return new Date(data).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                });
+              }
+            },
+            { 
+              data: 'dueDate',
+              render: function(data) {
+                const dueDate = new Date(data);
+                const today = new Date();
+                const diffTime = dueDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                let badge = '';
+                if (diffDays < 0) {
+                  badge = '<span class="badge bg-danger ms-1">Overdue</span>';
+                } else if (diffDays <= 7) {
+                  badge = '<span class="badge bg-warning ms-1">Due Soon</span>';
+                }
+                
+                return new Date(data).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric'
+                }) + badge;
+              }
+            },
+            { data: 'exporter' },
+            { data: 'importer' },
+            { 
+              data: 'amount',
+              render: function(data, type, row) {
+                const symbol = row.currency === 'USD' ? '$' : 
+                             row.currency === 'EUR' ? '€' : 
+                             row.currency === 'GBP' ? '£' : '¥';
+                return `<strong>${symbol}${data.toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}</strong>`;
+              }
+            },
+            { 
+              data: 'currency',
+              render: function(data) {
+                const symbols = {
+                  'USD': '$ (USD)',
+                  'EUR': '€ (EUR)',
+                  'GBP': '£ (GBP)',
+                  'JPY': '¥ (JPY)'
+                };
+                return symbols[data] || data;
+              }
+            },
+            { 
+              data: 'status',
+              render: function(data) {
+                const statusMap = {
+                  'draft': { class: 'badge-draft', text: 'Draft' },
+                  'pending': { class: 'badge-pending', text: 'Pending' },
+                  'approved': { class: 'badge-approved', text: 'Approved' },
+                  'submitted': { class: 'badge-submitted', text: 'Submitted' },
+                  'paid': { class: 'badge-paid', text: 'Paid' },
+                  'overdue': { class: 'badge-overdue', text: 'Overdue' },
+                  'cancelled': { class: 'badge-cancelled', text: 'Cancelled' }
+                };
+                const status = statusMap[data] || { class: 'badge-secondary', text: data };
+                return `<span class="badge-status ${status.class}">${status.text}</span>`;
+              }
+            },
+            { 
+              data: 'paymentTerms',
+              render: function(data) {
+                const termsMap = {
+                  'NET30': 'Net 30 Days',
+                  'NET60': 'Net 60 Days',
+                  'NET90': 'Net 90 Days',
+                  'IMMEDIATE': 'Immediate'
+                };
+                return termsMap[data] || data;
+              }
+            },
+            {
+              data: 'id',
+              render: function(data, type, row) {
+                return `
+                  <div class="d-flex gap-1 action-buttons">
+                    <button class="btn btn-sm btn-outline-success view-ci" data-id="${data}" title="View">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary edit-ci" data-id="${data}" title="Edit">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-info copy-ci" data-id="${data}" title="Copy">
+                      <i class="bi bi-copy"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger delete-ci" data-id="${data}" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                `;
+              },
+              orderable: false
+            }
+          ],
+          order: [[1, 'desc']], // Sort by CI Number descending
+          pageLength: 10,
+          responsive: true,
+          dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
+               '<"row"<"col-sm-12"tr>>' +
+               '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+          language: {
+            search: 'Search:',
+            lengthMenu: 'Show _MENU_ entries',
+            info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+            paginate: {
+              first: 'First',
+              last: 'Last',
+              next: 'Next',
+              previous: 'Previous'
+            }
+          }
+        });
+
+        // Add row click handler for checkboxes
+        $('#ciTable tbody').on('click', 'tr', function(e) {
+          // Don't trigger row click if clicking on checkbox or action buttons
+          if (e.target.type === 'checkbox' || 
+              e.target.closest('button') || 
+              e.target.closest('a')) {
+            return;
+          }
+          
+          const checkbox = $(this).find('.ci-checkbox');
+          const ciId = checkbox.val();
+          
+          if (checkbox.is(':checked')) {
+            checkbox.prop('checked', false);
+            selectedCIs.delete(ciId);
+            $(this).removeClass('selected');
+          } else {
+            checkbox.prop('checked', true);
+            selectedCIs.add(ciId);
+            $(this).addClass('selected');
+          }
+        });
+      }
+
+      // Initialize event listeners
+      function initializeEventListeners() {
+        // View CI button
+        $(document).on('click', '.view-ci', function(e) {
+          e.preventDefault();
+          const ciId = $(this).data('id');
+          viewCI(ciId);
+        });
+
+        // Edit CI button
+        $(document).on('click', '.edit-ci', function(e) {
+          e.preventDefault();
+          const ciId = $(this).data('id');
+          editCI(ciId);
+        });
+
+        // Copy CI button
+        $(document).on('click', '.copy-ci', function(e) {
+          e.preventDefault();
+          const ciId = $(this).data('id');
+          copyCI(ciId);
+        });
+
+        // Delete CI button
+        $(document).on('click', '.delete-ci', function(e) {
+          e.preventDefault();
+          const ciId = $(this).data('id');
+          confirmDelete(ciId);
+        });
+
+        // Checkbox change
+        $(document).on('change', '.ci-checkbox', function() {
+          const ciId = $(this).val();
+          const row = $(this).closest('tr');
+          
+          if ($(this).is(':checked')) {
+            selectedCIs.add(ciId);
+            row.addClass('selected');
+          } else {
+            selectedCIs.delete(ciId);
+            row.removeClass('selected');
+          }
+        });
+
+        // Apply filters
+        document.getElementById('applyFilters').addEventListener('click', applyFilters);
+        
+        // Reset filters
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
+        
+        // Bulk actions
+        document.getElementById('bulkApprove').addEventListener('click', bulkApprove);
+        document.getElementById('bulkDownload').addEventListener('click', bulkDownload);
+        document.getElementById('bulkEmail').addEventListener('click', bulkEmail);
+        document.getElementById('bulkDelete').addEventListener('click', bulkDelete);
+        document.getElementById('refreshData').addEventListener('click', refreshData);
+        
+        // Export buttons
+        document.getElementById('exportExcel').addEventListener('click', () => exportData('excel'));
+        document.getElementById('exportPDF').addEventListener('click', () => exportData('pdf'));
+        document.getElementById('exportCSV').addEventListener('click', () => exportData('csv'));
+        document.getElementById('exportPrint').addEventListener('click', () => exportData('print'));
+        
+        // Modal buttons
+        document.getElementById('confirmDelete').addEventListener('click', deleteCI);
+        document.getElementById('printCI').addEventListener('click', printCI);
+        document.getElementById('downloadCI').addEventListener('click', downloadCI);
+      }
+
+      // View CI details
+      function viewCI(ciId) {
+        const ci = sampleCIData.find(item => item.id == ciId);
+        if (!ci) return;
+        
+        const modal = document.getElementById('ciDetails');
+        modal.innerHTML = `
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card mb-3">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0"><i class="bi bi-info-circle me-2"></i>Basic Information</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">CI Number</label>
+                      <p class="fw-bold">${ci.ciNumber}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Invoice Date</label>
+                      <p class="fw-bold">${new Date(ci.invoiceDate).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Due Date</label>
+                      <p class="fw-bold">${new Date(ci.dueDate).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Status</label>
+                      <p>
+                        <span class="badge-status badge-${ci.status}">
+                          ${ci.status.charAt(0).toUpperCase() + ci.status.slice(1)}
+                        </span>
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">PO Number</label>
+                      <p class="fw-bold">${ci.poNumber}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">LC Reference</label>
+                      <p class="fw-bold">${ci.lcReference || 'N/A'}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Payment Terms</label>
+                      <p class="fw-bold">
+                        ${ci.paymentTerms === 'NET30' ? 'Net 30 Days' : 
+                          ci.paymentTerms === 'NET60' ? 'Net 60 Days' : 
+                          ci.paymentTerms === 'NET90' ? 'Net 90 Days' : 
+                          'Immediate Payment'}
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Incoterms</label>
+                      <p class="fw-bold">${ci.incoterms}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card mb-3">
+                    <div class="card-header bg-light">
+                      <h6 class="mb-0"><i class="bi bi-person-badge me-2"></i>Exporter Details</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="fw-bold mb-1">${ci.exporter}</p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-geo-alt me-1"></i> ${ci.portLoading}
+                      </p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-calendar me-1"></i> Created: ${new Date(ci.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card mb-3">
+                    <div class="card-header bg-light">
+                      <h6 class="mb-0"><i class="bi bi-building me-2"></i>Importer Details</h6>
+                    </div>
+                    <div class="card-body">
+                      <p class="fw-bold mb-1">${ci.importer}</p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-geo-alt me-1"></i> ${ci.portDischarge}
+                      </p>
+                      <p class="text-muted mb-0">
+                        <i class="bi bi-person me-1"></i> Created by: ${ci.createdBy}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card mb-3">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0"><i class="bi bi-currency-dollar me-2"></i>Financial Information</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Invoice Amount</label>
+                      <p class="fw-bold fs-4">
+                        ${ci.currency === 'USD' ? '$' : 
+                          ci.currency === 'EUR' ? '€' : 
+                          ci.currency === 'GBP' ? '£' : '¥'}
+                        ${ci.amount.toLocaleString('en-US', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2
+                        })}
+                      </p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Currency</label>
+                      <p class="fw-bold">${ci.currency}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Created On</label>
+                      <p class="fw-bold">${new Date(ci.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="form-label text-muted">Last Updated</label>
+                      <p class="fw-bold">${new Date(ci.updatedAt).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card">
+                <div class="card-header bg-light">
+                  <h6 class="mb-0"><i class="bi bi-truck me-2"></i>Shipment Details</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <label class="form-label text-muted">Port of Loading</label>
+                      <p class="fw-bold">${ci.portLoading}</p>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label text-muted">Port of Discharge</label>
+                      <p class="fw-bold">${ci.portDischarge}</p>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label text-muted">Incoterms</label>
+                      <p class="fw-bold">${ci.incoterms}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        const viewModal = new bootstrap.Modal(document.getElementById('viewCIModal'));
+        viewModal.show();
+      }
+
+      // Edit CI
+      function editCI(ciId) {
+        // In a real application, this would redirect to edit page
+        window.location.href = `ci-create.html?edit=${ciId}`;
+      }
+
+      // Copy CI
+      function copyCI(ciId) {
+        const ci = sampleCIData.find(item => item.id == ciId);
+        if (!ci) return;
+        
+        showAlert(`Copying CI ${ci.ciNumber}...`, 'info');
+        
+        // Simulate copy action
+        setTimeout(() => {
+          showAlert(`CI ${ci.ciNumber} copied successfully. You can now create a new invoice based on this template.`, 'success');
+        }, 1000);
+      }
+
+      // Confirm delete
+      function confirmDelete(ciId) {
+        currentDeleteId = ciId;
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        deleteModal.show();
+      }
+
+      // Delete CI
+      function deleteCI() {
+        if (!currentDeleteId) return;
+        
+        // In a real application, this would make an API call
+        console.log('Deleting CI:', currentDeleteId);
+        
+        // Simulate delete
+        setTimeout(() => {
+          showAlert(`Commercial Invoice deleted successfully!`, 'success');
+          const deleteModal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+          deleteModal.hide();
+          
+          // Remove from UI
+          const rowIndex = sampleCIData.findIndex(item => item.id == currentDeleteId);
+          if (rowIndex !== -1) {
+            sampleCIData.splice(rowIndex, 1);
+            ciTable.clear().rows.add(sampleCIData).draw();
+            updateSummaryCards();
+          }
+          
+          currentDeleteId = null;
+        }, 1000);
+      }
+
+      // Apply filters
+      function applyFilters() {
+        const status = document.getElementById('filterStatus').value;
+        const dateFilter = document.getElementById('filterDate').value;
+        const exporter = document.getElementById('filterExporter').value;
+        const importer = document.getElementById('filterImporter').value;
+        const amount = document.getElementById('filterAmount').value;
+        const currency = document.getElementById('filterCurrency').value;
+        const payment = document.getElementById('filterPayment').value;
+        
+        let filteredData = [...sampleCIData];
+        
+        // Apply status filter
+        if (status) {
+          filteredData = filteredData.filter(item => item.status === status);
+        }
+        
+        // Apply date filter
+        if (dateFilter) {
+          const today = new Date();
+          const startOfWeek = new Date(today);
+          startOfWeek.setDate(today.getDate() - today.getDay());
+          const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+          const startOfQuarter = new Date(today.getFullYear(), Math.floor(today.getMonth() / 3) * 3, 1);
+          const startOfYear = new Date(today.getFullYear(), 0, 1);
+          
+          filteredData = filteredData.filter(item => {
+            const invoiceDate = new Date(item.invoiceDate);
+            
+            switch(dateFilter) {
+              case 'today':
+                return invoiceDate.toDateString() === today.toDateString();
+              case 'week':
+                return invoiceDate >= startOfWeek;
+              case 'month':
+                return invoiceDate >= startOfMonth;
+              case 'quarter':
+                return invoiceDate >= startOfQuarter;
+              case 'year':
+                return invoiceDate >= startOfYear;
+              case 'custom':
+                const dateFrom = document.getElementById('dateFrom').value;
+                const dateTo = document.getElementById('dateTo').value;
+                if (dateFrom && dateTo) {
+                  const fromDate = new Date(dateFrom);
+                  const toDate = new Date(dateTo);
+                  toDate.setHours(23, 59, 59, 999);
+                  return invoiceDate >= fromDate && invoiceDate <= toDate;
+                }
+                return true;
+              default:
+                return true;
+            }
+          });
+        }
+        
+        // Apply exporter filter
+        if (exporter) {
+          filteredData = filteredData.filter(item => item.exporter === exporter);
+        }
+        
+        // Apply importer filter
+        if (importer) {
+          filteredData = filteredData.filter(item => item.importer === importer);
+        }
+        
+        // Apply amount filter
+        if (amount) {
+          filteredData = filteredData.filter(item => {
+            const [min, max] = amount.split('-');
+            if (max === '+') {
+              return item.amount >= parseInt(min);
+            }
+            return item.amount >= parseInt(min) && item.amount <= parseInt(max);
+          });
+        }
+        
+        // Apply currency filter
+        if (currency) {
+          filteredData = filteredData.filter(item => item.currency === currency);
+        }
+        
+        // Apply payment terms filter
+        if (payment) {
+          filteredData = filteredData.filter(item => item.paymentTerms === payment);
+        }
+        
+        // Update table
+        ciTable.clear().rows.add(filteredData).draw();
+        updateSummaryCards();
+        showAlert(`Filter applied: ${filteredData.length} records found`, 'success');
+      }
+
+      // Reset filters
+      function resetFilters() {
+        document.getElementById('filterStatus').value = '';
+        document.getElementById('filterDate').value = '';
+        document.getElementById('filterExporter').value = '';
+        document.getElementById('filterImporter').value = '';
+        document.getElementById('filterAmount').value = '';
+        document.getElementById('filterCurrency').value = '';
+        document.getElementById('filterPayment').value = '';
+        document.getElementById('dateFrom').value = '';
+        document.getElementById('dateTo').value = '';
+        document.getElementById('customDateRange').style.display = 'none';
+        
+        ciTable.clear().rows.add(sampleCIData).draw();
+        updateSummaryCards();
+        showAlert('All filters reset', 'info');
+      }
+
+      // Bulk approve
+      function bulkApprove() {
+        if (selectedCIs.size === 0) {
+          showAlert('Please select at least one CI to approve', 'warning');
+          return;
+        }
+        
+        // In a real application, this would make an API call
+        showAlert(`Approving ${selectedCIs.size} selected invoices...`, 'info');
+        
+        // Simulate bulk approval
+        setTimeout(() => {
+          selectedCIs.forEach(id => {
+            const ci = sampleCIData.find(item => item.id == id);
+            if (ci) {
+              ci.status = 'approved';
+              ci.updatedAt = new Date().toISOString().split('T')[0];
+            }
+          });
+          
+          ciTable.clear().rows.add(sampleCIData).draw();
+          updateSummaryCards();
+          selectedCIs.clear();
+          showAlert(`${selectedCIs.size} invoices approved successfully!`, 'success');
+        }, 1000);
+      }
+
+      // Bulk download
+      function bulkDownload() {
+        if (selectedCIs.size === 0) {
+          showAlert('Please select at least one CI to download', 'warning');
+          return;
+        }
+        
+        showAlert(`Preparing ${selectedCIs.size} invoices for download...`, 'info');
+        
+        // Simulate download
+        setTimeout(() => {
+          showAlert(`Download started for ${selectedCIs.size} invoices`, 'success');
+        }, 1500);
+      }
+
+      // Bulk email
+      function bulkEmail() {
+        if (selectedCIs.size === 0) {
+          showAlert('Please select at least one CI to email', 'warning');
+          return;
+        }
+        
+        const ciNumbers = Array.from(selectedCIs).map(id => {
+          const ci = sampleCIData.find(item => item.id == id);
+          return ci ? ci.ciNumber : '';
+        }).filter(Boolean);
+        
+        showAlert(`Sending emails for: ${ciNumbers.join(', ')}`, 'info');
+        
+        // Simulate email sending
+        setTimeout(() => {
+          showAlert(`Emails sent successfully to ${selectedCIs.size} recipients`, 'success');
+        }, 1500);
+      }
+
+      // Bulk delete
+      function bulkDelete() {
+        if (selectedCIs.size === 0) {
+          showAlert('Please select at least one CI to delete', 'warning');
+          return;
+        }
+        
+        if (confirm(`Are you sure you want to delete ${selectedCIs.size} selected invoices? This action cannot be undone.`)) {
+          // In a real application, this would make an API call
+          showAlert(`Deleting ${selectedCIs.size} selected invoices...`, 'info');
+          
+          // Simulate bulk deletion
+          setTimeout(() => {
+            selectedCIs.forEach(id => {
+              const index = sampleCIData.findIndex(item => item.id == id);
+              if (index !== -1) {
+                sampleCIData.splice(index, 1);
+              }
+            });
+            
+            ciTable.clear().rows.add(sampleCIData).draw();
+            updateSummaryCards();
+            selectedCIs.clear();
+            showAlert(`${selectedCIs.size} invoices deleted successfully!`, 'success');
+          }, 1000);
+        }
+      }
+
+      // Refresh data
+      function refreshData() {
+        showAlert('Refreshing data...', 'info');
+        
+        // Simulate refresh
+        setTimeout(() => {
+          ciTable.clear().rows.add(sampleCIData).draw();
+          updateSummaryCards();
+          showAlert('Data refreshed successfully', 'success');
+        }, 1000);
+      }
+
+      // Export data
+      function exportData(format) {
+        let exportTitle = 'Commercial_Invoices';
+        
+        switch(format) {
+          case 'excel':
+            showAlert('Exporting to Excel...', 'info');
+            setTimeout(() => showAlert('Excel export started', 'success'), 500);
+            break;
+          case 'pdf':
+            showAlert('Generating PDF...', 'info');
+            setTimeout(() => showAlert('PDF generated successfully', 'success'), 500);
+            break;
+          case 'csv':
+            showAlert('Exporting to CSV...', 'info');
+            setTimeout(() => showAlert('CSV export started', 'success'), 500);
+            break;
+          case 'print':
+            window.print();
+            break;
+        }
+      }
+
+      // Update summary cards
+      function updateSummaryCards() {
+        const data = ciTable.rows().data().toArray();
+        
+        // Total invoices
+        document.getElementById('totalInvoices').textContent = data.length;
+        
+        // Total amount
+        const totalAmount = data.reduce((sum, item) => sum + item.amount, 0);
+        document.getElementById('totalAmount').textContent = 
+          '$' + totalAmount.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+        
+        // Pending invoices
+        const pending = data.filter(item => item.status === 'pending').length;
+        document.getElementById('pendingInvoices').textContent = pending;
+        
+        // Overdue invoices
+        const today = new Date();
+        const overdue = data.filter(item => {
+          const dueDate = new Date(item.dueDate);
+          return dueDate < today && item.status !== 'paid' && item.status !== 'cancelled';
+        }).length;
+        document.getElementById('overdueInvoices').textContent = overdue;
+      }
+
+      // Print CI
+      function printCI() {
+        showAlert('Opening print dialog...', 'info');
+        setTimeout(() => {
+          window.print();
+        }, 500);
+      }
+
+      // Download CI as PDF
+      function downloadCI() {
+        showAlert('Generating PDF download...', 'info');
+        
+        // Simulate PDF generation
+        setTimeout(() => {
+          showAlert('PDF downloaded successfully', 'success');
+        }, 1500);
+      }
+
+      // Show alert message
+      function showAlert(message, type = 'info') {
+        // Remove existing alerts
+        const existingAlert = document.querySelector('.alert-dismissible');
+        if (existingAlert) {
+          existingAlert.remove();
+        }
+        
+        const alertClass = {
+          'success': 'alert-success',
+          'warning': 'alert-warning',
+          'info': 'alert-info',
+          'danger': 'alert-danger'
+        }[type];
+        
+        const iconClass = {
+          'success': 'bi-check-circle-fill',
+          'warning': 'bi-exclamation-triangle-fill',
+          'info': 'bi-info-circle-fill',
+          'danger': 'bi-x-circle-fill'
+        }[type];
+        
+        const alertHTML = `
+          <div class="alert ${alertClass} alert-dismissible fade show position-fixed top-0 end-0 m-3" style="z-index: 9999;" role="alert">
+            <i class="bi ${iconClass} me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', alertHTML);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+          const alert = document.querySelector('.alert-dismissible');
+          if (alert) {
+            alert.remove();
+          }
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>

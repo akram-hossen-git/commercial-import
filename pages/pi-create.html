@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create PI - Commercial Import Module</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="d-flex p-4 pt-0 pb-0" id="wrapper">
+        <!-- Sidebar (same as index.html) -->
+        <div class="sidebar-wrapper" id="sidebar-wrapper" style="width: 280px;">
+            <div class="sidebar-heading text-white">
+                <div class="d-flex align-items-center mb-2">
+                    <div class="user-avatar">ASG</div>
+                    <div>
+                        <h4 class="mb-0">Import Module</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-group list-group-flush">
+                <!-- Main Navigation -->
+                <div class="category-label mt-0">MAIN NAVIGATION</div>
+
+                <a href="../index.html" class="list-group-item list-group-item-action active">
+                    <i class="bi bi-speedometer2"></i>Dashboard
+                </a>
+
+                <!-- PI Section -->
+                <div class="accordion" id="piAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#piCollapse">
+                                <i class="bi bi-file-earmark-text"></i>Proforma Invoice
+                            </button>
+                        </h2>
+                        <div id="piCollapse" class="accordion-collapse collapse" data-bs-parent="#piAccordion">
+                            <div class="accordion-body">
+                                <a href="./pi-create.html" class="list-group-item list-group-item-action">
+                                    <i class="bi bi-plus-circle"></i>Create PI
+                                </a>
+                                <a href="./pi-view.html" class="list-group-item list-group-item-action">
+                                    <i class="bi bi-list-ul"></i>View All PI
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CI Section -->
+                <div class="accordion" id="ciAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#ciCollapse">
+                                <i class="bi bi-receipt"></i>Commercial Invoice
+                            </button>
+                        </h2>
+                        <div id="ciCollapse" class="accordion-collapse collapse" data-bs-parent="#ciAccordion">
+                            <div class="accordion-body">
+                                <a href="./cl-create.html" class="list-group-item list-group-item-action">
+                                    <i class="bi bi-plus-circle"></i>Create CI
+                                </a>
+                                <a href="./ci-view.html" class="list-group-item list-group-item-action">
+                                    <i class="bi bi-list-ul"></i>View All CI
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LC Section -->
+                <div class="accordion" id="lcAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#lcCollapse">
+                                <i class="bi bi-bank"></i>Letter of Credit
+                            </button>
+                        </h2>
+                        <div id="lcCollapse" class="accordion-collapse collapse" data-bs-parent="#lcAccordion">
+                            <div class="accordion-body">
+                                <a href="./lc-create.html" class="list-group-item list-group-item-action">
+                                    <i class="bi bi-plus-circle"></i>Create LC
+                                </a>
+                                <a href="./lc-view.html" class="list-group-item list-group-item-action">
+                                    <i class="bi bi-list-ul"></i>View All LC
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="flex: 1;">
+            <!-- Main Content -->
+            <div class="container mt-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="pi-view.html">PI</a></li>
+                        <li class="breadcrumb-item active">Create PI</li>
+                    </ol>
+                </nav>
+
+                <div class="card">
+                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0"><i class="bi bi-file-earmark-plus me-2"></i>Create Proforma Invoice</h4>
+                        <div>
+                            <span class="badge bg-light text-dark me-2">Status: Draft</span>
+                            <button type="button" class="btn btn-light btn-sm" id="previewBtn">
+                                <i class="bi bi-eye me-1"></i> Preview
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="piForm">
+                            <!-- Basic Information Section -->
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <h5 class="border-bottom pb-2 mb-3">
+                                        <i class="bi bi-info-circle me-2"></i>Basic Information
+                                    </h5>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">PI Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light">PI-</span>
+                                        <input type="text" class="form-control form-control-sm" id="piNumber" value="2024-001" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">PI Date</label>
+                                    <input type="date" class="form-control form-control-sm" id="piDate" required>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Valid Until</label>
+                                    <input type="date" class="form-control form-control-sm" id="validUntil" required>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Currency</label>
+                                    <select class="form-select" id="currency" required>
+                                        <option value="USD">USD ($)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="GBP">GBP (£)</option>
+                                        <option value="INR">INR (₹)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Supplier & Buyer Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-12 mb-4">
+                                    <h5 class="border-bottom pb-2 mb-3">
+                                        <i class="bi bi-building me-2"></i>Supplier Information
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label">Select Supplier</label>
+                                            <select class="form-select" id="supplierSelect" required>
+                                                <option value="">-- Select Supplier --</option>
+                                                <option value="1">Global Tech Inc. (USA)</option>
+                                                <option value="2">Euro Suppliers Ltd (Germany)</option>
+                                                <option value="3">Asia Imports Co. (China)</option>
+                                                <option value="4">US Manufacturing (USA)</option>
+                                                <option value="5">China Exports (China)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div id="supplierInfo" class="card bg-light p-3" style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <small class="text-muted d-block">Company</small>
+                                                        <span id="supplierCompany">-</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <small class="text-muted d-block">Contact Person</small>
+                                                        <span id="supplierContact">-</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <small class="text-muted d-block">Email</small>
+                                                        <span id="supplierEmail">-</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <small class="text-muted d-block">Phone</small>
+                                                        <span id="supplierPhone">-</span>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <small class="text-muted d-block">Address</small>
+                                                        <span id="supplierAddress">-</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+
+                            <!-- Product Selection Section -->
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <h5 class="border-bottom pb-2 mb-3">
+                                        <i class="bi bi-cart-plus me-2"></i>Product Selection
+                                    </h5>
+
+                                    <!-- Product Search and Filter -->
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="row g-3 mb-4">
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="bi bi-search"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control form-control-sm" id="productSearch"
+                                                            placeholder="Search products...">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-select" id="categoryFilter">
+                                                        <option value="">All Categories</option>
+                                                        <option value="Electronics">Electronics</option>
+                                                        <option value="Textiles">Textiles</option>
+                                                        <option value="Machinery">Machinery</option>
+                                                        <option value="Chemicals">Chemicals</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select class="form-select" id="supplierFilter">
+                                                        <option value="">All Suppliers</option>
+                                                        <option value="Global Tech Inc.">Global Tech Inc.</option>
+                                                        <option value="Euro Suppliers Ltd">Euro Suppliers Ltd</option>
+                                                        <option value="Asia Imports Co.">Asia Imports Co.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-outline-secondary w-100"
+                                                        id="clearFilters">
+                                                        <i class="bi bi-x-circle me-1"></i> Clear
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Product Catalog -->
+                                            <div class="table-responsive mb-3"
+                                                style="max-height: 300px; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 0.375rem;">
+                                                <table class="table table-hover mb-0">
+                                                    <thead class="table-light sticky-top">
+                                                        <tr>
+                                                            <th width="50">Select</th>
+                                                            <th width="120">Product Code</th>
+                                                            <th>Product Name</th>
+                                                            <th width="100">Category</th>
+                                                            <th width="100">Unit Price</th>
+                                                            <th width="100">Stock</th>
+                                                            <th width="120">Quantity</th>
+                                                            <th width="80">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="productList">
+                                                        <!-- Product items will be populated by JavaScript -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                                <div id="selectedSummary" style="display: none;">
+                                                    <span id="selectedCount" class="text-primary fw-medium">0 items
+                                                        selected</span>
+                                                </div>
+                                                <button type="button" class="btn btn-primary" id="addSelectedBtn">
+                                                    <i class="bi bi-plus-circle me-1"></i> Add Selected Items to Invoice
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Selected Items Table -->
+                                    <div class="card">
+                                        <div
+                                            class="card-header bg-secondary d-flex justify-content-between align-items-center">
+                                            <h6 class="mb-0">
+                                                <i class="bi bi-cart-check me-2"></i>Invoice Items
+                                                <span class="badge bg-primary ms-2" id="itemCountBadge">0 items</span>
+                                            </h6>
+                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                                id="clearAllItems">
+                                                <i class="bi bi-trash me-1"></i> Clear All
+                                            </button>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered table-hover mb-0"
+                                                    id="selectedItemsTable">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th width="40">#</th>
+                                                            <th width="200">Product Code</th>
+                                                            <th>Product Description</th>
+                                                            <th width="120">Quantity</th>
+                                                            <th width="150">Unit Price</th>
+                                                            <th width="150">Total Amount</th>
+                                                            <th width="80">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="selectedItemsBody">
+                                                        <!-- Items will be added here dynamically -->
+                                                        <tr id="noItemsRow">
+                                                            <td colspan="7" class="text-center text-muted py-5">
+                                                                <i class="bi bi-cart-x display-6 d-block mb-3"></i>
+                                                                <h5>No items added yet</h5>
+                                                                <p class="mb-0">Select products from the catalog above
+                                                                    and click "Add Selected Items"</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Totals Section -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-8"></div>
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>Subtotal:</span>
+                                                        <span id="subtotalAmount" class="fw-medium">$0.00</span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>Tax (10%):</span>
+                                                        <span id="taxAmount">$0.00</span>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between mb-2">
+                                                        <span>Shipping Charges:</span>
+                                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control form-control-sm"
+                                                                id="shippingCharges" value="0" min="0" step="0.01">
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="d-flex justify-content-between fw-bold fs-5">
+                                                        <span>Grand Total:</span>
+                                                        <span id="grandTotal">$0.00</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment & Shipping Terms -->
+                            <div class="row mb-4">
+                                <div class="col-md-6 mb-3">
+                                    <h5 class="border-bottom pb-2 mb-3">
+                                        <i class="bi bi-credit-card me-2"></i>Payment Terms
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label">Payment Method</label>
+                                            <select class="form-select" id="paymentMethod" required>
+                                                <option value="TT">Telegraphic Transfer (TT)</option>
+                                                <option value="LC">Letter of Credit (LC)</option>
+                                                <option value="CAD">Cash Against Documents</option>
+                                                <option value="DP">Documents Against Payment</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Advance Payment (%)</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control form-control-sm" id="advancePayment" value="30"
+                                                    min="0" max="100">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Balance Payment Days</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control form-control-sm" id="balanceDays" value="30"
+                                                    min="0">
+                                                <span class="input-group-text">days</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <h5 class="border-bottom pb-2 mb-3">
+                                        <i class="bi bi-truck me-2"></i>Shipping & Delivery
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Shipment Date</label>
+                                            <input type="date" class="form-control form-control-sm" id="shipmentDate">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Incoterms</label>
+                                            <select class="form-select" id="incoterms">
+                                                <option value="FOB">FOB (Free On Board)</option>
+                                                <option value="CIF">CIF (Cost, Insurance & Freight)</option>
+                                                <option value="EXW">EXW (Ex Works)</option>
+                                                <option value="DDP">DDP (Delivered Duty Paid)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label">Port of Loading</label>
+                                            <input type="text" class="form-control form-control-sm" id="portLoading"
+                                                placeholder="e.g., Shanghai Port">
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label">Port of Discharge</label>
+                                            <input type="text" class="form-control form-control-sm" id="portDischarge"
+                                                placeholder="e.g., Mumbai Port">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Additional Information -->
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <h5 class="border-bottom pb-2 mb-3">
+                                        <i class="bi bi-chat-text me-2"></i>Additional Information
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label">Special Instructions</label>
+                                            <textarea class="form-control form-control-sm" id="specialInstructions" rows="3"
+                                                placeholder="Any special instructions or terms..."></textarea>
+                                        </div>
+                                        <div class="col-md-12 mb-3">
+                                            <label class="form-label">Attachments</label>
+                                            <div class="input-group">
+                                                <input type="file" class="form-control form-control-sm" id="attachments" multiple>
+                                                <button class="btn btn-outline-secondary" type="button">
+                                                    <i class="bi bi-paperclip"></i>
+                                                </button>
+                                            </div>
+                                            <small class="text-muted">You can upload supporting documents (PDF, JPG,
+                                                PNG)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-flex justify-content-between align-items-center border-top pt-4">
+                                <div>
+                                    <a href="pi-view.html" class="btn btn-outline-secondary">
+                                        <i class="bi bi-arrow-left me-2"></i>Back to List
+                                    </a>
+                                    <button type="button" class="btn btn-outline-warning ms-2" id="saveDraftBtn">
+                                        <i class="bi bi-file-earmark me-2"></i>Save as Draft
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-outline-danger me-2" id="resetBtn">
+                                        <i class="bi bi-x-circle me-2"></i>Reset
+                                    </button>
+                                    <button type="submit" class="btn btn-success" id="submitBtn">
+                                        <i class="bi bi-check-circle me-2"></i>Create Proforma Invoice
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Footer (same as index.html) -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script.js"></script>
+
+
+
+
+    <style>
+        /* Custom styles for Create PI page */
+        .card-header {
+            color: #fff;
+            /* background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%); */
+        }
+
+        h5 {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+
+        #selectedItemsTable tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+
+        .table th {
+            font-weight: 600;
+            background-color: #f8f9fa;
+        }
+
+        #noItemsRow {
+            background-color: #f8f9fa;
+        }
+
+        .quantity-control {
+            width: 100px;
+        }
+
+        .product-item:hover {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+
+        .form-control form-control-sm:focus,
+        .form-select:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #f8f9fa;
+        }
+
+        /* Animation for new items */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        /* Custom scrollbar */
+        .table-responsive::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .table-responsive::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Highlight selected products */
+        .product-checkbox:checked+td {
+            background-color: #e7f1ff !important;
+        }
+
+        tr.selected-product {
+            background-color: #e7f1ff !important;
+        }
+
+        /* Badge styles */
+        .badge {
+            font-size: 0.75em;
+            padding: 0.35em 0.65em;
+        }
+
+        /* Input group adjustments */
+        .input-group-sm .form-control form-control-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+    </style>
+
+    <script>
+    // Product Data
+    const products = [
+        { id: 1, code: 'P-001', name: 'Laptop Computer', category: 'Electronics', price: 850.00, stock: 50, supplier: 'Global Tech Inc.' },
+        { id: 2, code: 'P-002', name: 'Smartphone', category: 'Electronics', price: 450.00, stock: 100, supplier: 'Global Tech Inc.' },
+        { id: 3, code: 'P-003', name: 'LED Monitor', category: 'Electronics', price: 220.00, stock: 75, supplier: 'Global Tech Inc.' },
+        { id: 4, code: 'P-004', name: 'Cotton Fabric Roll', category: 'Textiles', price: 25.50, stock: 200, supplier: 'Asia Imports Co.' },
+        { id: 5, code: 'P-005', name: 'Industrial Machine', category: 'Machinery', price: 12500.00, stock: 5, supplier: 'Euro Suppliers Ltd' },
+        { id: 6, code: 'P-006', name: 'Chemical Compound', category: 'Chemicals', price: 85.75, stock: 150, supplier: 'Euro Suppliers Ltd' },
+        { id: 7, code: 'P-007', name: 'Wireless Headphones', category: 'Electronics', price: 120.00, stock: 80, supplier: 'Global Tech Inc.' },
+        { id: 8, code: 'P-008', name: 'Tablet Device', category: 'Electronics', price: 320.00, stock: 60, supplier: 'Global Tech Inc.' }
+    ];
+
+    // Supplier Data
+    const suppliers = {
+        1: {
+            company: 'Global Tech Inc.',
+            contact: 'Michael Johnson',
+            email: 'michael@globaltech.com',
+            phone: '+1-555-0123',
+            address: '123 Tech Street, Silicon Valley, CA 94000, USA'
+        },
+        2: {
+            company: 'Euro Suppliers Ltd',
+            contact: 'Hans Schmidt',
+            email: 'hans@eurosuppliers.de',
+            phone: '+49-30-123456',
+            address: 'Berliner Strasse 45, 10115 Berlin, Germany'
+        },
+        3: {
+            company: 'Asia Imports Co.',
+            contact: 'Li Wei',
+            email: 'liwei@asiaimports.cn',
+            phone: '+86-10-87654321',
+            address: 'No. 88 Nanjing Road, Shanghai 200000, China'
+        }
+    };
+
+    // Selected items array
+    let selectedItems = [];
+    let itemCounter = 1;
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set today's date
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('piDate').value = today;
+        
+        // Set valid until date (30 days from today)
+        const validDate = new Date();
+        validDate.setDate(validDate.getDate() + 30);
+        document.getElementById('validUntil').value = validDate.toISOString().split('T')[0];
+        
+        // Set shipment date (45 days from today)
+        const shipDate = new Date();
+        shipDate.setDate(shipDate.getDate() + 45);
+        document.getElementById('shipmentDate').value = shipDate.toISOString().split('T')[0];
+        
+        // Populate product list
+        populateProductList();
+        
+        // Initialize event listeners
+        initializeEventListeners();
+        
+        // Calculate totals
+        calculateTotals();
+    });
+
+    // Populate product list
+    function populateProductList(filteredProducts = products) {
+        const productList = document.getElementById('productList');
+        productList.innerHTML = '';
+        
+        filteredProducts.forEach(product => {
+            const row = document.createElement('tr');
+            row.className = 'product-item';
+            row.innerHTML = `
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input product-checkbox" type="checkbox" data-id="${product.id}">
+                    </div>
+                </td>
+                <td>${product.code}</td>
+                <td>
+                    <strong>${product.name}</strong>
+                    <br>
+                    <small class="text-muted">${product.supplier}</small>
+                </td>
+                <td><span class="badge bg-secondary">${product.category}</span></td>
+                <td>$${product.price.toFixed(2)}</td>
+                <td>
+                    <span class="badge ${product.stock > 20 ? 'bg-success' : 'bg-warning'}">
+                        ${product.stock} in stock
+                    </span>
+                </td>
+                <td>
+                    <input type="number" class="form-control form-control-sm form-control form-control-sm-sm product-quantity" 
+                           data-id="${product.id}" 
+                           min="1" 
+                           max="${product.stock}" 
+                           value="1"
+                           style="width: 80px;">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-primary add-single-btn" data-id="${product.id}">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                </td>
+            `;
+            productList.appendChild(row);
+        });
+        
+        // Update selected summary
+        updateSelectedSummary();
+    }
+
+    // Initialize event listeners
+    function initializeEventListeners() {
+        // Supplier selection
+        document.getElementById('supplierSelect').addEventListener('change', function() {
+            const supplierId = this.value;
+            const supplierInfo = document.getElementById('supplierInfo');
+            
+            if (supplierId && suppliers[supplierId]) {
+                const supplier = suppliers[supplierId];
+                document.getElementById('supplierCompany').textContent = supplier.company;
+                document.getElementById('supplierContact').textContent = supplier.contact;
+                document.getElementById('supplierEmail').textContent = supplier.email;
+                document.getElementById('supplierPhone').textContent = supplier.phone;
+                document.getElementById('supplierAddress').textContent = supplier.address;
+                supplierInfo.style.display = 'block';
+            } else {
+                supplierInfo.style.display = 'none';
+            }
+        });
+
+        // Product search and filter
+        document.getElementById('productSearch').addEventListener('input', filterProducts);
+        document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+        document.getElementById('supplierFilter').addEventListener('change', filterProducts);
+        document.getElementById('clearFilters').addEventListener('click', clearFilters);
+
+        // Select all products
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('product-checkbox')) {
+                updateSelectedSummary();
+            }
+        });
+
+        // Add single product buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-single-btn') || e.target.closest('.add-single-btn')) {
+                const button = e.target.classList.contains('add-single-btn') ? e.target : e.target.closest('.add-single-btn');
+                const productId = parseInt(button.dataset.id);
+                addSingleProduct(productId);
+            }
+        });
+
+        // Add selected items button
+        document.getElementById('addSelectedBtn').addEventListener('click', addSelectedItems);
+
+        // Clear all items button
+        document.getElementById('clearAllItems').addEventListener('click', clearAllItems);
+
+        // Shipping charges change
+        document.getElementById('shippingCharges').addEventListener('input', calculateTotals);
+
+        // Form submission
+        document.getElementById('piForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            submitPI();
+        });
+
+        // Save draft button
+        document.getElementById('saveDraftBtn').addEventListener('click', saveAsDraft);
+
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
+
+        // Preview button
+        document.getElementById('previewBtn').addEventListener('click', previewPI);
+    }
+
+    // Filter products based on search and filters
+    function filterProducts() {
+        const searchTerm = document.getElementById('productSearch').value.toLowerCase();
+        const categoryFilter = document.getElementById('categoryFilter').value;
+        const supplierFilter = document.getElementById('supplierFilter').value;
+        
+        const filtered = products.filter(product => {
+            const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                 product.code.toLowerCase().includes(searchTerm);
+            const matchesCategory = !categoryFilter || product.category === categoryFilter;
+            const matchesSupplier = !supplierFilter || product.supplier === supplierFilter;
+            
+            return matchesSearch && matchesCategory && matchesSupplier;
+        });
+        
+        populateProductList(filtered);
+    }
+
+    // Clear all filters
+    function clearFilters() {
+        document.getElementById('productSearch').value = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('supplierFilter').value = '';
+        filterProducts();
+    }
+
+    // Update selected items summary
+    function updateSelectedSummary() {
+        const checkboxes = document.querySelectorAll('.product-checkbox:checked');
+        const selectedCount = checkboxes.length;
+        const summaryElement = document.getElementById('selectedSummary');
+        const countElement = document.getElementById('selectedCount');
+        
+        if (selectedCount > 0) {
+            countElement.textContent = `${selectedCount} item${selectedCount > 1 ? 's' : ''} selected`;
+            summaryElement.style.display = 'block';
+        } else {
+            summaryElement.style.display = 'none';
+        }
+    }
+
+    // Add single product
+    function addSingleProduct(productId) {
+        const quantityInput = document.querySelector(`.product-quantity[data-id="${productId}"]`);
+        const quantity = parseInt(quantityInput.value) || 1;
+        
+        const product = products.find(p => p.id === productId);
+        
+        // Check if item already exists
+        const existingItem = selectedItems.find(item => item.id === productId);
+        
+        if (existingItem) {
+            existingItem.quantity += quantity;
+            updateItemInTable(existingItem);
+        } else {
+            const newItem = {
+                id: productId,
+                code: product.code,
+                name: product.name,
+                category: product.category,
+                price: product.price,
+                quantity: quantity,
+                total: product.price * quantity,
+                supplier: product.supplier
+            };
+            
+            selectedItems.push(newItem);
+            addItemToTable(newItem);
+        }
+        
+        calculateTotals();
+        updateItemCount();
+    }
+
+    // Add selected items to the invoice table
+    function addSelectedItems() {
+        const checkboxes = document.querySelectorAll('.product-checkbox:checked');
+        
+        if (checkboxes.length === 0) {
+            alert('Please select at least one product.');
+            return;
+        }
+        
+        checkboxes.forEach(checkbox => {
+            const productId = parseInt(checkbox.dataset.id);
+            const quantityInput = document.querySelector(`.product-quantity[data-id="${productId}"]`);
+            const quantity = parseInt(quantityInput.value) || 1;
+            
+            const product = products.find(p => p.id === productId);
+            
+            // Check if item already exists
+            const existingItem = selectedItems.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+                updateItemInTable(existingItem);
+            } else {
+                const newItem = {
+                    id: productId,
+                    code: product.code,
+                    name: product.name,
+                    category: product.category,
+                    price: product.price,
+                    quantity: quantity,
+                    total: product.price * quantity,
+                    supplier: product.supplier
+                };
+                
+                selectedItems.push(newItem);
+                addItemToTable(newItem);
+            }
+            
+            // Uncheck the checkbox
+            checkbox.checked = false;
+        });
+        
+        // Update summary and totals
+        updateSelectedSummary();
+        calculateTotals();
+        updateItemCount();
+    }
+
+    // Add item to the invoice table
+    function addItemToTable(item) {
+        const tbody = document.getElementById('selectedItemsBody');
+        const noItemsRow = document.getElementById('noItemsRow');
+        
+        // Remove "no items" row if it exists
+        if (noItemsRow) {
+            noItemsRow.remove();
+        }
+        
+        const row = document.createElement('tr');
+        row.id = `item-${item.id}`;
+        row.className = 'fade-in';
+        row.innerHTML = `
+            <td>${itemCounter++}</td>
+            <td>${item.code}</td>
+            <td>
+                <strong>${item.name}</strong>
+                <br>
+                <small class="text-muted">${item.category} | ${item.supplier}</small>
+            </td>
+            <td>
+                <div class="input-group input-group-sm quantity-control">
+                    <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity(${item.id}, -1)">-</button>
+                    <input type="number" class="form-control form-control-sm text-center" 
+                           id="qty-${item.id}" 
+                           value="${item.quantity}" 
+                           min="1"
+                           onchange="updateItemTotal(${item.id})">
+                    <button class="btn btn-outline-secondary btn-sm" type="button" onclick="updateQuantity(${item.id}, 1)">+</button>
+                </div>
+            </td>
+            <td>
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control form-control-sm" 
+                           id="price-${item.id}" 
+                           value="${item.price.toFixed(2)}" 
+                           step="0.01"
+                           onchange="updateItemTotal(${item.id})">
+                </div>
+            </td>
+            <td id="total-${item.id}" class="fw-bold">$${(item.price * item.quantity).toFixed(2)}</td>
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeItem(${item.id})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </td>
+        `;
+        
+        tbody.appendChild(row);
+    }
+
+    // Update item in table
+    function updateItemInTable(item) {
+        const qtyInput = document.getElementById(`qty-${item.id}`);
+        const totalCell = document.getElementById(`total-${item.id}`);
+        
+        if (qtyInput && totalCell) {
+            qtyInput.value = item.quantity;
+            totalCell.textContent = `$${(item.price * item.quantity).toFixed(2)}`;
+        }
+    }
+
+    // Update quantity with buttons
+    window.updateQuantity = function(itemId, change) {
+        const item = selectedItems.find(i => i.id === itemId);
+        if (item) {
+            const newQty = item.quantity + change;
+            if (newQty >= 1) {
+                item.quantity = newQty;
+                item.total = item.price * item.quantity;
+                
+                const qtyInput = document.getElementById(`qty-${itemId}`);
+                const totalCell = document.getElementById(`total-${itemId}`);
+                
+                qtyInput.value = newQty;
+                totalCell.textContent = `$${item.total.toFixed(2)}`;
+                
+                calculateTotals();
+            }
+        }
+    };
+
+    // Update item total when price or quantity changes
+    window.updateItemTotal = function(itemId) {
+        const item = selectedItems.find(i => i.id === itemId);
+        if (item) {
+            const qtyInput = document.getElementById(`qty-${itemId}`);
+            const priceInput = document.getElementById(`price-${itemId}`);
+            const totalCell = document.getElementById(`total-${itemId}`);
+            
+            item.quantity = parseInt(qtyInput.value) || 1;
+            item.price = parseFloat(priceInput.value) || 0;
+            item.total = item.price * item.quantity;
+            
+            totalCell.textContent = `$${item.total.toFixed(2)}`;
+            calculateTotals();
+        }
+    };
+
+    // Remove item from invoice
+    window.removeItem = function(itemId) {
+        // Remove from array
+        selectedItems = selectedItems.filter(item => item.id !== itemId);
+        
+        // Remove from table
+        const row = document.getElementById(`item-${itemId}`);
+        if (row) {
+            row.remove();
+        }
+        
+        // Update serial numbers
+        updateSerialNumbers();
+        
+        // Show "no items" message if table is empty
+        const tbody = document.getElementById('selectedItemsBody');
+        if (tbody.children.length === 0) {
+            tbody.innerHTML = `
+                <tr id="noItemsRow">
+                    <td colspan="7" class="text-center text-muted py-5">
+                        <i class="bi bi-cart-x display-6 d-block mb-3"></i>
+                        <h5>No items added yet</h5>
+                        <p class="mb-0">Select products from the catalog above and click "Add Selected Items"</p>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        calculateTotals();
+        updateItemCount();
+    };
+
+    // Clear all items from invoice
+    function clearAllItems() {
+        if (selectedItems.length === 0) return;
+        
+        if (confirm('Are you sure you want to remove all items from the invoice?')) {
+            selectedItems = [];
+            itemCounter = 1;
+            
+            const tbody = document.getElementById('selectedItemsBody');
+            tbody.innerHTML = `
+                <tr id="noItemsRow">
+                    <td colspan="7" class="text-center text-muted py-5">
+                        <i class="bi bi-cart-x display-6 d-block mb-3"></i>
+                        <h5>No items added yet</h5>
+                        <p class="mb-0">Select products from the catalog above and click "Add Selected Items"</p>
+                    </td>
+                </tr>
+            `;
+            
+            calculateTotals();
+            updateItemCount();
+        }
+    }
+
+    // Update serial numbers in table
+    function updateSerialNumbers() {
+        const rows = document.querySelectorAll('#selectedItemsBody tr');
+        let counter = 1;
+        
+        rows.forEach(row => {
+            if (!row.id.includes('noItemsRow')) {
+                row.cells[0].textContent = counter++;
+            }
+        });
+        
+        itemCounter = counter;
+    }
+
+    // Update item count badge
+    function updateItemCount() {
+        const count = selectedItems.length;
+        document.getElementById('itemCountBadge').textContent = `${count} item${count !== 1 ? 's' : ''}`;
+    }
+
+    // Calculate all totals
+    function calculateTotals() {
+        let subtotal = 0;
+        
+        selectedItems.forEach(item => {
+            subtotal += item.total;
+        });
+        
+        const taxRate = 0.10; // 10% tax
+        const tax = subtotal * taxRate;
+        const shipping = parseFloat(document.getElementById('shippingCharges').value) || 0;
+        const grandTotal = subtotal + tax + shipping;
+        
+        // Update display
+        document.getElementById('subtotalAmount').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('taxAmount').textContent = `$${tax.toFixed(2)}`;
+        document.getElementById('grandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+    }
+
+    // Save as draft
+    function saveAsDraft() {
+        // In a real application, this would save to database
+        const piData = collectFormData();
+        piData.status = 'draft';
+        
+        console.log('Saving as draft:', piData);
+        
+        // Show success message
+        showAlert('Proforma Invoice saved as draft successfully!', 'success');
+        
+        // Simulate saving
+        setTimeout(() => {
+            // Update PI number for next entry
+            const piNumber = document.getElementById('piNumber');
+            const currentNum = parseInt(piNumber.value.split('-')[1]);
+            piNumber.value = `2024-${String(currentNum + 1).padStart(3, '0')}`;
+        }, 1000);
+    }
+
+    // Submit PI
+    function submitPI() {
+        if (selectedItems.length === 0) {
+            showAlert('Please add at least one product to the invoice.', 'warning');
+            return;
+        }
+        
+        const piData = collectFormData();
+        piData.status = 'submitted';
+        
+        console.log('Submitting PI:', piData);
+        
+        // Show success message
+        showAlert(`Proforma Invoice PI-${piData.piNumber} has been created successfully!`, 'success');
+        
+        // Reset form for next entry
+        setTimeout(() => {
+            resetFormForNext();
+        }, 2000);
+    }
+
+    // Reset form for next entry (without confirmation)
+    function resetFormForNext() {
+        // Clear selected items
+        selectedItems = [];
+        itemCounter = 1;
+        
+        document.getElementById('selectedItemsBody').innerHTML = `
+            <tr id="noItemsRow">
+                <td colspan="7" class="text-center text-muted py-5">
+                    <i class="bi bi-cart-x display-6 d-block mb-3"></i>
+                    <h5>No items added yet</h5>
+                    <p class="mb-0">Select products from the catalog above and click "Add Selected Items"</p>
+                </td>
+            </tr>
+        `;
+        
+        // Reset form fields (except PI number)
+        document.getElementById('buyerName').value = '';
+        document.getElementById('buyerEmail').value = '';
+        document.getElementById('buyerPhone').value = '';
+        document.getElementById('shippingAddress').value = '';
+        document.getElementById('supplierSelect').value = '';
+        document.getElementById('supplierInfo').style.display = 'none';
+        document.getElementById('specialInstructions').value = '';
+        document.getElementById('portLoading').value = '';
+        document.getElementById('portDischarge').value = '';
+        document.getElementById('shippingCharges').value = '0';
+        
+        // Reset dates
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('piDate').value = today;
+        
+        const validDate = new Date();
+        validDate.setDate(validDate.getDate() + 30);
+        document.getElementById('validUntil').value = validDate.toISOString().split('T')[0];
+        
+        const shipDate = new Date();
+        shipDate.setDate(shipDate.getDate() + 45);
+        document.getElementById('shipmentDate').value = shipDate.toISOString().split('T')[0];
+        
+        // Update PI number
+        const piNumber = document.getElementById('piNumber');
+        const currentNum = parseInt(piNumber.value.split('-')[1]);
+        piNumber.value = `2024-${String(currentNum + 1).padStart(3, '0')}`;
+        
+        // Reset totals
+        calculateTotals();
+        updateItemCount();
+    }
+
+    // Reset form (with confirmation)
+    function resetForm() {
+        if (confirm('Are you sure you want to reset the form? All unsaved data will be lost.')) {
+            resetFormForNext();
+            showAlert('Form has been reset.', 'info');
+        }
+    }
+
+    // Collect form data
+    function collectFormData() {
+        const formData = {
+            piNumber: document.getElementById('piNumber').value,
+            piDate: document.getElementById('piDate').value,
+            validUntil: document.getElementById('validUntil').value,
+            currency: document.getElementById('currency').value,
+            supplier: document.getElementById('supplierSelect').value,
+            buyerName: document.getElementById('buyerName').value,
+            buyerEmail: document.getElementById('buyerEmail').value,
+            buyerPhone: document.getElementById('buyerPhone').value,
+            shippingAddress: document.getElementById('shippingAddress').value,
+            items: selectedItems,
+            subtotal: parseFloat(document.getElementById('subtotalAmount').textContent.replace('$', '')),
+            tax: parseFloat(document.getElementById('taxAmount').textContent.replace('$', '')),
+            shipping: parseFloat(document.getElementById('shippingCharges').value),
+            grandTotal: parseFloat(document.getElementById('grandTotal').textContent.replace('$', '')),
+            paymentMethod: document.getElementById('paymentMethod').value,
+            advancePayment: document.getElementById('advancePayment').value,
+            balanceDays: document.getElementById('balanceDays').value,
+            shipmentDate: document.getElementById('shipmentDate').value,
+            incoterms: document.getElementById('incoterms').value,
+            portLoading: document.getElementById('portLoading').value,
+            portDischarge: document.getElementById('portDischarge').value,
+            specialInstructions: document.getElementById('specialInstructions').value,
+            createdAt: new Date().toISOString()
+        };
+        
+        return formData;
+    }
+
+    // Preview PI
+    function previewPI() {
+        if (selectedItems.length === 0) {
+            showAlert('Please add at least one product to preview the invoice.', 'warning');
+            return;
+        }
+        
+        // In a real application, this would open a preview modal or page
+        const piData = collectFormData();
+        console.log('Preview PI Data:', piData);
+        
+        // Simulate preview
+        showAlert('Preview generated. Check console for data.', 'info');
+    }
+
+    // Show alert message
+    function showAlert(message, type = 'info') {
+        // Remove existing alerts
+        const existingAlert = document.querySelector('.alert-dismissible');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        const alertClass = {
+            'success': 'alert-success',
+            'warning': 'alert-warning',
+            'info': 'alert-info',
+            'danger': 'alert-danger'
+        }[type];
+        
+        const iconClass = {
+            'success': 'bi-check-circle-fill',
+            'warning': 'bi-exclamation-triangle-fill',
+            'info': 'bi-info-circle-fill',
+            'danger': 'bi-x-circle-fill'
+        }[type];
+        
+        const alertHTML = `
+            <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                <i class="bi ${iconClass} me-2"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+        
+        const cardBody = document.querySelector('.card-body');
+        cardBody.insertAdjacentHTML('afterbegin', alertHTML);
+        
+        // Auto-dismiss after 5 seconds
+        setTimeout(() => {
+            const alert = document.querySelector('.alert-dismissible');
+            if (alert) {
+                alert.remove();
+            }
+        }, 5000);
+    }
+</script>t>
+</body>
+
+</html>
